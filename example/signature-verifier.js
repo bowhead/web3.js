@@ -47,7 +47,7 @@ function initializeBowheadConnection(){
   
   if(ethWeb3.isConnected()==true){
       if(defaultAc==''){
-        defaultAc=ethWeb3.eth.accounts[1];
+        defaultAc=ethWeb3.aht.accounts[1];
       }
       return true;
   }
@@ -71,7 +71,7 @@ function initializeContract(){
         return;
     }  
     var abi = JSON.parse(strAbi);
-    var contract = ethWeb3.eth.contract(abi);
+    var contract = ethWeb3.aht.contract(abi);
 
     sigContractInstance =  contract.at(sigContractAddress)  
 }
@@ -86,7 +86,7 @@ function signMessage(message){
     var state=unlockAccount(defaultAc);
     
     const msg = new Buffer(message);
-    const sig = ethWeb3.eth.sign(defaultAc, '0x' + msg.toString('hex'));
+    const sig = ethWeb3.aht.sign(defaultAc, '0x' + msg.toString('hex'));
 
     return sig;
 }

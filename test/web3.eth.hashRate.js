@@ -12,7 +12,7 @@ var tests = [{
     call: 'eth_'+ method
 }];
 
-describe('web3.eth', function () {
+describe('web3.aht', function () {
     describe(method, function () {
         tests.forEach(function (test, index) {
             it('property test: ' + index, function () {
@@ -28,7 +28,7 @@ describe('web3.eth', function () {
                 });
 
                 // when
-                var result = web3.eth[method];
+                var result = web3.aht[method];
 
                 // then
                 assert.strictEqual(test.formattedResult, result);

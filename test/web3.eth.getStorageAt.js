@@ -8,7 +8,7 @@ var method = 'getStorageAt';
 
 var tests = [{
     args: ['0x47d33b27bb249a2dbab4c0612bf9caf4c1950855', 2],
-    formattedArgs: ['0x47d33b27bb249a2dbab4c0612bf9caf4c1950855', '0x2', web3.eth.defaultBlock],
+    formattedArgs: ['0x47d33b27bb249a2dbab4c0612bf9caf4c1950855', '0x2', web3.aht.defaultBlock],
     result: '0x47d33b2',
     formattedResult: '0x47d33b2',
     call: 'eth_'+ method

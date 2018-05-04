@@ -87,8 +87,8 @@ web3.setProvider(new web3.providers.HttpProvider('http://host.url', 0, BasicAuth
 There you go, now you can use it:
 
 ```js
-var coinbase = web3.eth.coinbase;
-var balance = web3.eth.getBalance(coinbase);
+var coinbase = web3.aht.coinbase;
+var balance = web3.aht.getBalance(coinbase);
 ```
 
 You can find more examples in [`example`](https://github.com/bowhead/web3.js/tree/master/example) directory.

@@ -59,7 +59,7 @@ describe('eth', function () {
 
 
                 // call
-                var syncing = web3.eth[method](function(e, res){
+                var syncing = web3.aht[method](function(e, res){
                     if(count === 1) {
                         assert.isTrue(res);
                         count++;

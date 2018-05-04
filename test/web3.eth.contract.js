@@ -3,7 +3,7 @@ var FakeHttpProvider = require('./helpers/FakeHttpProvider');
 var Web3 = require('../index');
 
 
-describe('web3.eth.contract', function() {
+describe('web3.aht.contract', function() {
     it('should create simple contract with one method from abi with explicit type name', function () {
         
         // given
@@ -26,7 +26,7 @@ describe('web3.eth.contract', function() {
     
         // when
         var web3 = new Web3();
-        var myCon = web3.eth.contract(description).at(address);
+        var myCon = web3.aht.contract(description).at(address);
 
         // then
         assert.equal('function', typeof myCon.test); 
@@ -55,7 +55,7 @@ describe('web3.eth.contract', function() {
 
         // when
         var web3 = new Web3();
-        var myCon = web3.eth.contract(description).at(address);
+        var myCon = web3.aht.contract(description).at(address);
 
         // then
         assert.equal('function', typeof myCon.test); 
@@ -98,7 +98,7 @@ describe('web3.eth.contract', function() {
         
         // when
         var web3 = new Web3();
-        var myCon = web3.eth.contract(description).at(address);
+        var myCon = web3.aht.contract(description).at(address);
 
         // then
         assert.equal('function', typeof myCon.test); 
@@ -143,7 +143,7 @@ describe('web3.eth.contract', function() {
         
         // when
         var web3 = new Web3();
-        var myCon = web3.eth.contract(description).at(address);
+        var myCon = web3.aht.contract(description).at(address);
 
         // then
         assert.equal('function', typeof myCon.test); 
@@ -172,7 +172,7 @@ describe('web3.eth.contract', function() {
 
         // when
         var web3 = new Web3();
-        var myCon = web3.eth.contract(description).at(address);
+        var myCon = web3.aht.contract(description).at(address);
 
         // then
         assert.equal('undefined', typeof myCon.test); 
@@ -201,7 +201,7 @@ describe('web3.eth.contract', function() {
 
         // when
         var web3 = new Web3();
-        var myCon = web3.eth.contract(description).at(address);
+        var myCon = web3.aht.contract(description).at(address);
 
         // then
         assert.equal('function', typeof myCon.test); 
@@ -241,7 +241,7 @@ describe('web3.eth.contract', function() {
             }
         });
         
-        web3.eth.contract(description).new(2, {from: address, data: code}, function(e, myCon){
+        web3.aht.contract(description).new(2, {from: address, data: code}, function(e, myCon){
                 done();
                 web3.stopWatching();
         });

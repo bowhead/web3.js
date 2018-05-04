@@ -51,7 +51,7 @@ var tests = [{
     call: 'eth_newPendingTransactionFilter'
 }];
 
-describe('web3.eth', function () {
+describe('web3.aht', function () {
     describe(method, function () {
         tests.forEach(function (test, index) {
             it('property test: ' + index, function () {
@@ -68,7 +68,7 @@ describe('web3.eth', function () {
                });
 
                // call
-               var filter = web3.eth[method].apply(web3.eth, test.args);
+               var filter = web3.aht[method].apply(web3.aht, test.args);
 
                // test filter.get
                if(typeof test.args === 'object') {
@@ -111,7 +111,7 @@ describe('web3.eth', function () {
                     assert.include(errors, err);
                     done();
                 });
-                web3.eth[method].apply(web3.eth, args);
+                web3.aht[method].apply(web3.aht, args);
             })
         });
     });

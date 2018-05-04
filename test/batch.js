@@ -40,8 +40,8 @@ describe('lib/web3/batch', function () {
             });
 
             var batch = web3.createBatch(); 
-            batch.add(web3.eth.getBalance.request('0x0000000000000000000000000000000000000000', 'latest', callback));
-            batch.add(web3.eth.getBalance.request('0x0000000000000000000000000000000000000005', 'latest', callback2));
+            batch.add(web3.aht.getBalance.request('0x0000000000000000000000000000000000000000', 'latest', callback));
+            batch.add(web3.aht.getBalance.request('0x0000000000000000000000000000000000000005', 'latest', callback2));
             batch.execute();
         });
         
@@ -78,7 +78,7 @@ describe('lib/web3/batch', function () {
             });
 
             var batch = web3.createBatch(); 
-            batch.add(web3.eth.getAccounts.request(callback));
+            batch.add(web3.aht.getAccounts.request(callback));
             batch.add(web3.net.getPeerCount.request(callback2));
             batch.execute();
         });
@@ -134,8 +134,8 @@ describe('lib/web3/batch', function () {
             });
 
             var batch = web3.createBatch(); 
-            batch.add(web3.eth.getBalance.request('0x0000000000000000000000000000000000000000', 'latest', callback));
-            batch.add(web3.eth.contract(abi).at(address).balance.request(address, callback2));
+            batch.add(web3.aht.getBalance.request('0x0000000000000000000000000000000000000000', 'latest', callback));
+            batch.add(web3.aht.contract(abi).at(address).balance.request(address, callback2));
             provider.injectBatchResults([result, result2]);
             batch.execute();
         });
@@ -192,8 +192,8 @@ describe('lib/web3/batch', function () {
             });
 
             var batch = web3.createBatch(); 
-            batch.add(web3.eth.getBalance.request('0x0000000000000000000000000000000000000000', 'latest', callback));
-            batch.add(web3.eth.contract(abi).at(address).balance.request(address, callback2));
+            batch.add(web3.aht.getBalance.request('0x0000000000000000000000000000000000000000', 'latest', callback));
+            batch.add(web3.aht.contract(abi).at(address).balance.request(address, callback2));
             provider.injectBatchResults([result, result2], true); // injects error
             batch.execute();
         });

@@ -22,7 +22,7 @@ describe('eth', function () {
             });
 
             // call
-            web3.eth.getSyncing(function(err, res){
+            web3.aht.getSyncing(function(err, res){
                 assert.deepEqual(res, {
                     startingBlock: 11,
                     currentBlock: 11,
@@ -43,7 +43,7 @@ describe('eth', function () {
             });
 
             // call
-            web3.eth.getSyncing(function(err, res){
+            web3.aht.getSyncing(function(err, res){
                 console.log('err', err, 'res', res)
                 assert.strictEqual(res, false);
                 done();
