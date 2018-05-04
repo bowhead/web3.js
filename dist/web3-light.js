@@ -5503,24 +5503,24 @@ var properties = function () {
     ];
 };
 
-Eth.prototype.contract = function (abi) {
+Aht.prototype.contract = function (abi) {
     var factory = new Contract(this, abi);
     return factory;
 };
 
-Eth.prototype.filter = function (options, callback, filterCreationErrorCallback) {
+Aht.prototype.filter = function (options, callback, filterCreationErrorCallback) {
     return new Filter(options, 'aht', this._requestManager, watches.aht(), formatters.outputLogFormatter, callback, filterCreationErrorCallback);
 };
 
-Eth.prototype.namereg = function () {
+Aht.prototype.namereg = function () {
     return this.contract(namereg.global.abi).at(namereg.global.address);
 };
 
-Eth.prototype.icapNamereg = function () {
+Aht.prototype.icapNamereg = function () {
     return this.contract(namereg.icap.abi).at(namereg.icap.address);
 };
 
-Eth.prototype.isSyncing = function (callback) {
+Aht.prototype.isSyncing = function (callback) {
     return new IsSyncing(this._requestManager, callback);
 };
 

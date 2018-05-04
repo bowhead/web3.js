@@ -101,7 +101,7 @@ function verifySignedByAc(message, sig){
 
     const res = splitSig(sig);
 
-    // Unfortunately Geth client adds this line to the message as a prefix while signing
+    // Unfortunately Gaht client adds this line to the message as a prefix while signing
     // So while finding who signed it we need to prefix this part 
     const prefix = new Buffer("\x19Bowhead Signed Message:\n");
     const msg = new Buffer(message);
