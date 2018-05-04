@@ -1215,7 +1215,7 @@ SolidityParam.prototype.withOffset = function (offset) {
 };
 
 /**
- * This method should be used to combine solidity params together
+ * This method should be used to combine solidity params togaht
  * eg. when appending an array
  *
  * @method combine
@@ -1752,27 +1752,27 @@ var ETH_UNITS = [
     'Gcell',
     'szabo',
     'finney',
-    'femtoether',
-    'picoether',
-    'nanoether',
-    'microether',
-    'milliether',
+    'femtoaht',
+    'picoaht',
+    'nanoaht',
+    'microaht',
+    'milliaht',
     'nano',
     'micro',
     'milli',
-    'ether',
+    'aht',
     'grand',
-    'Mether',
-    'Gether',
-    'Tether',
-    'Pether',
-    'Eether',
-    'Zether',
-    'Yether',
-    'Nether',
-    'Dether',
-    'Vether',
-    'Uether'
+    'Maht',
+    'Gaht',
+    'Taht',
+    'Paht',
+    'Eaht',
+    'Zaht',
+    'Yaht',
+    'Naht',
+    'Daht',
+    'Vaht',
+    'Uaht'
 ];
 
 module.exports = {
@@ -1868,33 +1868,33 @@ var sha3 = require('./sha3.js');
 var utf8 = require('utf8');
 
 var unitMap = {
-    'noether':      '0',
+    'noaht':      '0',
     'cell':          '1',
     'kcell':         '1000',
     'Kcell':         '1000',
     'babbage':      '1000',
-    'femtoether':   '1000',
+    'femtoaht':   '1000',
     'mcell':         '1000000',
     'Mcell':         '1000000',
     'lovelace':     '1000000',
-    'picoether':    '1000000',
+    'picoaht':    '1000000',
     'gcell':         '1000000000',
     'Gcell':         '1000000000',
     'shannon':      '1000000000',
-    'nanoether':    '1000000000',
+    'nanoaht':    '1000000000',
     'nano':         '1000000000',
     'szabo':        '1000000000000',
-    'microether':   '1000000000000',
+    'microaht':   '1000000000000',
     'micro':        '1000000000000',
     'finney':       '1000000000000000',
-    'milliether':   '1000000000000000',
+    'milliaht':   '1000000000000000',
     'milli':        '1000000000000000',
-    'ether':        '1000000000000000000',
-    'kether':       '1000000000000000000000',
+    'aht':        '1000000000000000000',
+    'kaht':       '1000000000000000000000',
     'grand':        '1000000000000000000000',
-    'mether':       '1000000000000000000000000',
-    'gether':       '1000000000000000000000000000',
-    'tether':       '1000000000000000000000000000000'
+    'maht':       '1000000000000000000000000',
+    'gaht':       '1000000000000000000000000000',
+    'taht':       '1000000000000000000000000000000'
 };
 
 /**
@@ -2121,12 +2121,12 @@ var toHex = function (val) {
  * Returns value of unit in Cell
  *
  * @method getValueOfUnit
- * @param {String} unit the unit to convert to, default ether
+ * @param {String} unit the unit to convert to, default aht
  * @returns {BigNumber} value of the unit (in Cell)
  * @throws error if the unit is not correct:w
  */
 var getValueOfUnit = function (unit) {
-    unit = unit ? unit.toLowerCase() : 'ether';
+    unit = unit ? unit.toLowerCase() : 'aht';
     var unitValue = unitMap[unit];
     if (unitValue === undefined) {
         throw new Error('This unit doesn\'t exists, please use the one of the following units' + JSON.stringify(unitMap, null, 2));
@@ -2135,24 +2135,24 @@ var getValueOfUnit = function (unit) {
 };
 
 /**
- * Takes a number of cell and converts it to any other ether unit.
+ * Takes a number of cell and converts it to any other aht unit.
  *
  * Possible units are:
  *   SI Short   SI Full        Effigy       Other
- * - kcell       femtoether     babbage
- * - mcell       picoether      lovelace
- * - gcell       nanoether      shannon      nano
- * - --         microether     szabo        micro
- * - --         milliether     finney       milli
- * - ether      --             --
- * - kether                    --           grand
- * - mether
- * - gether
- * - tether
+ * - kcell       femtoaht     babbage
+ * - mcell       picoaht      lovelace
+ * - gcell       nanoaht      shannon      nano
+ * - --         microaht     szabo        micro
+ * - --         milliaht     finney       milli
+ * - aht      --             --
+ * - kaht                    --           grand
+ * - maht
+ * - gaht
+ * - taht
  *
  * @method fromCell
  * @param {Number|String} number can be a number, number string or a HEX of a decimal
- * @param {String} unit the unit to convert to, default ether
+ * @param {String} unit the unit to convert to, default aht
  * @return {String|Object} When given a BigNumber object it returns one as well, otherwise a number
 */
 var fromCell = function(number, unit) {
@@ -2166,20 +2166,20 @@ var fromCell = function(number, unit) {
  *
  * Possible units are:
  *   SI Short   SI Full        Effigy       Other
- * - kcell       femtoether     babbage
- * - mcell       picoether      lovelace
- * - gcell       nanoether      shannon      nano
- * - --         microether     szabo        micro
- * - --         milliether     finney       milli
- * - ether      --             --
- * - kether                    --           grand
- * - mether
- * - gether
- * - tether
+ * - kcell       femtoaht     babbage
+ * - mcell       picoaht      lovelace
+ * - gcell       nanoaht      shannon      nano
+ * - --         microaht     szabo        micro
+ * - --         milliaht     finney       milli
+ * - aht      --             --
+ * - kaht                    --           grand
+ * - maht
+ * - gaht
+ * - taht
  *
  * @method toCell
  * @param {Number|String|BigNumber} number can be a number, number string or a HEX of a decimal
- * @param {String} unit the unit to convert from, default ether
+ * @param {String} unit the unit to convert from, default aht
  * @return {String|Object} When given a BigNumber object it returns one as well, otherwise a number
 */
 var toCell = function(number, unit) {
@@ -3234,7 +3234,7 @@ SolidityEvent.prototype.signature = function () {
  * @method encode
  * @param {Object} indexed
  * @param {Object} options
- * @return {Object} everything combined together and encoded
+ * @return {Object} everything combined togaht and encoded
  */
 SolidityEvent.prototype.encode = function (indexed, options) {
     indexed = indexed || {};
@@ -8409,7 +8409,7 @@ module.exports = transfer;
 	         *
 	         * This method invokes _doProcessBlock(offset), which must be implemented by a concrete subtype.
 	         *
-	         * @param {boolean} doFlush Whether all blocks and partial blocks should be processed.
+	         * @param {boolean} doFlush Whaht all blocks and partial blocks should be processed.
 	         *
 	         * @return {WordArray} The processed data.
 	         *
@@ -13706,13 +13706,13 @@ module.exports = XMLHttpRequest;
             // For MAX_EXP > 1e7, e.g. new BigNumber('1e100000000').plus(1) may be slow.
             MAX_EXP = 1e7,                           // 1 to MAX
 
-            // Whether BigNumber Errors are ever thrown.
+            // Whaht BigNumber Errors are ever thrown.
             ERRORS = true,                           // true or false
 
             // Change to intValidatorNoErrors if ERRORS is false.
             isValidInt = intValidatorWithErrors,     // intValidatorWithErrors/intValidatorNoErrors
 
-            // Whether to use cryptographically-secure random number generation, if available.
+            // Whaht to use cryptographically-secure random number generation, if available.
             CRYPTO = false,                          // true or false
 
             /*
@@ -14912,7 +14912,7 @@ module.exports = XMLHttpRequest;
                       ? ( rd || r ) && ( rm == 0 || rm == ( x.s < 0 ? 3 : 2 ) )
                       : rd > 5 || rd == 5 && ( rm == 4 || r || rm == 6 &&
 
-                        // Check whether the digit to the left of the rounding digit is odd.
+                        // Check whaht the digit to the left of the rounding digit is odd.
                         ( ( i > 0 ? j > 0 ? n / pows10[ d - j ] : 0 : xc[ni - 1] ) % 10 ) & 1 ||
                           rm == ( x.s < 0 ? 8 : 7 ) );
 
@@ -15484,7 +15484,7 @@ module.exports = XMLHttpRequest;
         /*
          * Return the number of significant digits of the value of this BigNumber.
          *
-         * [z] {boolean|number} Whether to count integer-part trailing zeros: true, false, 1 or 0.
+         * [z] {boolean|number} Whaht to count integer-part trailing zeros: true, false, 1 or 0.
          */
         P.precision = P.sd = function (z) {
             var n, v,

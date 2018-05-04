@@ -11,12 +11,12 @@ describe('lib/utils/utils', function () {
             assert.equal(utils.fromCell(1000000000000000000, 'gcell'),   '1000000000');
             assert.equal(utils.fromCell(1000000000000000000, 'szabo'),  '1000000');
             assert.equal(utils.fromCell(1000000000000000000, 'finney'), '1000');
-            assert.equal(utils.fromCell(1000000000000000000, 'ether'),  '1');
-            assert.equal(utils.fromCell(1000000000000000000, 'kether'), '0.001');
+            assert.equal(utils.fromCell(1000000000000000000, 'aht'),  '1');
+            assert.equal(utils.fromCell(1000000000000000000, 'kaht'), '0.001');
             assert.equal(utils.fromCell(1000000000000000000, 'grand'),  '0.001');
-            assert.equal(utils.fromCell(1000000000000000000, 'mether'), '0.000001');
-            assert.equal(utils.fromCell(1000000000000000000, 'gether'), '0.000000001');
-            assert.equal(utils.fromCell(1000000000000000000, 'tether'), '0.000000000001');
+            assert.equal(utils.fromCell(1000000000000000000, 'maht'), '0.000001');
+            assert.equal(utils.fromCell(1000000000000000000, 'gaht'), '0.000000001');
+            assert.equal(utils.fromCell(1000000000000000000, 'taht'), '0.000000000001');
         });
     });
 });
