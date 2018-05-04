@@ -1746,10 +1746,10 @@ if (typeof XMLHttpRequest === 'undefined') {
 var BigNumber = require('bignumber.js');
 
 var ETH_UNITS = [
-    'wei',
-    'kwei',
-    'Mwei',
-    'Gwei',
+    'cell',
+    'kcell',
+    'Mcell',
+    'Gcell',
     'szabo',
     'finney',
     'femtoether',
@@ -1869,17 +1869,17 @@ var utf8 = require('utf8');
 
 var unitMap = {
     'noether':      '0',
-    'wei':          '1',
-    'kwei':         '1000',
-    'Kwei':         '1000',
+    'cell':          '1',
+    'kcell':         '1000',
+    'Kcell':         '1000',
     'babbage':      '1000',
     'femtoether':   '1000',
-    'mwei':         '1000000',
-    'Mwei':         '1000000',
+    'mcell':         '1000000',
+    'Mcell':         '1000000',
     'lovelace':     '1000000',
     'picoether':    '1000000',
-    'gwei':         '1000000000',
-    'Gwei':         '1000000000',
+    'gcell':         '1000000000',
+    'Gcell':         '1000000000',
     'shannon':      '1000000000',
     'nanoether':    '1000000000',
     'nano':         '1000000000',
@@ -2118,11 +2118,11 @@ var toHex = function (val) {
 };
 
 /**
- * Returns value of unit in Wei
+ * Returns value of unit in Cell
  *
  * @method getValueOfUnit
  * @param {String} unit the unit to convert to, default ether
- * @returns {BigNumber} value of the unit (in Wei)
+ * @returns {BigNumber} value of the unit (in Cell)
  * @throws error if the unit is not correct:w
  */
 var getValueOfUnit = function (unit) {
@@ -2135,13 +2135,13 @@ var getValueOfUnit = function (unit) {
 };
 
 /**
- * Takes a number of wei and converts it to any other ether unit.
+ * Takes a number of cell and converts it to any other ether unit.
  *
  * Possible units are:
  *   SI Short   SI Full        Effigy       Other
- * - kwei       femtoether     babbage
- * - mwei       picoether      lovelace
- * - gwei       nanoether      shannon      nano
+ * - kcell       femtoether     babbage
+ * - mcell       picoether      lovelace
+ * - gcell       nanoether      shannon      nano
  * - --         microether     szabo        micro
  * - --         milliether     finney       milli
  * - ether      --             --
@@ -2150,25 +2150,25 @@ var getValueOfUnit = function (unit) {
  * - gether
  * - tether
  *
- * @method fromWei
+ * @method fromCell
  * @param {Number|String} number can be a number, number string or a HEX of a decimal
  * @param {String} unit the unit to convert to, default ether
  * @return {String|Object} When given a BigNumber object it returns one as well, otherwise a number
 */
-var fromWei = function(number, unit) {
+var fromCell = function(number, unit) {
     var returnValue = toBigNumber(number).dividedBy(getValueOfUnit(unit));
 
     return isBigNumber(number) ? returnValue : returnValue.toString(10);
 };
 
 /**
- * Takes a number of a unit and converts it to wei.
+ * Takes a number of a unit and converts it to cell.
  *
  * Possible units are:
  *   SI Short   SI Full        Effigy       Other
- * - kwei       femtoether     babbage
- * - mwei       picoether      lovelace
- * - gwei       nanoether      shannon      nano
+ * - kcell       femtoether     babbage
+ * - mcell       picoether      lovelace
+ * - gcell       nanoether      shannon      nano
  * - --         microether     szabo        micro
  * - --         milliether     finney       milli
  * - ether      --             --
@@ -2177,12 +2177,12 @@ var fromWei = function(number, unit) {
  * - gether
  * - tether
  *
- * @method toWei
+ * @method toCell
  * @param {Number|String|BigNumber} number can be a number, number string or a HEX of a decimal
  * @param {String} unit the unit to convert from, default ether
  * @return {String|Object} When given a BigNumber object it returns one as well, otherwise a number
 */
-var toWei = function(number, unit) {
+var toCell = function(number, unit) {
     var returnValue = toBigNumber(number).times(getValueOfUnit(unit));
 
     return isBigNumber(number) ? returnValue : returnValue.toString(10);
@@ -2449,8 +2449,8 @@ module.exports = {
     transformToFullName: transformToFullName,
     extractDisplayName: extractDisplayName,
     extractTypeName: extractTypeName,
-    toWei: toWei,
-    fromWei: fromWei,
+    toCell: toCell,
+    fromCell: fromCell,
     toBigNumber: toBigNumber,
     toTwosComplement: toTwosComplement,
     toAddress: toAddress,
@@ -2571,8 +2571,8 @@ Web3.prototype.fromUtf8 = utils.fromUtf8;
 Web3.prototype.toDecimal = utils.toDecimal;
 Web3.prototype.fromDecimal = utils.fromDecimal;
 Web3.prototype.toBigNumber = utils.toBigNumber;
-Web3.prototype.toWei = utils.toWei;
-Web3.prototype.fromWei = utils.fromWei;
+Web3.prototype.toCell = utils.toCell;
+Web3.prototype.fromCell = utils.fromCell;
 Web3.prototype.isAddress = utils.isAddress;
 Web3.prototype.isChecksumAddress = utils.isChecksumAddress;
 Web3.prototype.toChecksumAddress = utils.toChecksumAddress;
