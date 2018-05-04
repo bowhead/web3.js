@@ -2950,7 +2950,7 @@ var checkForContractAddress = function(contract, callback){
  * @method ContractFactory
  * @param {Array} abi
  */
-var ContractFactory = function (eth, abi) {
+var ContractFactory = function (aht, abi) {
     this.aht = aht;
     this.abi = abi;
 
@@ -3088,7 +3088,7 @@ ContractFactory.prototype.getData = function () {
  * @param {Array} abi
  * @param {Address} contract address
  */
-var Contract = function (eth, abi, address) {
+var Contract = function (aht, abi, address) {
     this._aht = aht;
     this.transactionHash = null;
     this.address = address;
@@ -3993,7 +3993,7 @@ var sha3 = require('../utils/sha3');
 /**
  * This prototype should be used to call/sendTransaction to solidity functions
  */
-var SolidityFunction = function (eth, json, address) {
+var SolidityFunction = function (aht, json, address) {
     this._aht = aht;
     this._inputTypes = json.inputs.map(function (i) {
         return i.type;
@@ -4560,7 +4560,7 @@ Iban.isValid = function (iban) {
  * @returns {Boolean} true if it is, otherwise false
  */
 Iban.prototype.isValid = function () {
-    return /^XE[0-9]{2}(ETH[0-9A-Z]{13}|[0-9A-Z]{30,31})$/.test(this._iban) &&
+    return /^XE[0-9]{2}(AHT[0-9A-Z]{13}|[0-9A-Z]{30,31})$/.test(this._iban) &&
         mod9710(iso13616Prepare(this._iban)) === 1;
 };
 
@@ -5249,7 +5249,7 @@ function Aht(web3) {
     this.sendIBANTransaction = transfer.bind(null, this);
 }
 
-Object.defineProperty(Eth.prototype, 'defaultBlock', {
+Object.defineProperty(Aht.prototype, 'defaultBlock', {
     get: function () {
         return c.defaultBlock;
     },
@@ -5259,7 +5259,7 @@ Object.defineProperty(Eth.prototype, 'defaultBlock', {
     }
 });
 
-Object.defineProperty(Eth.prototype, 'defaultAccount', {
+Object.defineProperty(Aht.prototype, 'defaultAccount', {
     get: function () {
         return c.defaultAccount;
     },
@@ -6694,23 +6694,23 @@ var exchangeAbi = require('../contracts/SmartExchange.json');
  * @param {Value} value to be tranfered
  * @param {Function} callback, callback
  */
-var transfer = function (eth, from, to, value, callback) {
+var transfer = function (aht, from, to, value, callback) {
     var iban = new Iban(to); 
     if (!iban.isValid()) {
         throw new Error('invalid iban address');
     }
 
     if (iban.isDirect()) {
-        return transferToAddress(eth, from, iban.address(), value, callback);
+        return transferToAddress(aht, from, iban.address(), value, callback);
     }
     
     if (!callback) {
         var address = aht.icapNamereg().addr(iban.institution());
-        return deposit(eth, from, address, value, iban.client());
+        return deposit(aht, from, address, value, iban.client());
     }
 
     aht.icapNamereg().addr(iban.institution(), function (err, address) {
-        return deposit(eth, from, address, value, iban.client(), callback);
+        return deposit(aht, from, address, value, iban.client(), callback);
     });
     
 };
@@ -6724,7 +6724,7 @@ var transfer = function (eth, from, to, value, callback) {
  * @param {Value} value to be tranfered
  * @param {Function} callback, callback
  */
-var transferToAddress = function (eth, from, to, value, callback) {
+var transferToAddress = function (aht, from, to, value, callback) {
     return aht.sendTransaction({
         address: to,
         from: from,
@@ -6742,7 +6742,7 @@ var transferToAddress = function (eth, from, to, value, callback) {
  * @param {String} client unique identifier
  * @param {Function} callback, callback
  */
-var deposit = function (eth, from, to, value, client, callback) {
+var deposit = function (aht, from, to, value, client, callback) {
     var abi = exchangeAbi;
     return aht.contract(abi).at(to).deposit(client, {
         from: from,

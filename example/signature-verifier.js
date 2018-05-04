@@ -39,15 +39,15 @@ function setMessage(msg){
 }
 
 function initializeBowheadConnection(){
-   if(ethWeb3!=null && ahtWeb3.isConnected()==true)  {
+   if(ahtWeb3!=null && ahtWeb3.isConnected()==true)  {
     return true;
   }
   
-  ahtWeb3 = new Web3(new Web3.providers.HttpProvider(ethURL));
+  ahtWeb3 = new Web3(new Web3.providers.HttpProvider(ahtURL));
   
-  if(ethWeb3.isConnected()==true){
+  if(ahtWeb3.isConnected()==true){
       if(defaultAc==''){
-        defaultAc=ethWeb3.aht.accounts[1];
+        defaultAc=ahtWeb3.aht.accounts[1];
       }
       return true;
   }
@@ -57,7 +57,7 @@ function initializeBowheadConnection(){
 
 function unlockAccount(acAddress){
   if(acAddress!=undefined && acAddress!=null){
-    var state=ethWeb3.personal.unlockAccount(defaultAc, defaultAcPWD, 100);
+    var state=ahtWeb3.personal.unlockAccount(defaultAc, defaultAcPWD, 100);
     return state;
   }
 
@@ -67,7 +67,7 @@ function unlockAccount(acAddress){
 
 function initializeContract(){
     initializeBowheadConnection();
-    if(ethWeb3.isConnected()==false){
+    if(ahtWeb3.isConnected()==false){
         return;
     }  
     var abi = JSON.parse(strAbi);
@@ -79,7 +79,7 @@ function initializeContract(){
 function signMessage(message){
 
     initializeBowheadConnection();
-    if(ethWeb3.isConnected()==false){
+    if(ahtWeb3.isConnected()==false){
         return false;
     }
     
@@ -94,7 +94,7 @@ function signMessage(message){
 function verifySignedByAc(message, sig){
     initializeBowheadConnection();
 
-    if(ethWeb3.isConnected()==false){
+    if(ahtWeb3.isConnected()==false){
         return false;
     }
     initializeContract();
@@ -152,7 +152,7 @@ function execute(){
     console.log("\te. Message for signing");
     console.log("**********************************************************************");
 
-    if(ethURL==''){
+    if(ahtURL==''){
         console.log("Error: Bowhead URL is not specified");
         return;
     }
