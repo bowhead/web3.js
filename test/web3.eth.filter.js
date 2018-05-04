@@ -21,7 +21,7 @@ var tests = [{
     }],
     result: '0xf',
     formattedResult: '0xf',
-    call: 'eth_newFilter'
+    call: 'aht_newFilter'
 },{
     args: [{
         fromBlock: 'latest',
@@ -36,19 +36,19 @@ var tests = [{
     }],
     result: '0xf',
     formattedResult: '0xf',
-    call: 'eth_newFilter'
+    call: 'aht_newFilter'
 },{
     args: ['latest'],
     formattedArgs: [],
     result: '0xf',
     formattedResult: '0xf',
-    call: 'eth_newBlockFilter'
+    call: 'aht_newBlockFilter'
 },{
     args: ['pending'],
     formattedArgs: [],
     result: '0xf',
     formattedResult: '0xf',
-    call: 'eth_newPendingTransactionFilter'
+    call: 'aht_newPendingTransactionFilter'
 }];
 
 describe('web3.aht', function () {
@@ -78,7 +78,7 @@ describe('web3.aht', function () {
                    provider.injectResult(logs);
                    provider.injectValidation(function (payload) {
                        assert.equal(payload.jsonrpc, '2.0');
-                       assert.equal(payload.method, 'eth_getFilterLogs');
+                       assert.equal(payload.method, 'aht_getFilterLogs');
                        assert.deepEqual(payload.params, [test.formattedResult]);
                    });
 
