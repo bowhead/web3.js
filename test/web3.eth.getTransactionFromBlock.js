@@ -48,5 +48,5 @@ var tests = [{
     call: 'aht_getTransactionByBlockNumberAndIndex'
 }];
 
-testMethod.runTests('eth', method, tests);
+testMethod.runTests('aht', method, tests);
 

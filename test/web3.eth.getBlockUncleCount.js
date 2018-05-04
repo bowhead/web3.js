@@ -24,4 +24,4 @@ var tests = [{
     call: 'aht_getUncleCountByBlockNumber'
 }];
 
-testMethod.runTests('eth', method, tests);
+testMethod.runTests('aht', method, tests);

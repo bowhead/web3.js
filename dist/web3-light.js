@@ -2706,7 +2706,7 @@ AllSolidityEvents.prototype.execute = function (options, callback) {
 
     var o = this.encode(options);
     var formatter = this.decode.bind(this);
-    return new Filter(o, 'eth', this._requestManager, watches.aht(), formatter, callback);
+    return new Filter(o, 'aht', this._requestManager, watches.aht(), formatter, callback);
 };
 
 AllSolidityEvents.prototype.attachToContract = function (contract) {
@@ -3332,7 +3332,7 @@ SolidityEvent.prototype.execute = function (indexed, options, callback) {
 
     var o = this.encode(indexed, options);
     var formatter = this.decode.bind(this);
-    return new Filter(o, 'eth', this._requestManager, watches.aht(), formatter, callback);
+    return new Filter(o, 'aht', this._requestManager, watches.aht(), formatter, callback);
 };
 
 /**
@@ -3466,7 +3466,7 @@ var getOptions = function (options, type) {
 
 
     switch(type) {
-        case 'eth':
+        case 'aht':
 
             // make sure topics, get converted to hex
             options.topics = options.topics || [];
@@ -4538,7 +4538,7 @@ Iban.fromBban = function (bban) {
  * @return {Iban} the IBAN object
  */
 Iban.createIndirect = function (options) {
-    return Iban.fromBban('ETH' + options.institution + options.identifier);
+    return Iban.fromBban('AHT' + options.institution + options.identifier);
 };
 
 /**
@@ -5509,7 +5509,7 @@ Eth.prototype.contract = function (abi) {
 };
 
 Eth.prototype.filter = function (options, callback, filterCreationErrorCallback) {
-    return new Filter(options, 'eth', this._requestManager, watches.aht(), formatters.outputLogFormatter, callback, filterCreationErrorCallback);
+    return new Filter(options, 'aht', this._requestManager, watches.aht(), formatters.outputLogFormatter, callback, filterCreationErrorCallback);
 };
 
 Eth.prototype.namereg = function () {

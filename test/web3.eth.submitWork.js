@@ -13,5 +13,5 @@ var tests = [
     call: 'aht_'+ method
 }];
 
-testMethod.runTests('eth', method, tests);
+testMethod.runTests('aht', method, tests);
 

@@ -5,7 +5,7 @@ var Web3 = require('../index');
 var assert = chai.assert;
 var FakeHttpProvider = require('./helpers/FakeHttpProvider');
 
-describe('eth', function () {
+describe('aht', function () {
     describe('getSyncing', function () {
         it('syncing object', function (done) {
             // given

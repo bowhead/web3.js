@@ -39,7 +39,7 @@ var tests = [{
     call: 'aht_syncing'
 }];
 
-describe('eth', function () {
+describe('aht', function () {
     describe(method, function () {
         tests.forEach(function (test, index) {
             it('property test: ' + index, function (done) {
