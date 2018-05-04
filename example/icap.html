@@ -11,7 +11,7 @@
     var Web3 = require('web3');
     var web3 = new Web3();
     var BigNumber = require('bignumber.js');
-    web3.setProvider(new web3.providers.HttpProvider("http://localhost:8545"));
+    web3.setProvider(new web3.providers.HttpProvider("http://localhost:9634"));
     var from = web3.eth.coinbase;
     web3.eth.defaultAccount = from;
 
@@ -144,7 +144,7 @@
 </head>
 <body>
     <div class="col-lg-12">
-        <i>This page expects geth with JSON-RPC running at port 8545</i>
+        <i>This page expects geth with JSON-RPC running at port 9634</i>
         <div class="page-header">
             <h1>ICAP transfer</h1>
         </div>
