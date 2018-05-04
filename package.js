@@ -1,9 +1,9 @@
 /* jshint ignore:start */
 Package.describe({
-  name: 'ethereum:web3',
+  name: 'bowhead:web3',
   version: '0.20.6',
-  summary: 'Ethereum JavaScript API, middleware to talk to a ethreum node over RPC',
-  git: 'https://github.com/ethereum/ethereum.js',
+  summary: 'Bowhead JavaScript API, middleware to talk to a ethreum node over RPC',
+  git: 'https://github.com/bowhead/bowhead.js',
   // By default, Meteor will default to using README.md for documentation.
   // To avoid submitting documentation, set this field to null.
   documentation: 'README.md'

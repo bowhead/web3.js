@@ -1,6 +1,6 @@
 /**
  * This utility module helps to demonstrate following features
- * a. Signing a message by an Ethereum user
+ * a. Signing a message by an Bowhead user
  * b. Finding the account address using which the message was signed
  */
 var Web3 = require('../index.js');
@@ -30,7 +30,7 @@ function setPassword(pwd){
     defaultAcPWD = pwd;
 }
 
-function setEthereumURL(url){
+function setBowheadURL(url){
     ethURL = url;
 }
 
@@ -38,7 +38,7 @@ function setMessage(msg){
     signMessage = msg;
 }
 
-function initializeEthereumConnection(){
+function initializeBowheadConnection(){
    if(ethWeb3!=null && ethWeb3.isConnected()==true)  {
     return true;
   }
@@ -66,7 +66,7 @@ function unlockAccount(acAddress){
 
 
 function initializeContract(){
-    initializeEthereumConnection();
+    initializeBowheadConnection();
     if(ethWeb3.isConnected()==false){
         return;
     }  
@@ -78,7 +78,7 @@ function initializeContract(){
 
 function signMessage(message){
 
-    initializeEthereumConnection();
+    initializeBowheadConnection();
     if(ethWeb3.isConnected()==false){
         return false;
     }
@@ -92,7 +92,7 @@ function signMessage(message){
 }
 
 function verifySignedByAc(message, sig){
-    initializeEthereumConnection();
+    initializeBowheadConnection();
 
     if(ethWeb3.isConnected()==false){
         return false;
@@ -103,7 +103,7 @@ function verifySignedByAc(message, sig){
 
     // Unfortunately Geth client adds this line to the message as a prefix while signing
     // So while finding who signed it we need to prefix this part 
-    const prefix = new Buffer("\x19Ethereum Signed Message:\n");
+    const prefix = new Buffer("\x19Bowhead Signed Message:\n");
     const msg = new Buffer(message);
     const prefixedMsg = ethWeb3.sha3(
     Buffer.concat([prefix, new Buffer(String(msg.length)), msg]).toString('utf8')
@@ -142,18 +142,18 @@ function execute(){
     console.log("\n\n**********************************************************************");
     console.log("Steps to Run");
     console.log("**********************************************************************");
-    console.log("1. Deploy the following contract in your ethereum environment");
+    console.log("1. Deploy the following contract in your bowhead environment");
     console.log(signatureContractCodeReadable);
     console.log("2. Set the following parameters (i.e. at the end of the code)");
-    console.log("\ta. Ethereum URL");
-    console.log("\tb. Ethereum Account Address");
-    console.log("\tc. Ethereum Account Passphrase");
+    console.log("\ta. Bowhead URL");
+    console.log("\tb. Bowhead Account Address");
+    console.log("\tc. Bowhead Account Passphrase");
     console.log("\td. Signature Contract Address");
     console.log("\te. Message for signing");
     console.log("**********************************************************************");
 
     if(ethURL==''){
-        console.log("Error: Ethereum URL is not specified");
+        console.log("Error: Bowhead URL is not specified");
         return;
     }
     if(defaultAc==''){
@@ -175,9 +175,9 @@ function execute(){
     
 
     console.log("Following parameters applied");
-    console.log("\ta. Ethereum URL                  :",ethURL);
-    console.log("\tb. Ethereum Account Address      :",defaultAc);
-    console.log("\tc. Ethereum Account Passphrase   :",defaultAcPWD);
+    console.log("\ta. Bowhead URL                  :",ethURL);
+    console.log("\tb. Bowhead Account Address      :",defaultAc);
+    console.log("\tc. Bowhead Account Passphrase   :",defaultAcPWD);
     console.log("\td. Signature Contract Address    :",sigContractAddress);
     console.log("\te. Message for signing           :",signMessage);
 
@@ -200,7 +200,7 @@ function execute(){
 
 // Please uncomment the below listed three lines of code and provide the required values
 
-// Value 1- Please provide the ethereum account address which you want to use to perform the operation
+// Value 1- Please provide the bowhead account address which you want to use to perform the operation
 //setAccount('<Provide the account address>');
 
 // Value 2- Please provide the password of the accound to be used 
@@ -212,9 +212,9 @@ function execute(){
 //setContractAddress('<Provide the deployed contract address>');
 
 // Value 4- If required please update with a different message
-setEthereumURL('http://localhost:8545');
+setBowheadURL('http://localhost:8545');
 
-// Value 5- If required please update with a Ethereum URL
+// Value 5- If required please update with a Bowhead URL
 setMessage('This the test sign message');
 
 
