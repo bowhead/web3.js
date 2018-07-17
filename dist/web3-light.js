@@ -619,7 +619,7 @@ module.exports = SolidityTypeBytes;
 */
 /**
  * @file coder.js
- * @author Marek Kotewicz <marek@ethdev.com>
+ * @author Marek Kotewicz <mare._aht.ev.com>
  * @date 2015
  */
 
@@ -890,7 +890,7 @@ module.exports = SolidityTypeDynamicBytes;
 */
 /**
  * @file formatters.js
- * @author Marek Kotewicz <marek@ethdev.com>
+ * @author Marek Kotewicz <mare._aht.ev.com>
  * @date 2015
  */
 
@@ -1178,7 +1178,7 @@ module.exports = SolidityTypeInt;
 */
 /** 
  * @file param.js
- * @author Marek Kotewicz <marek@ethdev.com>
+ * @author Marek Kotewicz <mare._aht.ev.com>
  * @date 2015
  */
 
@@ -1215,7 +1215,7 @@ SolidityParam.prototype.withOffset = function (offset) {
 };
 
 /**
- * This method should be used to combine solidity params togaht
+ * This method should be used to combine solidity params to.aht
  * eg. when appending an array
  *
  * @method combine
@@ -1724,7 +1724,7 @@ if (typeof XMLHttpRequest === 'undefined') {
 */
 /** @file config.js
  * @authors:
- *   Marek Kotewicz <marek@ethdev.com>
+ *   Marek Kotewicz <mare._aht.ev.com>
  * @date 2015
  */
 
@@ -1746,33 +1746,22 @@ if (typeof XMLHttpRequest === 'undefined') {
 var BigNumber = require('bignumber.js');
 
 var AHT_UNITS = [
+    'noaht',
     'cell',
     'kcell',
+    'Kcell',
+    'mcell',
     'Mcell',
+    'gcell',
     'Gcell',
-    'szabo',
-    'finney',
-    'femtoaht',
-    'picoaht',
-    'nanoaht',
-    'microaht',
-    'milliaht',
-    'nano',
-    'micro',
-    'milli',
-    'aht',
-    'grand',
-    'Maht',
-    'Gaht',
-    'Taht',
-    'Paht',
-    'Eaht',
-    'Zaht',
-    'Yaht',
-    'Naht',
-    'Daht',
-    'Vaht',
-    'Uaht'
+    'organ',
+    'korgan',
+    'Korgan',
+    'morgan',
+    'Morgan',
+    'gorgan',
+    'Gorgan',
+    'aht'
 ];
 
 module.exports = {
@@ -1805,7 +1794,7 @@ module.exports = {
 */
 /** 
  * @file sha3.js
- * @author Marek Kotewicz <marek@ethdev.com>
+ * @author Marek Kotewicz <mare._aht.ev.com>
  * @date 2015
  */
 
@@ -1845,7 +1834,7 @@ module.exports = function (value, options) {
 */
 /**
  * @file utils.js
- * @author Marek Kotewicz <marek@ethdev.com>
+ * @author Marek Kotewicz <mare._aht.ev.com>
  * @date 2015
  */
 
@@ -1868,33 +1857,22 @@ var sha3 = require('./sha3.js');
 var utf8 = require('utf8');
 
 var unitMap = {
-    'noaht':      '0',
+    'noaht':         '0',
     'cell':          '1',
     'kcell':         '1000',
     'Kcell':         '1000',
-    'babbage':      '1000',
-    'femtoaht':   '1000',
     'mcell':         '1000000',
     'Mcell':         '1000000',
-    'lovelace':     '1000000',
-    'picoaht':    '1000000',
     'gcell':         '1000000000',
     'Gcell':         '1000000000',
-    'shannon':      '1000000000',
-    'nanoaht':    '1000000000',
-    'nano':         '1000000000',
-    'szabo':        '1000000000000',
-    'microaht':   '1000000000000',
-    'micro':        '1000000000000',
-    'finney':       '1000000000000000',
-    'milliaht':   '1000000000000000',
-    'milli':        '1000000000000000',
-    'aht':        '1000000000000000000',
-    'kaht':       '1000000000000000000000',
-    'grand':        '1000000000000000000000',
-    'maht':       '1000000000000000000000000',
-    'gaht':       '1000000000000000000000000000',
-    'taht':       '1000000000000000000000000000000'
+    'organ':         '1000000000',
+    'korgan':        '1000000000000',
+    'Korgan':        '1000000000000',
+    'morgan':        '1000000000000000',
+    'Morgan':        '1000000000000000',
+    'gorgan':        '1000000000000000000',
+    'Gorgan':        '1000000000000000000',
+    'aht':           '1000000000000000000'
 };
 
 /**
@@ -2121,7 +2099,7 @@ var toHex = function (val) {
  * Returns value of unit in Cell
  *
  * @method getValueOfUnit
- * @param {String} unit the unit to convert to, default aht
+ * @param {String} unit the unit to convert to, default.aht
  * @returns {BigNumber} value of the unit (in Cell)
  * @throws error if the unit is not correct:w
  */
@@ -2135,24 +2113,24 @@ var getValueOfUnit = function (unit) {
 };
 
 /**
- * Takes a number of cell and converts it to any other aht unit.
+ * Takes a number of cell and converts it to any othe._aht.unit.
  *
  * Possible units are:
  *   SI Short   SI Full        Effigy       Other
- * - kcell       femtoaht     babbage
- * - mcell       picoaht      lovelace
- * - gcell       nanoaht      shannon      nano
- * - --         microaht     szabo        micro
- * - --         milliaht     finney       milli
- * - aht      --             --
- * - kaht                    --           grand
- * - maht
- * - gaht
- * - taht
+ * - kcell       fem._aht.    babbage
+ * - mcell       pi._aht.     lovelace
+ * - gcell       na._aht.     shannon      nano
+ * - --         mic._aht.    szabo        micro
+ * - --         mil._aht.    finney       milli
+ * ._aht.     --             --
+ * -._aht.                   --           grand
+ * - .aht
+ * - .aht
+ * - .aht
  *
  * @method fromCell
  * @param {Number|String} number can be a number, number string or a HEX of a decimal
- * @param {String} unit the unit to convert to, default aht
+ * @param {String} unit the unit to convert to, default.aht
  * @return {String|Object} When given a BigNumber object it returns one as well, otherwise a number
 */
 var fromCell = function(number, unit) {
@@ -2166,20 +2144,20 @@ var fromCell = function(number, unit) {
  *
  * Possible units are:
  *   SI Short   SI Full        Effigy       Other
- * - kcell       femtoaht     babbage
- * - mcell       picoaht      lovelace
- * - gcell       nanoaht      shannon      nano
- * - --         microaht     szabo        micro
- * - --         milliaht     finney       milli
- * - aht      --             --
- * - kaht                    --           grand
- * - maht
- * - gaht
- * - taht
+ * - kcell       fem._aht.    babbage
+ * - mcell       pi._aht.     lovelace
+ * - gcell       na._aht.     shannon      nano
+ * - --         mic._aht.    szabo        micro
+ * - --         mil._aht.    finney       milli
+ * ._aht.     --             --
+ * -._aht.                   --           grand
+ * - .aht
+ * - .aht
+ * - .aht
  *
  * @method toCell
  * @param {Number|String|BigNumber} number can be a number, number string or a HEX of a decimal
- * @param {String} unit the unit to convert from, default aht
+ * @param {String} unit the unit to convert from, default.aht
  * @return {String|Object} When given a BigNumber object it returns one as well, otherwise a number
 */
 var toCell = function(number, unit) {
@@ -2494,11 +2472,11 @@ module.exports={
 /**
  * @file web3.js
  * @authors:
- *   Jeffrey Wilcke <jeff@ethdev.com>
- *   Marek Kotewicz <marek@ethdev.com>
- *   Marian Oancea <marian@ethdev.com>
- *   Fabian Vogelsteller <fabian@ethdev.com>
- *   Gav Wood <g@ethdev.com>
+ *   Jeffrey Wilcke <jef._aht.ev.com>
+ *   Marek Kotewicz <mare._aht.ev.com>
+ *   Marian Oancea <maria._aht.ev.com>
+ *   Fabian Vogelsteller <fabia._aht.ev.com>
+ *   Gav Wood <._aht.ev.com>
  * @date 2014
  */
 
@@ -2606,7 +2584,7 @@ var properties = function () {
         }),
         new Property({
             name: 'version.bowhead',
-            getter: 'aht_protocolVersion',
+            getter: 'aht.protocolVersion',
             inputFormatter: utils.toDecimal
         }),
         new Property({
@@ -2647,7 +2625,7 @@ module.exports = Web3;
 */
 /**
  * @file allevents.js
- * @author Marek Kotewicz <marek@ethdev.com>
+ * @author Marek Kotewicz <mare._aht.ev.com>
  * @date 2014
  */
 
@@ -2736,7 +2714,7 @@ module.exports = AllSolidityEvents;
 */
 /** 
  * @file batch.js
- * @author Marek Kotewicz <marek@ethdev.com>
+ * @author Marek Kotewicz <mare._aht.ev.com>
  * @date 2015
  */
 
@@ -2804,7 +2782,7 @@ module.exports = Batch;
 */
 /**
  * @file contract.js
- * @author Marek Kotewicz <marek@ethdev.com>
+ * @author Marek Kotewicz <mare._aht.ev.com>
  * @date 2014
  */
 
@@ -2950,8 +2928,8 @@ var checkForContractAddress = function(contract, callback){
  * @method ContractFactory
  * @param {Array} abi
  */
-var ContractFactory = function (aht, abi) {
-    this.aht = aht;
+var ContractFactory = function(aht, abi) {
+    this.aht =_aht;
     this.abi = abi;
 
     /**
@@ -3088,7 +3066,7 @@ ContractFactory.prototype.getData = function () {
  * @param {Array} abi
  * @param {Address} contract address
  */
-var Contract = function (aht, abi, address) {
+var Contract = function(aht, abi, address) {
     this._aht = aht;
     this.transactionHash = null;
     this.address = address;
@@ -3116,7 +3094,7 @@ module.exports = ContractFactory;
 */
 /** 
  * @file errors.js
- * @author Marek Kotewicz <marek@ethdev.com>
+ * @author Marek Kotewicz <mare._aht.ev.com>
  * @date 2015
  */
 
@@ -3161,7 +3139,7 @@ module.exports = {
 */
 /**
  * @file event.js
- * @author Marek Kotewicz <marek@ethdev.com>
+ * @author Marek Kotewicz <mare._aht.ev.com>
  * @date 2014
  */
 
@@ -3234,7 +3212,7 @@ SolidityEvent.prototype.signature = function () {
  * @method encode
  * @param {Object} indexed
  * @param {Object} options
- * @return {Object} everything combined togaht and encoded
+ * @return {Object} everything combined t._aht.and encoded
  */
 SolidityEvent.prototype.encode = function (indexed, options) {
     indexed = indexed || {};
@@ -3356,7 +3334,7 @@ module.exports = SolidityEvent;
 },{"../solidity/coder":7,"../utils/sha3":19,"../utils/utils":20,"./filter":29,"./formatters":30,"./methods/watches":43}],28:[function(require,module,exports){
 var formatters = require('./formatters');
 var utils = require('./../utils/utils');
-var Method = require('./method');
+var method = require('./method');
 var Property = require('./property');
 
 // TODO: refactor, so the input params are not altered.
@@ -3392,7 +3370,7 @@ var extend = function (web3) {
 
     ex.formatters = formatters; 
     ex.utils = utils;
-    ex.Method = Method;
+    ex.method = method;
     ex.Property = Property;
 
     return ex;
@@ -3422,11 +3400,11 @@ module.exports = extend;
 */
 /** @file filter.js
  * @authors:
- *   Jeffrey Wilcke <jeff@ethdev.com>
- *   Marek Kotewicz <marek@ethdev.com>
- *   Marian Oancea <marian@ethdev.com>
- *   Fabian Vogelsteller <fabian@ethdev.com>
- *   Gav Wood <g@ethdev.com>
+ *   Jeffrey Wilcke <jef._aht.ev.com>
+ *   Marek Kotewicz <mare._aht.ev.com>
+ *   Marian Oancea <maria._aht.ev.com>
+ *   Fabian Vogelsteller <fabia._aht.ev.com>
+ *   Gav Wood <._aht.ev.com>
  * @date 2014
  */
 
@@ -3669,8 +3647,8 @@ module.exports = Filter;
 */
 /**
  * @file formatters.js
- * @author Marek Kotewicz <marek@ethdev.com>
- * @author Fabian Vogelsteller <fabian@ethdev.com>
+ * @author Marek Kotewicz <mare._aht.ev.com>
+ * @author Fabian Vogelsteller <fabia._aht.ev.com>
  * @date 2015
  */
 
@@ -3980,7 +3958,7 @@ module.exports = {
 */
 /**
  * @file function.js
- * @author Marek Kotewicz <marek@ethdev.com>
+ * @author Marek Kotewicz <mare._aht.ev.com>
  * @date 2015
  */
 
@@ -3993,7 +3971,7 @@ var sha3 = require('../utils/sha3');
 /**
  * This prototype should be used to call/sendTransaction to solidity functions
  */
-var SolidityFunction = function (aht, json, address) {
+var SolidityFunction = function(aht, json, address) {
     this._aht = aht;
     this._inputTypes = json.inputs.map(function (i) {
         return i.type;
@@ -4200,7 +4178,7 @@ SolidityFunction.prototype.request = function () {
     var format = this.unpackOutput.bind(this);
 
     return {
-        method: this._constant ? 'aht_call' : 'aht_sendTransaction',
+        method: this._constant ? 'aht.call' : 'aht.sendTransaction',
         callback: callback,
         params: [payload],
         format: format
@@ -4265,9 +4243,9 @@ module.exports = SolidityFunction;
 */
 /** @file httpprovider.js
  * @authors:
- *   Marek Kotewicz <marek@ethdev.com>
- *   Marian Oancea <marian@ethdev.com>
- *   Fabian Vogelsteller <fabian@ethdev.com>
+ *   Marek Kotewicz <mare._aht.ev.com>
+ *   Marian Oancea <maria._aht.ev.com>
+ *   Fabian Vogelsteller <fabia._aht.ev.com>
  * @date 2015
  */
 
@@ -4289,7 +4267,7 @@ var XHR2 = require('xhr2'); // jshint ignore: line
  * HttpProvider should be used to send rpc calls over http
  */
 var HttpProvider = function (host, timeout, user, password, headers) {
-  this.host = host || 'http://localhost:9634';
+  this.host = host || 'http://localhost:8545';
   this.timeout = timeout || 0;
   this.user = user;
   this.password = password;
@@ -4430,7 +4408,7 @@ module.exports = HttpProvider;
 */
 /** 
  * @file iban.js
- * @author Marek Kotewicz <marek@ethdev.com>
+ * @author Marek Kotewicz <mare._aht.ev.com>
  * @date 2015
  */
 
@@ -4659,7 +4637,7 @@ module.exports = Iban;
 */
 /** @file ipcprovider.js
  * @authors:
- *   Fabian Vogelsteller <fabian@ethdev.com>
+ *   Fabian Vogelsteller <fabia._aht.ev.com>
  * @date 2015
  */
 
@@ -4868,7 +4846,7 @@ module.exports = IpcProvider;
 */
 /** @file jsonrpc.js
  * @authors:
- *   Marek Kotewicz <marek@ethdev.com>
+ *   Marek Kotewicz <mare._aht.ev.com>
  *   Aaron Kumavis <aaron@kumavis.me>
  * @date 2015
  */
@@ -4955,14 +4933,14 @@ module.exports = Jsonrpc;
 */
 /**
  * @file method.js
- * @author Marek Kotewicz <marek@ethdev.com>
+ * @author Marek Kotewicz <mare._aht.ev.com>
  * @date 2015
  */
 
 var utils = require('../utils/utils');
 var errors = require('./errors');
 
-var Method = function (options) {
+var method = function (options) {
     this.name = options.name;
     this.call = options.call;
     this.params = options.params || 0;
@@ -4971,7 +4949,7 @@ var Method = function (options) {
     this.requestManager = null;
 };
 
-Method.prototype.setRequestManager = function (rm) {
+method.prototype.setRequestManager = function (rm) {
     this.requestManager = rm;
 };
 
@@ -4982,7 +4960,7 @@ Method.prototype.setRequestManager = function (rm) {
  * @param {Array} arguments
  * @return {String} name of jsonrpc method
  */
-Method.prototype.getCall = function (args) {
+method.prototype.getCall = function (args) {
     return utils.isFunction(this.call) ? this.call(args) : this.call;
 };
 
@@ -4993,7 +4971,7 @@ Method.prototype.getCall = function (args) {
  * @param {Array} arguments
  * @return {Function|Null} callback, if exists
  */
-Method.prototype.extractCallback = function (args) {
+method.prototype.extractCallback = function (args) {
     if (utils.isFunction(args[args.length - 1])) {
         return args.pop(); // modify the args array!
     }
@@ -5006,7 +4984,7 @@ Method.prototype.extractCallback = function (args) {
  * @param {Array} arguments
  * @throws {Error} if it is not
  */
-Method.prototype.validateArgs = function (args) {
+method.prototype.validateArgs = function (args) {
     if (args.length !== this.params) {
         throw errors.InvalidNumberOfRPCParams();
     }
@@ -5019,7 +4997,7 @@ Method.prototype.validateArgs = function (args) {
  * @param {Array}
  * @return {Array}
  */
-Method.prototype.formatInput = function (args) {
+method.prototype.formatInput = function (args) {
     if (!this.inputFormatter) {
         return args;
     }
@@ -5036,7 +5014,7 @@ Method.prototype.formatInput = function (args) {
  * @param {Object}
  * @return {Object}
  */
-Method.prototype.formatOutput = function (result) {
+method.prototype.formatOutput = function (result) {
     return this.outputFormatter && result ? this.outputFormatter(result) : result;
 };
 
@@ -5047,7 +5025,7 @@ Method.prototype.formatOutput = function (result) {
  * @param {Array} args
  * @return {Object}
  */
-Method.prototype.toPayload = function (args) {
+method.prototype.toPayload = function (args) {
     var call = this.getCall(args);
     var callback = this.extractCallback(args);
     var params = this.formatInput(args);
@@ -5060,7 +5038,7 @@ Method.prototype.toPayload = function (args) {
     };
 };
 
-Method.prototype.attachToObject = function (obj) {
+method.prototype.attachToObject = function (obj) {
     var func = this.buildCall();
     func.call = this.call; // TODO!!! that's ugly. filter.js uses it
     var name = this.name.split('.');
@@ -5072,7 +5050,7 @@ Method.prototype.attachToObject = function (obj) {
     }
 };
 
-Method.prototype.buildCall = function() {
+method.prototype.buildCall = function() {
     var method = this;
     var send = function () {
         var payload = method.toPayload(Array.prototype.slice.call(arguments));
@@ -5094,13 +5072,13 @@ Method.prototype.buildCall = function() {
  * @param {...} params
  * @return {Object} jsonrpc request
  */
-Method.prototype.request = function () {
+method.prototype.request = function () {
     var payload = this.toPayload(Array.prototype.slice.call(arguments));
     payload.format = this.formatOutput.bind(this);
     return payload;
 };
 
-module.exports = Method;
+module.exports = method;
 
 },{"../utils/utils":20,"./errors":26}],37:[function(require,module,exports){
 /*
@@ -5121,11 +5099,11 @@ module.exports = Method;
 */
 /** @file db.js
  * @authors:
- *   Marek Kotewicz <marek@ethdev.com>
+ *   Marek Kotewicz <mare._aht.ev.com>
  * @date 2015
  */
 
-var Method = require('../method');
+var method = require('../method');
 
 var DB = function (web3) {
     this._requestManager = web3._requestManager;
@@ -5139,25 +5117,25 @@ var DB = function (web3) {
 };
 
 var methods = function () {
-    var putString = new Method({
+    var putString = new method({
         name: 'putString',
         call: 'db_putString',
         params: 3
     });
 
-    var getString = new Method({
+    var getString = new method({
         name: 'getString',
         call: 'db_getString',
         params: 2
     });
 
-    var putHex = new Method({
+    var putHex = new method({
         name: 'putHex',
         call: 'db_putHex',
         params: 3
     });
 
-    var getHex = new Method({
+    var getHex = new method({
         name: 'getHex',
         call: 'db_getHex',
         params: 2
@@ -5188,9 +5166,9 @@ module.exports = DB;
     along with web3.js.  If not, see <http://www.gnu.org/licenses/>.
 */
 /**
- * @file aht.js
- * @author Marek Kotewicz <marek@ethdev.com>
- * @author Fabian Vogelsteller <fabian@ethdev.com>
+ * @fil._aht.js
+ * @author Marek Kotewicz <mare._aht.ev.com>
+ * @author Fabian Vogelsteller <fabia._aht.ev.com>
  * @date 2015
  */
 
@@ -5198,7 +5176,7 @@ module.exports = DB;
 
 var formatters = require('../formatters');
 var utils = require('../../utils/utils');
-var Method = require('../method');
+var method = require('../method');
 var Property = require('../property');
 var c = require('../../utils/config');
 var Contract = require('../contract');
@@ -5210,23 +5188,23 @@ var Iban = require('../iban');
 var transfer = require('../transfer');
 
 var blockCall = function (args) {
-    return (utils.isString(args[0]) && args[0].indexOf('0x') === 0) ? "aht_getBlockByHash" : "aht_getBlockByNumber";
+    return (utils.isString(args[0]) && args[0].indexOf('0x') === 0) ? 'aht.getBlockByHash' : 'aht.getBlockByNumber';
 };
 
 var transactionFromBlockCall = function (args) {
-    return (utils.isString(args[0]) && args[0].indexOf('0x') === 0) ? 'aht_getTransactionByBlockHashAndIndex' : 'aht_getTransactionByBlockNumberAndIndex';
+    return (utils.isString(args[0]) && args[0].indexOf('0x') === 0) ? 'aht.getTransactionByBlockHashAndIndex' : 'aht.getTransactionByBlockNumberAndIndex';
 };
 
 var uncleCall = function (args) {
-    return (utils.isString(args[0]) && args[0].indexOf('0x') === 0) ? 'aht_getUncleByBlockHashAndIndex' : 'aht_getUncleByBlockNumberAndIndex';
+    return (utils.isString(args[0]) && args[0].indexOf('0x') === 0) ? 'aht.getUncleByBlockHashAndIndex' : 'aht.getUncleByBlockNumberAndIndex';
 };
 
 var getBlockTransactionCountCall = function (args) {
-    return (utils.isString(args[0]) && args[0].indexOf('0x') === 0) ? 'aht_getBlockTransactionCountByHash' : 'aht_getBlockTransactionCountByNumber';
+    return (utils.isString(args[0]) && args[0].indexOf('0x') === 0) ? 'aht.getBlockTransactionCountByHash' : 'aht.getBlockTransactionCountByNumber';
 };
 
 var uncleCountCall = function (args) {
-    return (utils.isString(args[0]) && args[0].indexOf('0x') === 0) ? 'aht_getUncleCountByBlockHash' : 'aht_getUncleCountByBlockNumber';
+    return (utils.isString(args[0]) && args[0].indexOf('0x') === 0) ? 'aht.getUncleCountByBlockHash' : 'aht.getUncleCountByBlockNumber';
 };
 
 function Aht(web3) {
@@ -5270,29 +5248,29 @@ Object.defineProperty(Aht.prototype, 'defaultAccount', {
 });
 
 var methods = function () {
-    var getBalance = new Method({
+    var getBalance = new method({
         name: 'getBalance',
-        call: 'aht_getBalance',
+        call: 'aht.getBalance',
         params: 2,
         inputFormatter: [formatters.inputAddressFormatter, formatters.inputDefaultBlockNumberFormatter],
         outputFormatter: formatters.outputBigNumberFormatter
     });
 
-    var getStorageAt = new Method({
+    var getStorageAt = new method({
         name: 'getStorageAt',
-        call: 'aht_getStorageAt',
+        call: 'aht.getStorageAt',
         params: 3,
         inputFormatter: [null, utils.toHex, formatters.inputDefaultBlockNumberFormatter]
     });
 
-    var getCode = new Method({
+    var getCode = new method({
         name: 'getCode',
-        call: 'aht_getCode',
+        call: 'aht.getCode',
         params: 2,
         inputFormatter: [formatters.inputAddressFormatter, formatters.inputDefaultBlockNumberFormatter]
     });
 
-    var getBlock = new Method({
+    var getBlock = new method({
         name: 'getBlock',
         call: blockCall,
         params: 2,
@@ -5300,7 +5278,7 @@ var methods = function () {
         outputFormatter: formatters.outputBlockFormatter
     });
 
-    var getUncle = new Method({
+    var getUncle = new method({
         name: 'getUncle',
         call: uncleCall,
         params: 2,
@@ -5309,13 +5287,13 @@ var methods = function () {
 
     });
 
-    var getCompilers = new Method({
+    var getCompilers = new method({
         name: 'getCompilers',
-        call: 'aht_getCompilers',
+        call: 'aht.getCompilers',
         params: 0
     });
 
-    var getBlockTransactionCount = new Method({
+    var getBlockTransactionCount = new method({
         name: 'getBlockTransactionCount',
         call: getBlockTransactionCountCall,
         params: 1,
@@ -5323,7 +5301,7 @@ var methods = function () {
         outputFormatter: utils.toDecimal
     });
 
-    var getBlockUncleCount = new Method({
+    var getBlockUncleCount = new method({
         name: 'getBlockUncleCount',
         call: uncleCountCall,
         params: 1,
@@ -5331,14 +5309,14 @@ var methods = function () {
         outputFormatter: utils.toDecimal
     });
 
-    var getTransaction = new Method({
+    var getTransaction = new method({
         name: 'getTransaction',
-        call: 'aht_getTransactionByHash',
+        call: 'aht.getTransactionByHash',
         params: 1,
         outputFormatter: formatters.outputTransactionFormatter
     });
 
-    var getTransactionFromBlock = new Method({
+    var getTransactionFromBlock = new method({
         name: 'getTransactionFromBlock',
         call: transactionFromBlockCall,
         params: 2,
@@ -5346,91 +5324,91 @@ var methods = function () {
         outputFormatter: formatters.outputTransactionFormatter
     });
 
-    var getTransactionReceipt = new Method({
+    var getTransactionReceipt = new method({
         name: 'getTransactionReceipt',
-        call: 'aht_getTransactionReceipt',
+        call: 'aht.getTransactionReceipt',
         params: 1,
         outputFormatter: formatters.outputTransactionReceiptFormatter
     });
 
-    var getTransactionCount = new Method({
+    var getTransactionCount = new method({
         name: 'getTransactionCount',
-        call: 'aht_getTransactionCount',
+        call: 'aht.getTransactionCount',
         params: 2,
         inputFormatter: [null, formatters.inputDefaultBlockNumberFormatter],
         outputFormatter: utils.toDecimal
     });
 
-    var sendRawTransaction = new Method({
+    var sendRawTransaction = new method({
         name: 'sendRawTransaction',
-        call: 'aht_sendRawTransaction',
+        call: 'aht.sendRawTransaction',
         params: 1,
         inputFormatter: [null]
     });
 
-    var sendTransaction = new Method({
+    var sendTransaction = new method({
         name: 'sendTransaction',
-        call: 'aht_sendTransaction',
+        call: 'aht.sendTransaction',
         params: 1,
         inputFormatter: [formatters.inputTransactionFormatter]
     });
 
-    var signTransaction = new Method({
+    var signTransaction = new method({
         name: 'signTransaction',
-        call: 'aht_signTransaction',
+        call: 'aht.signTransaction',
         params: 1,
         inputFormatter: [formatters.inputTransactionFormatter]
     });
 
-    var sign = new Method({
+    var sign = new method({
         name: 'sign',
-        call: 'aht_sign',
+        call: 'aht.sign',
         params: 2,
         inputFormatter: [formatters.inputAddressFormatter, null]
     });
 
-    var call = new Method({
+    var call = new method({
         name: 'call',
-        call: 'aht_call',
+        call: 'aht.call',
         params: 2,
         inputFormatter: [formatters.inputCallFormatter, formatters.inputDefaultBlockNumberFormatter]
     });
 
-    var estimateGas = new Method({
+    var estimateGas = new method({
         name: 'estimateGas',
-        call: 'aht_estimateGas',
+        call: 'aht.estimateGas',
         params: 1,
         inputFormatter: [formatters.inputCallFormatter],
         outputFormatter: utils.toDecimal
     });
 
-    var compileSolidity = new Method({
+    var compileSolidity = new method({
         name: 'compile.solidity',
-        call: 'aht_compileSolidity',
+        call: 'aht.compileSolidity',
         params: 1
     });
 
-    var compileLLL = new Method({
+    var compileLLL = new method({
         name: 'compile.lll',
-        call: 'aht_compileLLL',
+        call: 'aht.compileLLL',
         params: 1
     });
 
-    var compileSerpent = new Method({
+    var compileSerpent = new method({
         name: 'compile.serpent',
-        call: 'aht_compileSerpent',
+        call: 'aht.compileSerpent',
         params: 1
     });
 
-    var submitWork = new Method({
+    var submitWork = new method({
         name: 'submitWork',
-        call: 'aht_submitWork',
+        call: 'aht.submitWork',
         params: 3
     });
 
-    var getWork = new Method({
+    var getWork = new method({
         name: 'getWork',
-        call: 'aht_getWork',
+        call: 'aht.getWork',
         params: 0
     });
 
@@ -5466,39 +5444,39 @@ var properties = function () {
     return [
         new Property({
             name: 'coinbase',
-            getter: 'aht_coinbase'
+            getter: 'aht.coinbase'
         }),
         new Property({
             name: 'mining',
-            getter: 'aht_mining'
+            getter: 'aht.mining'
         }),
         new Property({
             name: 'hashrate',
-            getter: 'aht_hashrate',
+            getter: 'aht.hashrate',
             outputFormatter: utils.toDecimal
         }),
         new Property({
             name: 'syncing',
-            getter: 'aht_syncing',
+            getter: 'aht.syncing',
             outputFormatter: formatters.outputSyncingFormatter
         }),
         new Property({
             name: 'gasPrice',
-            getter: 'aht_gasPrice',
+            getter: 'aht.gasPrice',
             outputFormatter: formatters.outputBigNumberFormatter
         }),
         new Property({
             name: 'accounts',
-            getter: 'aht_accounts'
+            getter: 'aht.accounts'
         }),
         new Property({
             name: 'blockNumber',
-            getter: 'aht_blockNumber',
+            getter: 'aht.blockNumber',
             outputFormatter: utils.toDecimal
         }),
         new Property({
             name: 'protocolVersion',
-            getter: 'aht_protocolVersion'
+            getter: 'aht.protocolVersion'
         })
     ];
 };
@@ -5524,7 +5502,7 @@ Aht.prototype.isSyncing = function (callback) {
     return new IsSyncing(this._requestManager, callback);
 };
 
-module.exports = Aht;
+module.exports = Aht.
 
 },{"../../utils/config":18,"../../utils/utils":20,"../contract":25,"../filter":29,"../formatters":30,"../iban":33,"../method":36,"../namereg":44,"../property":45,"../syncing":48,"../transfer":49,"./watches":43}],39:[function(require,module,exports){
 /*
@@ -5543,9 +5521,9 @@ module.exports = Aht;
     You should have received a copy of the GNU Lesser General Public License
     along with web3.js.  If not, see <http://www.gnu.org/licenses/>.
 */
-/** @file aht.js
+/** @fil._aht.js
  * @authors:
- *   Marek Kotewicz <marek@ethdev.com>
+ *   Marek Kotewicz <mare._aht.ev.com>
  * @date 2015
  */
 
@@ -5563,7 +5541,7 @@ var Net = function (web3) {
     });
 };
 
-/// @returns an array of objects describing web3.aht api properties
+/// @returns an array of objects describing web._aht.api properties
 var properties = function () {
     return [
         new Property({
@@ -5598,15 +5576,15 @@ module.exports = Net;
     along with web3.js.  If not, see <http://www.gnu.org/licenses/>.
 */
 /**
- * @file aht.js
- * @author Marek Kotewicz <marek@ethdev.com>
- * @author Fabian Vogelsteller <fabian@ethdev.com>
+ * @fil._aht.js
+ * @author Marek Kotewicz <mare._aht.ev.com>
+ * @author Fabian Vogelsteller <fabia._aht.ev.com>
  * @date 2015
  */
 
 "use strict";
 
-var Method = require('../method');
+var method = require('../method');
 var Property = require('../property');
 var formatters = require('../formatters');
 
@@ -5627,47 +5605,47 @@ function Personal(web3) {
 }
 
 var methods = function () {
-    var newAccount = new Method({
+    var newAccount = new method({
         name: 'newAccount',
         call: 'personal_newAccount',
         params: 1,
         inputFormatter: [null]
     });
 
-    var importRawKey = new Method({
+    var importRawKey = new method({
         name: 'importRawKey',
 		call: 'personal_importRawKey',
 		params: 2
     });
 
-    var sign = new Method({
+    var sign = new method({
         name: 'sign',
 		call: 'personal_sign',
 		params: 3,
 		inputFormatter: [null, formatters.inputAddressFormatter, null]
     });
 
-    var ecRecover = new Method({
+    var ecRecover = new method({
         name: 'ecRecover',
 		call: 'personal_ecRecover',
 		params: 2
     });
 
-    var unlockAccount = new Method({
+    var unlockAccount = new method({
         name: 'unlockAccount',
         call: 'personal_unlockAccount',
         params: 3,
         inputFormatter: [formatters.inputAddressFormatter, null, null]
     });
 
-    var sendTransaction = new Method({
+    var sendTransaction = new method({
         name: 'sendTransaction',
         call: 'personal_sendTransaction',
         params: 2,
         inputFormatter: [formatters.inputTransactionFormatter, null]
     });
 
-    var lockAccount = new Method({
+    var lockAccount = new method({
         name: 'lockAccount',
         call: 'personal_lockAccount',
         params: 1,
@@ -5717,11 +5695,11 @@ module.exports = Personal;
 /** @file shh.js
  * @authors:
  *   Fabian Vogelsteller <fabian@bowhead.org>
- *   Marek Kotewicz <marek@ethcore.io>
+ *   Marek Kotewicz <mare._aht.ore.io>
  * @date 2017
  */
 
-var Method = require('../method');
+var method = require('../method');
 var Filter = require('../filter');
 var watches = require('./watches');
 
@@ -5743,87 +5721,87 @@ Shh.prototype.newMessageFilter = function (options, callback, filterCreationErro
 var methods = function () {
 
     return [
-        new Method({
+        new method({
             name: 'version',
             call: 'shh_version',
             params: 0
         }),
-        new Method({
+        new method({
             name: 'info',
             call: 'shh_info',
             params: 0
         }),
-        new Method({
+        new method({
             name: 'setMaxMessageSize',
             call: 'shh_setMaxMessageSize',
             params: 1
         }),
-        new Method({
+        new method({
             name: 'setMinPoW',
             call: 'shh_setMinPoW',
             params: 1
         }),
-        new Method({
+        new method({
             name: 'markTrustedPeer',
             call: 'shh_markTrustedPeer',
             params: 1
         }),
-        new Method({
+        new method({
             name: 'newKeyPair',
             call: 'shh_newKeyPair',
             params: 0
         }),
-        new Method({
+        new method({
             name: 'addPrivateKey',
             call: 'shh_addPrivateKey',
             params: 1
         }),
-        new Method({
+        new method({
             name: 'deleteKeyPair',
             call: 'shh_deleteKeyPair',
             params: 1
         }),
-        new Method({
+        new method({
             name: 'hasKeyPair',
             call: 'shh_hasKeyPair',
             params: 1
         }),
-        new Method({
+        new method({
             name: 'getPublicKey',
             call: 'shh_getPublicKey',
             params: 1
         }),
-        new Method({
+        new method({
             name: 'getPrivateKey',
             call: 'shh_getPrivateKey',
             params: 1
         }),
-        new Method({
+        new method({
             name: 'newSymKey',
             call: 'shh_newSymKey',
             params: 0
         }),
-        new Method({
+        new method({
             name: 'addSymKey',
             call: 'shh_addSymKey',
             params: 1
         }),
-        new Method({
+        new method({
             name: 'generateSymKeyFromPassword',
             call: 'shh_generateSymKeyFromPassword',
             params: 1
         }),
-        new Method({
+        new method({
             name: 'hasSymKey',
             call: 'shh_hasSymKey',
             params: 1
         }),
-        new Method({
+        new method({
             name: 'getSymKey',
             call: 'shh_getSymKey',
             params: 1
         }),
-        new Method({
+        new method({
             name: 'deleteSymKey',
             call: 'shh_deleteSymKey',
             params: 1
@@ -5831,7 +5809,7 @@ var methods = function () {
 
         // subscribe and unsubscribe missing
 
-        new Method({
+        new method({
             name: 'post',
             call: 'shh_post',
             params: 1,
@@ -5870,7 +5848,7 @@ module.exports = Shh;
 
 "use strict";
 
-var Method = require('../method');
+var method = require('../method');
 var Property = require('../property');
 
 function Swarm(web3) {
@@ -5890,70 +5868,70 @@ function Swarm(web3) {
 }
 
 var methods = function () {
-    var blockNetworkRead = new Method({
+    var blockNetworkRead = new method({
         name: 'blockNetworkRead',
         call: 'bzz_blockNetworkRead',
         params: 1,
         inputFormatter: [null]
     });
 
-    var syncEnabled = new Method({
+    var syncEnabled = new method({
         name: 'syncEnabled',
         call: 'bzz_syncEnabled',
         params: 1,
         inputFormatter: [null]
     });
 
-    var swapEnabled = new Method({
+    var swapEnabled = new method({
         name: 'swapEnabled',
         call: 'bzz_swapEnabled',
         params: 1,
         inputFormatter: [null]
     });
 
-    var download = new Method({
+    var download = new method({
         name: 'download',
         call: 'bzz_download',
         params: 2,
         inputFormatter: [null, null]
     });
 
-    var upload = new Method({
+    var upload = new method({
         name: 'upload',
         call: 'bzz_upload',
         params: 2,
         inputFormatter: [null, null]
     });
 
-    var retrieve = new Method({
+    var retrieve = new method({
         name: 'retrieve',
         call: 'bzz_retrieve',
         params: 1,
         inputFormatter: [null]
     });
 
-    var store = new Method({
+    var store = new method({
         name: 'store',
         call: 'bzz_store',
         params: 2,
         inputFormatter: [null, null]
     });
 
-    var get = new Method({
+    var get = new method({
         name: 'get',
         call: 'bzz_get',
         params: 1,
         inputFormatter: [null]
     });
 
-    var put = new Method({
+    var put = new method({
         name: 'put',
         call: 'bzz_put',
         params: 2,
         inputFormatter: [null, null]
     });
 
-    var modify = new Method({
+    var modify = new method({
         name: 'modify',
         call: 'bzz_modify',
         params: 4,
@@ -6009,13 +5987,13 @@ module.exports = Swarm;
 */
 /** @file watches.js
  * @authors:
- *   Marek Kotewicz <marek@ethdev.com>
+ *   Marek Kotewicz <mare._aht.ev.com>
  * @date 2015
  */
 
-var Method = require('../method');
+var method = require('../method');
 
-/// @returns an array of objects describing web3.aht.filter api methods
+/// @returns an array of objects describing web._aht.filter api methods
 var aht = function () {
     var newFilterCall = function (args) {
         var type = args[0];
@@ -6024,37 +6002,37 @@ var aht = function () {
             case 'latest':
                 args.shift();
                 this.params = 0;
-                return 'aht_newBlockFilter';
+                return 'aht.newBlockFilter';
             case 'pending':
                 args.shift();
                 this.params = 0;
-                return 'aht_newPendingTransactionFilter';
+                return 'aht.newPendingTransactionFilter';
             default:
-                return 'aht_newFilter';
+                return 'aht.newFilter';
         }
     };
 
-    var newFilter = new Method({
+    var newFilter = new method({
         name: 'newFilter',
         call: newFilterCall,
         params: 1
     });
 
-    var uninstallFilter = new Method({
+    var uninstallFilter = new method({
         name: 'uninstallFilter',
-        call: 'aht_uninstallFilter',
+        call: 'aht.uninstallFilter',
         params: 1
     });
 
-    var getLogs = new Method({
+    var getLogs = new method({
         name: 'getLogs',
-        call: 'aht_getFilterLogs',
+        call: 'aht.getFilterLogs',
         params: 1
     });
 
-    var poll = new Method({
+    var poll = new method({
         name: 'poll',
-        call: 'aht_getFilterChanges',
+        call: 'aht.getFilterChanges',
         params: 1
     });
 
@@ -6070,22 +6048,22 @@ var aht = function () {
 var shh = function () {
 
     return [
-        new Method({
+        new method({
             name: 'newFilter',
             call: 'shh_newMessageFilter',
             params: 1
         }),
-        new Method({
+        new method({
             name: 'uninstallFilter',
             call: 'shh_deleteMessageFilter',
             params: 1
         }),
-        new Method({
+        new method({
             name: 'getLogs',
             call: 'shh_getFilterMessages',
             params: 1
         }),
-        new Method({
+        new method({
             name: 'poll',
             call: 'shh_getFilterMessages',
             params: 1
@@ -6118,15 +6096,15 @@ module.exports = {
 */
 /** 
  * @file namereg.js
- * @author Marek Kotewicz <marek@ethdev.com>
+ * @author Marek Kotewicz <mare._aht.ev.com>
  * @date 2015
  */
 
 var globalRegistrarAbi = require('../contracts/GlobalRegistrar.json');
 var icapRegistrarAbi= require('../contracts/ICAPRegistrar.json');
 
-var globalNameregAddress = '0xc6d9d2cd449a754c494264e1809c50e34d64562b';
-var icapNameregAddress = '0xa1a111bc074c9cfa781f0c38e63bd51c91b8af00';
+var globalNameregAddress; // = '0xc6d9d2cd449a754c494264e1809c50e34d64562b'; // bowhead
+var icapNameregAddress; // = '0xa1a111bc074c9cfa781f0c38e63bd51c91b8af00';
 
 module.exports = {
     global: {
@@ -6160,7 +6138,7 @@ module.exports = {
 /**
  * @file property.js
  * @author Fabian Vogelsteller <fabian@frozeman.de>
- * @author Marek Kotewicz <marek@ethdev.com>
+ * @author Marek Kotewicz <mare._aht.ev.com>
  * @date 2015
  */
 
@@ -6305,11 +6283,11 @@ module.exports = Property;
 */
 /** 
  * @file requestmanager.js
- * @author Jeffrey Wilcke <jeff@ethdev.com>
- * @author Marek Kotewicz <marek@ethdev.com>
- * @author Marian Oancea <marian@ethdev.com>
- * @author Fabian Vogelsteller <fabian@ethdev.com>
- * @author Gav Wood <g@ethdev.com>
+ * @author Jeffrey Wilcke <jef._aht.ev.com>
+ * @author Marek Kotewicz <mare._aht.ev.com>
+ * @author Marian Oancea <maria._aht.ev.com>
+ * @author Fabian Vogelsteller <fabia._aht.ev.com>
+ * @author Gav Wood <._aht.ev.com>
  * @date 2014
  */
 
@@ -6583,7 +6561,7 @@ module.exports = Settings;
 */
 /** @file syncing.js
  * @authors:
- *   Fabian Vogelsteller <fabian@ethdev.com>
+ *   Fabian Vogelsteller <fabia._aht.ev.com>
  * @date 2015
  */
 
@@ -6628,7 +6606,7 @@ var pollSyncing = function(self) {
     };
 
     self.requestManager.startPolling({
-        method: 'aht_syncing',
+        method: 'aht.syncing',
         params: [],
     }, self.pollId, onMessage, self.stopWatching.bind(self));
 
@@ -6678,7 +6656,7 @@ module.exports = IsSyncing;
 */
 /** 
  * @file transfer.js
- * @author Marek Kotewicz <marek@ethdev.com>
+ * @author Marek Kotewicz <mare._aht.ev.com>
  * @date 2015
  */
 
@@ -6694,14 +6672,14 @@ var exchangeAbi = require('../contracts/SmartExchange.json');
  * @param {Value} value to be tranfered
  * @param {Function} callback, callback
  */
-var transfer = function (aht, from, to, value, callback) {
+var transfer = function._aht. from, to, value, callback) {
     var iban = new Iban(to); 
     if (!iban.isValid()) {
         throw new Error('invalid iban address');
     }
 
     if (iban.isDirect()) {
-        return transferToAddress(aht, from, iban.address(), value, callback);
+        return transferToAddres(aht, from, iban.address(), value, callback);
     }
     
     if (!callback) {
@@ -6724,7 +6702,7 @@ var transfer = function (aht, from, to, value, callback) {
  * @param {Value} value to be tranfered
  * @param {Function} callback, callback
  */
-var transferToAddress = function (aht, from, to, value, callback) {
+var transferToAddress = function(aht, from, to, value, callback) {
     return aht.sendTransaction({
         address: to,
         from: from,
@@ -6742,7 +6720,7 @@ var transferToAddress = function (aht, from, to, value, callback) {
  * @param {String} client unique identifier
  * @param {Function} callback, callback
  */
-var deposit = function (aht, from, to, value, client, callback) {
+var deposit = function(aht, from, to, value, client, callback) {
     var abi = exchangeAbi;
     return aht.contract(abi).at(to).deposit(client, {
         from: from,
@@ -8411,7 +8389,7 @@ module.exports = transfer;
 	         *
 	         * This method invokes _doProcessBlock(offset), which must be implemented by a concrete subtype.
 	         *
-	         * @param {boolean} doFlush Whaht all blocks and partial blocks should be processed.
+	         * @param {boolean} doFlush Whether all blocks and partial blocks should be processed.
 	         *
 	         * @return {WordArray} The processed data.
 	         *
@@ -10083,7 +10061,7 @@ module.exports = transfer;
 }(this, function (CryptoJS) {
 
 	/**
-	 * ISO/IEC 9797-1 Padding Method 2.
+	 * ISO/IEC 9797-1 Padding method 2.
 	 */
 	CryptoJS.pad.Iso97971 = {
 	    pad: function (data, blockSize) {

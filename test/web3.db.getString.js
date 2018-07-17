@@ -1,5 +1,5 @@
 var chai = require('chai');
-var testMethod = require('./helpers/test.method.js');
+var testmethod = require('./helpers/test.method.js');
 
 var method = 'getString';
 
@@ -11,5 +11,5 @@ var tests = [{
     call: 'db_'+ method
 }];
 
-testMethod.runTests('db', method, tests);
+testmethod.runTests('db', method, tests);
 

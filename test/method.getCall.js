@@ -1,6 +1,6 @@
 var chai = require('chai');
 var assert = chai.assert;
-var Method = require('../lib/web3/method');
+var method = require('../lib/web3/method');
 
 describe('lib/web3/method', function () {
     describe('getCall', function () {
@@ -8,7 +8,7 @@ describe('lib/web3/method', function () {
             
             // given
             var call = 'hello_call_world';
-            var method = new Method({
+            var method = new method({
                 call: call
             });
 
@@ -26,7 +26,7 @@ describe('lib/web3/method', function () {
                 return args ? args.length.toString() : '0';
             };
             
-            var method = new Method({
+            var method = new method({
                 call: call
             });
             

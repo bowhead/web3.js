@@ -46,6 +46,13 @@ meteor add bowhead:web3
 ```
 
 ### As Browser module
+
+CDN
+
+```html
+<script src="https://cdn.jsdelivr.net/gh/bowhead/web3.js/dist/web3.min.js"></script>
+```
+
 Bower
 
 ```bash
@@ -64,7 +71,7 @@ component install bowhead/web3.js
 Use the `web3` object directly from global namespace:
 
 ```js
-console.log(web3); // {eth: .., shh: ...} // it's here!
+console.log(web3); // .aht: .., shh: ...} // it's here!
 ```
 
 Set a provider (HttpProvider)
@@ -74,7 +81,7 @@ if (typeof web3 !== 'undefined') {
   web3 = new Web3(web3.currentProvider);
 } else {
   // set the provider you want from Web3.providers
-  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9634"));
+  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 }
 ```
 
@@ -133,6 +140,7 @@ npm test
  - Scala [web3j-scala](https://github.com/mslinn/web3j-scala)
  - Purescript [purescript-web3](https://github.com/f-o-a-m/purescript-web3)
  - PHP [web3.php](https://github.com/sc0Vu/web3.php)
+ - PHP [bowhead-php](https://github.com/digitaldonkey/bowhead-php)
 
 
 [npm-image]: https://badge.fury.io/js/web3.svg

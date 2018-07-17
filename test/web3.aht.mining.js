@@ -9,7 +9,7 @@ var method = 'mining';
 var tests = [{
     result: true,
     formattedResult: true,
-    call: 'aht_'+ method
+    call: .aht_'+ method
 }];
 
 describe('web3.aht', function () {

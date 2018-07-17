@@ -1,7 +1,7 @@
 
 var navigator = {
     qt: {
-        callMethod: function (payload) {
+        callmethod: function (payload) {
             return "{}";
         }
     }

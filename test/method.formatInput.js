@@ -1,6 +1,6 @@
 var chai = require('chai');
 var assert = chai.assert;
-var Method = require('../lib/web3/method');
+var method = require('../lib/web3/method');
 
 describe('lib/web3/method', function () {
     describe('formatInput', function () {
@@ -11,7 +11,7 @@ describe('lib/web3/method', function () {
                 return arg + '*';
             };
             
-            var method = new Method({
+            var method = new method({
                 inputFormatter: [star, star, star]
             });
             var args = ['1','2','3'];
@@ -27,7 +27,7 @@ describe('lib/web3/method', function () {
         it('should do nothing if there is no formatter', function () {
 
             // given
-            var method = new Method({});
+            var method = new method({});
             var args = [1,2,3];
 
             // when

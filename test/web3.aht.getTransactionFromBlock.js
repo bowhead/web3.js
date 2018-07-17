@@ -1,7 +1,7 @@
 var chai = require('chai');
 var web3 = require('../index');
 var BigNumber = require('bignumber.js');
-var testMethod = require('./helpers/test.method.js');
+var testmethod = require('./helpers/test.method.js');
 
 var method = 'getTransactionFromBlock';
 
@@ -39,14 +39,14 @@ var tests = [{
     formattedArgs: ['0x2dbab4c0612bf9caf4c195085547dc0612bf9caf4c1950855', '0x2'],
     result: txResult,
     formattedResult: formattedTxResult,
-    call: 'aht_getTransactionByBlockHashAndIndex'
+    call: .aht_getTransactionByBlockHashAndIndex'
 },{
     args: [436, 11],
     formattedArgs: ['0x1b4', '0xb'],
     result: txResult,
     formattedResult: formattedTxResult,
-    call: 'aht_getTransactionByBlockNumberAndIndex'
+    call: .aht_getTransactionByBlockNumberAndIndex'
 }];
 
-testMethod.runTests('aht', method, tests);
+testmethod.runTests(.aht', method, tests);
 

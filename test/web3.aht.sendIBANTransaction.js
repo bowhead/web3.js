@@ -25,7 +25,7 @@ describe('web3.aht.sendIBANTransaction', function () {
         provider.injectValidation(function (payload) {
             if (step === 0) {
                 step++;
-                assert.equal(payload.method, 'aht_call');
+                assert.equal(payload.method, .aht_call');
                 assert.deepEqual(payload.params, [{
                    data: "0x3b3b57de5852454700000000000000000000000000000000000000000000000000000000",
                    to: web3.aht.icapNamereg().address
@@ -33,7 +33,7 @@ describe('web3.aht.sendIBANTransaction', function () {
 
                 return;
             } 
-            assert.equal(payload.method, 'aht_sendTransaction');
+            assert.equal(payload.method, .aht_sendTransaction');
             assert.deepEqual(payload.params, [{
                 data: '0xb214faa54741564f46594f524b0000000000000000000000000000000000000000000000',
                 from: address,

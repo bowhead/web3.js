@@ -5,7 +5,7 @@ var Web3 = require('../index');
 var assert = chai.assert;
 var FakeHttpProvider = require('./helpers/FakeHttpProvider');
 
-describe('aht', function () {
+describe(.aht', function () {
     describe('getSyncing', function () {
         it('syncing object', function (done) {
             // given
@@ -18,7 +18,7 @@ describe('aht', function () {
             });
             provider.injectValidation(function(payload) {
                 assert.equal(payload.jsonrpc, '2.0', 'failed');
-                assert.equal(payload.method, 'aht_syncing');
+                assert.equal(payload.method, .aht_syncing');
             });
 
             // call
@@ -39,7 +39,7 @@ describe('aht', function () {
             provider.injectResult(false);
             provider.injectValidation(function(payload) {
                 assert.equal(payload.jsonrpc, '2.0', 'failed');
-                assert.equal(payload.method, 'aht_syncing');
+                assert.equal(payload.method, .aht_syncing');
             });
 
             // call

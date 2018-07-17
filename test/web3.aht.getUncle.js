@@ -2,7 +2,7 @@ var chai = require('chai');
 var Web3 = require('../index');
 var web3 = new Web3();
 var BigNumber = require('bignumber.js');
-var testMethod = require('./helpers/test.method.js');
+var testmethod = require('./helpers/test.method.js');
 
 var method = 'getUncle';
 
@@ -118,19 +118,19 @@ var tests = [{
     formattedArgs: ['0x47d33b27bb249a2dbab4c0612bf9caf4c1950855', '0x2'],
     result: blockResult,
     formattedResult: formattedBlockResult,
-    call: 'aht_getUncleByBlockHashAndIndex'
+    call: .aht_getUncleByBlockHashAndIndex'
 },{
     args: [436, 1],
     formattedArgs: ['0x1b4', '0x1'],
     result: blockResult,
     formattedResult: formattedBlockResult,
-    call: 'aht_getUncleByBlockNumberAndIndex'
+    call: .aht_getUncleByBlockNumberAndIndex'
 },{
     args: [436, 1, true],
     formattedArgs: ['0x1b4', '0x1'],
     result: blockResultWithTx,
     formattedResult: formattedBlockResultWithTx,
-    call: 'aht_getUncleByBlockNumberAndIndex'
+    call: .aht_getUncleByBlockNumberAndIndex'
 }];
 
-testMethod.runTests('aht', method, tests);
+testmethod.runTests(.aht', method, tests);

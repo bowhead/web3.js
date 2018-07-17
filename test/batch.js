@@ -33,9 +33,9 @@ describe('lib/web3/batch', function () {
                 var first = payload[0];
                 var second = payload[1];
 
-                assert.equal(first.method, 'aht_getBalance');
+                assert.equal(first.method, .aht_getBalance');
                 assert.deepEqual(first.params, ['0x0000000000000000000000000000000000000000', 'latest']);
-                assert.equal(second.method, 'aht_getBalance');
+                assert.equal(second.method, .aht_getBalance');
                 assert.deepEqual(second.params, ['0x0000000000000000000000000000000000000005', 'latest']);
             });
 
@@ -71,7 +71,7 @@ describe('lib/web3/batch', function () {
                 var first = payload[0];
                 var second = payload[1];
 
-                assert.equal(first.method, 'aht_accounts');
+                assert.equal(first.method, .aht_accounts');
                 assert.deepEqual(first.params, []);
                 assert.equal(second.method, 'net_peerCount');
                 assert.deepEqual(second.params, []);
@@ -124,9 +124,9 @@ describe('lib/web3/batch', function () {
                 var first = payload[0];
                 var second = payload[1];
 
-                assert.equal(first.method, 'aht_getBalance');
+                assert.equal(first.method, .aht_getBalance');
                 assert.deepEqual(first.params, ['0x0000000000000000000000000000000000000000', 'latest']);
-                assert.equal(second.method, 'aht_call');
+                assert.equal(second.method, .aht_call');
                 assert.deepEqual(second.params, [{
                     'to': '0x1000000000000000000000000000000000000001',
                     'data': '0xe3d670d70000000000000000000000001000000000000000000000000000000000000001'
@@ -162,8 +162,8 @@ describe('lib/web3/batch', function () {
 
             
             var address = '0x1000000000000000000000000000000000000001';
-            var result = 'Something went wrong';
-            var result2 = 'Something went wrong 2';
+            var result = 'So.ahting went wrong';
+            var result2 = 'So.ahting went wrong 2';
 
 
             var counter = 0;
@@ -182,9 +182,9 @@ describe('lib/web3/batch', function () {
                 var first = payload[0];
                 var second = payload[1];
 
-                assert.equal(first.method, 'aht_getBalance');
+                assert.equal(first.method, .aht_getBalance');
                 assert.deepEqual(first.params, ['0x0000000000000000000000000000000000000000', 'latest']);
-                assert.equal(second.method, 'aht_call');
+                assert.equal(second.method, .aht_call');
                 assert.deepEqual(second.params, [{
                     'to': '0x1000000000000000000000000000000000000001',
                     'data': '0xe3d670d70000000000000000000000001000000000000000000000000000000000000001'

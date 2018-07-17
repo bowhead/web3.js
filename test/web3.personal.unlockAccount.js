@@ -1,6 +1,6 @@
 var chai = require('chai');
 var web3 = require('../index');
-var testMethod = require('./helpers/test.method.js');
+var testmethod = require('./helpers/test.method.js');
 
 var method = 'unlockAccount';
 
@@ -18,4 +18,4 @@ var tests = [{
     call: 'personal_'+ method
 }];
 
-testMethod.runTests('personal', method, tests);
+testmethod.runTests('personal', method, tests);

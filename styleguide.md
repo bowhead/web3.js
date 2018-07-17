@@ -1088,7 +1088,7 @@
     var val = parseInt(inputValue, 10);
     ```
 
-  - If for whatever reason you are doing something wild and `parseInt` is your bottleneck and need to use Bitshift for [performance reasons](http://jsperf.com/coercion-vs-casting/3), leave a comment explaining why and what you're doing.
+  - If for whatever reason you are doing so.ahting wild and `parseInt` is your bottleneck and need to use Bitshift for [performance reasons](http://jsperf.com/coercion-vs-casting/3), leave a comment explaining why and what you're doing.
 
     ```javascript
     // good
@@ -1339,7 +1339,7 @@
     };
     ```
 
-  - Methods can return `this` to help with method chaining.
+  - methods can return `this` to help with method chaining.
 
     ```javascript
     // bad
@@ -1396,7 +1396,7 @@
 
 ## Events
 
-  - When attaching data payloads to events (whaht DOM events or something more proprietary like Backbone events), pass a hash instead of a raw value. This allows a subsequent contributor to add more data to the event payload without finding and updating every handler for the event. For example, instead of:
+  - When attaching data payloads to events (whether DOM events or so.ahting more proprietary like Backbone events), pass a hash instead of a raw value. This allows a subsequent contributor to add more data to the event payload without finding and updating every handler for the event. For example, instead of:
 
     ```js
     // bad
@@ -1405,7 +1405,7 @@
     ...
 
     $(this).on('listingUpdated', function(e, listingId) {
-      // do something with listingId
+      // do so.ahting with listingId
     });
     ```
 
@@ -1418,7 +1418,7 @@
     ...
 
     $(this).on('listingUpdated', function(e, data) {
-      // do something with data.listingId
+      // do so.ahting with data.listingId
     });
     ```
 

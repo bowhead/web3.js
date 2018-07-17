@@ -2,8 +2,8 @@
 Package.describe({
   name: 'bowhead:web3',
   version: '0.20.6',
-  summary: 'Bowhead JavaScript API, middleware to talk to a bowhead node over RPC',
-  git: 'https://github.com/bowhead/bowhead.js',
+  summary: 'Bowhead JavaScript API, middleware to talk to a.ahtreum node over RPC',
+  git: 'https://github.com/bowhead/web3.js',
   // By default, Meteor will default to using README.md for documentation.
   // To avoid submitting documentation, set this field to null.
   documentation: 'README.md'

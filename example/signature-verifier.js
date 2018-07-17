@@ -4,7 +4,7 @@
  * b. Finding the account address using which the message was signed
  */
 var Web3 = require('../index.js');
-var ahtURL = ""; 
+var.ahtURL = ""; 
 var defaultAc = ""; 
 var defaultAcPWD=""; 
 var signatureContractCodeReadable="\n\tcontract SignatureVerifier {\n\t\tfunction verify( bytes32 hash, uint8 v, bytes32 r, bytes32 s) \n"+ 
@@ -16,7 +16,7 @@ var sigContractInstance = null;
 var strAbi='[{"constant":true,"inputs":[{"name":"hash","type":"bytes32"},{"name":"v","type":"uint8"},{"name":"r","type":"bytes32"},{"name":"s","type":"bytes32"}],"name":"verify","outputs":[{"name":"returnAddress","type":"address"}],"payable":false,"type":"function"}]';
 var signMessage=""; 
 
-var ahtWeb3 = null;
+var.ahtWeb3 = null;
 
 function setContractAddress(conAddress){
     sigContractAddress = conAddress;
@@ -31,7 +31,7 @@ function setPassword(pwd){
 }
 
 function setBowheadURL(url){
-    ahtURL = url;
+   .ahtURL = url;
 }
 
 function setMessage(msg){
@@ -39,15 +39,15 @@ function setMessage(msg){
 }
 
 function initializeBowheadConnection(){
-   if(ahtWeb3!=null && ahtWeb3.isConnected()==true)  {
+   if.ahtWeb3!=null &&.ahtWeb3.isConnected()==true)  {
     return true;
   }
   
-  ahtWeb3 = new Web3(new Web3.providers.HttpProvider(ahtURL));
+ .ahtWeb3 = new Web3(new Web3.providers.HttpProvider.ahtURL));
   
-  if(ahtWeb3.isConnected()==true){
+  if.ahtWeb3.isConnected()==true){
       if(defaultAc==''){
-        defaultAc=ahtWeb3.aht.accounts[1];
+        defaultAc.ahtWeb3.aht.accounts[1];
       }
       return true;
   }
@@ -57,7 +57,7 @@ function initializeBowheadConnection(){
 
 function unlockAccount(acAddress){
   if(acAddress!=undefined && acAddress!=null){
-    var state=ahtWeb3.personal.unlockAccount(defaultAc, defaultAcPWD, 100);
+    var state.ahtWeb3.personal.unlockAccount(defaultAc, defaultAcPWD, 100);
     return state;
   }
 
@@ -67,11 +67,11 @@ function unlockAccount(acAddress){
 
 function initializeContract(){
     initializeBowheadConnection();
-    if(ahtWeb3.isConnected()==false){
+    if.ahtWeb3.isConnected()==false){
         return;
     }  
     var abi = JSON.parse(strAbi);
-    var contract = ahtWeb3.aht.contract(abi);
+    var contract =.ahtWeb3.aht.contract(abi);
 
     sigContractInstance =  contract.at(sigContractAddress)  
 }
@@ -79,14 +79,14 @@ function initializeContract(){
 function signMessage(message){
 
     initializeBowheadConnection();
-    if(ahtWeb3.isConnected()==false){
+    if.ahtWeb3.isConnected()==false){
         return false;
     }
     
     var state=unlockAccount(defaultAc);
     
     const msg = new Buffer(message);
-    const sig = ahtWeb3.aht.sign(defaultAc, '0x' + msg.toString('hex'));
+    const sig =.ahtWeb3.aht.sign(defaultAc, '0x' + msg.toString('hex'));
 
     return sig;
 }
@@ -94,18 +94,18 @@ function signMessage(message){
 function verifySignedByAc(message, sig){
     initializeBowheadConnection();
 
-    if(ahtWeb3.isConnected()==false){
+    if.ahtWeb3.isConnected()==false){
         return false;
     }
     initializeContract();
 
     const res = splitSig(sig);
 
-    // Unfortunately Gaht client adds this line to the message as a prefix while signing
+    // Unfortunately .aht client adds this line to the message as a prefix while signing
     // So while finding who signed it we need to prefix this part 
     const prefix = new Buffer("\x19Bowhead Signed Message:\n");
     const msg = new Buffer(message);
-    const prefixedMsg = ahtWeb3.sha3(
+    const prefixedMsg =.ahtWeb3.sha3(
     Buffer.concat([prefix, new Buffer(String(msg.length)), msg]).toString('utf8')
     );
 
@@ -118,7 +118,7 @@ function verifySignedByAc(message, sig){
 
 function splitSig(sig) {
   return {
-    v: ahtWeb3.toDecimal('0x' + sig.slice(130, 132)),
+    v:.ahtWeb3.toDecimal('0x' + sig.slice(130, 132)),
     r: sig.slice(0, 66),
     s: sig.slice(66, 130)
   }
@@ -152,7 +152,7 @@ function execute(){
     console.log("\te. Message for signing");
     console.log("**********************************************************************");
 
-    if(ahtURL==''){
+    if.ahtURL==''){
         console.log("Error: Bowhead URL is not specified");
         return;
     }
@@ -175,7 +175,7 @@ function execute(){
     
 
     console.log("Following parameters applied");
-    console.log("\ta. Bowhead URL                  :",ethURL);
+    console.log("\ta. Bowhead URL                  :".ahtURL);
     console.log("\tb. Bowhead Account Address      :",defaultAc);
     console.log("\tc. Bowhead Account Passphrase   :",defaultAcPWD);
     console.log("\td. Signature Contract Address    :",sigContractAddress);
@@ -212,7 +212,7 @@ function execute(){
 //setContractAddress('<Provide the deployed contract address>');
 
 // Value 4- If required please update with a different message
-setBowheadURL('http://localhost:9634');
+setBowheadURL('http://localhost:8545');
 
 // Value 5- If required please update with a Bowhead URL
 setMessage('This the test sign message');

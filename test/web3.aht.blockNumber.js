@@ -9,7 +9,7 @@ var method = 'blockNumber';
 var tests = [{
     result: '0xb',
     formattedResult: 11,
-    call: 'aht_'+ method
+    call: .aht_'+ method
 }];
 
 describe('web3.aht', function () {

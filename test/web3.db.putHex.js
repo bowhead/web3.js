@@ -1,6 +1,6 @@
 var chai = require('chai');
 var web3 = require('../index');
-var testMethod = require('./helpers/test.method.js');
+var testmethod = require('./helpers/test.method.js');
 
 var method = 'putHex';
 
@@ -12,5 +12,5 @@ var tests = [{
     call: 'db_'+ method
 }];
 
-testMethod.runTests('db', method, tests);
+testmethod.runTests('db', method, tests);
 

@@ -1,7 +1,7 @@
 var chai = require('chai');
 var Web3 = require('../index');
 var web3 = new Web3();
-var testMethod = require('./helpers/test.method.js');
+var testmethod = require('./helpers/test.method.js');
 
 var method = 'post';
 
@@ -31,5 +31,5 @@ var tests = [{
     call: 'shh_'+ method
 }];
 
-testMethod.runTests('shh', method, tests);
+testmethod.runTests('shh', method, tests);
 

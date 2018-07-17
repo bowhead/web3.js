@@ -1,6 +1,6 @@
 var chai = require('chai');
 var assert = chai.assert;
-var Method = require('../lib/web3/method');
+var method = require('../lib/web3/method');
 var errors = require('../lib/web3/errors');
 
 describe('lib/web3/method', function () {
@@ -8,7 +8,7 @@ describe('lib/web3/method', function () {
         it('should pass', function () {
             
             // given
-            var method = new Method({
+            var method = new method({
                 params: 1
             });
 
@@ -27,7 +27,7 @@ describe('lib/web3/method', function () {
         it('should return call based on args', function () {
         
             // given
-            var method = new Method({
+            var method = new method({
                 params: 2
             });
 
