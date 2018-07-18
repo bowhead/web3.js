@@ -37,8 +37,8 @@ var tests = [{
     formattedArgs: ['0x2dbab4c0612bf9caf4c195085547dc0612bf9caf4c1950855'],
     result: txResult,
     formattedResult: formattedTxResult,
-    call: .aht_'+ method + 'ByHash'
+    call: 'aht_'+ method + 'ByHash'
 }];
 
-testmethod.runTests(.aht', method, tests);
+testmethod.runTests('aht', method, tests);
 

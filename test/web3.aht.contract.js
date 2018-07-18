@@ -230,13 +230,13 @@ describe('web3.aht.contract', function() {
         provider.injectValidation(function (payload) {
             if (steps === 1) {
                 assert.equal(payload.jsonrpc, '2.0');
-                assert.equal(payload.method, .aht_sendTransaction');
+                assert.equal(payload.method, 'aht_sendTransaction');
                 assert.equal(payload.params[0].data, code + '0000000000000000000000000000000000000000000000000000000000000002');
                 steps++;
 
             } else if (steps === 2) {
                 assert.equal(payload.jsonrpc, '2.0');
-                assert.equal(payload.method, .aht_newBlockFilter');
+                assert.equal(payload.method, 'aht_newBlockFilter');
                 steps++;
             }
         });

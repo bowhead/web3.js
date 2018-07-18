@@ -6,29 +6,29 @@ var FakeHttpProvider = require('./helpers/FakeHttpProvider');
 var utils = require('../lib/utils/utils');
 
 var tests = [{
-    protocol: .aht',
+    protocol: 'aht',
     args: ['latest'],
     firstResult: 1,
     firstPayload: {
-        method: .aht_newBlockFilter",
+        method: "aht_newBlockFilter",
         params: []
     },
     secondResult: ['0x1234'],
     secondPayload: {
-        method: .aht_getFilterChanges"
+        method: "aht_getFilterChanges"
     }
 },
 {
-    protocol: .aht',
+    protocol: 'aht',
     args: ['pending'],
     firstResult: 1,
     firstPayload: {
-        method: .aht_newPendingTransactionFilter",
+        method: "aht_newPendingTransactionFilter",
         params: []
     },
     secondResult: ['0x1234'],
     secondPayload: {
-        method: .aht_getFilterChanges"
+        method: "aht_getFilterChanges"
     }
 }];
 

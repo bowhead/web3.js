@@ -117,20 +117,20 @@ var tests = [{
     formattedArgs: ['0x47d33b27bb249a2dbab4c0612bf9caf4c1950855', false],
     result: blockResult,
     formattedResult: formattedBlockResult,
-    call: .aht_'+ method + 'ByHash'
+    call: 'aht_'+ method + 'ByHash'
 },{
     args: [436],
     formattedArgs: ['0x1b4', false],
     result: blockResult,
     formattedResult: formattedBlockResult,
-    call: .aht_'+ method + 'ByNumber'
+    call: 'aht_'+ method + 'ByNumber'
 },{
     args: [436, true],
     formattedArgs: ['0x1b4', true],
     result: blockResultWithTx,
     formattedResult: formattedBlockResultWithTx,
-    call: .aht_'+ method + 'ByNumber'
+    call: 'aht_'+ method + 'ByNumber'
 }];
 
-testmethod.runTests(.aht', method, tests);
+testmethod.runTests('aht', method, tests);
 

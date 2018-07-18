@@ -18,7 +18,7 @@ var tests = [{
     },
     result: '0xb',
     formattedResult: '0xb',
-    call: .aht_'+ method
+    call: 'aht_'+ method
 }];
 
 describe('async', function () {

@@ -8,13 +8,13 @@ var web3 = new Web3();
 var tests = [{
     properties: [new web3._extend.Property({
         name: 'gasPrice',
-        getter: .aht_gasPrice',
+        getter: 'aht_gasPrice',
         outputFormatter: web3._extend.formatters.outputBigNumberFormatter
     })]
 },{
     methods: [new web3._extend.method({
         name: 'getBalance',
-        call: .aht_getBalance',
+        call: 'aht_getBalance',
         params: 2,
         inputFormatter: [web3._extend.utils.toAddress, web3._extend.formatters.inputDefaultBlockNumberFormatter],
         outputFormatter: web3._extend.formatters.outputBigNumberFormatter
@@ -23,12 +23,12 @@ var tests = [{
     property: 'admin',
     properties: [new web3._extend.Property({
         name: 'gasPrice',
-        getter: .aht_gasPrice',
+        getter: 'aht_gasPrice',
         outputFormatter: web3._extend.formatters.outputBigNumberFormatter
     })],
     methods: [new web3._extend.method({
         name: 'getBalance',
-        call: .aht_getBalance',
+        call: 'aht_getBalance',
         params: 2,
         inputFormatter: [web3._extend.utils.toAddress, web3._extend.formatters.inputDefaultBlockNumberFormatter],
         outputFormatter: web3._extend.formatters.outputBigNumberFormatter
