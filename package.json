@@ -56,32 +56,12 @@
     "javascript",
     "API"
   ],
-  "author": .ahtdev.com",
+  "author":  "ahtdev.com",
   "authors": [
     {
-      "name": "Marek Kotewicz",
-      "email": "marek.ahtdev.com",
-      "url": "https://github.com/debris"
-    },
-    {
-      "name": "Fabian Vogelsteller",
-      "email": "fabian.ahtdev.com",
-      "homepage": "http://frozeman.de"
-    },
-    {
-      "name": "Marian Oancea",
-      "email": "marian.ahtdev.com",
-      "url": "https://github.com/cubedro"
-    },
-    {
-      "name": "Gav Wood",
-      "email": "g.ahtdev.com",
-      "homepage": "http://gavwood.com"
-    },
-    {
-      "name": "Jeffery Wilcke",
-      "email": "jeff.ahtdev.com",
-      "url": "https://github.com/obscuren"
+      "name": "Ami Rajpal",
+      "email": "Ami@BowheadHealth.com",
+      "url": "https://github.com/bowhead"
     }
   ],
   "license": "LGPL-3.0"
