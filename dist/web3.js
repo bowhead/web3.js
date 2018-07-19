@@ -5995,7 +5995,7 @@ module.exports = Swarm;
 var method = require('../method');
 
 /// @returns an array of objects describing web._aht.filter api methods
-va._aht.= function () {
+var aht = function () {
     var newFilterCall = function (args) {
         var type = args[0];
 
