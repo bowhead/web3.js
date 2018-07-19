@@ -212,7 +212,7 @@ function execute(){
 //setContractAddress('<Provide the deployed contract address>');
 
 // Value 4- If required please update with a different message
-setBowheadURL('http://localhost:8545');
+setBowheadURL('http://localhost:9634');
 
 // Value 5- If required please update with a Bowhead URL
 setMessage('This the test sign message');
