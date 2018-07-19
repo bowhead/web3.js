@@ -7,8 +7,10 @@
 <script type="text/javascript">
    
     var Web3 = require('web3');
+    console.log(Web3); // debug
     var web3 = new Web3();
     web3.setProvider(new web3.providers.HttpProvider());
+    console.log(Web3); // debug
 
     function watchBalance() {
         var coinbase = web3.aht.coinbase;
