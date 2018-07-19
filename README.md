@@ -1,33 +1,24 @@
-# Migration 0.13.0 -> 0.14.0
+**PREVIEW RELEASE** This is a beta preview release with breaking changes! The current stable version is 0.20.0 
 
-web3.js version 0.14.0 supports [multiple instances of web3](https://github.com/bowhead/web3.js/issues/297) object.
-To migrate to this version, please follow the guide:
+<img src="https://github.com/bowhead/web3.js/raw/1.0/web3js.jpg" width=200 />
 
-```diff
--var web3 = require('web3');
-+var Web3 = require('web3');
-+var web3 = new Web3();
-```
-
-
-# Bowhead JavaScript API
+# web3.js - Bowhead JavaScript API
 
 [![Join the chat at https://gitter.im/bowhead/web3.js](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/bowhead/web3.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-This is the Bowhead compatible [JavaScript API](https://github.com/bowhead/wiki/wiki/JavaScript-API)
-which implements the [Generic JSON RPC](https://github.com/bowhead/wiki/wiki/JSON-RPC) spec. It's available on npm as a node module, for bower and component as an embeddable js and as a meteor.js package.
+[![npm](https://img.shields.io/npm/dm/web3.svg)](https://www.npmjs.com/package/web3) [![Build Status][travis-image]][travis-url] [![dependency status][dep-image]][dep-url] [![dev dependency status][dep-dev-image]][dep-dev-url] [![Coverage Status][coveralls-image]][coveralls-url] [![Stories in Ready][waffle-image]][waffle-url]
 
-[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![dependency status][dep-image]][dep-url] [![dev dependency status][dep-dev-image]][dep-dev-url] [![Coverage Status][coveralls-image]][coveralls-url] [![Stories in Ready][waffle-image]][waffle-url]
+This is the Bowhead [JavaScript API][docs]
+which connects to the [Generic JSON RPC](https://github.com/bowhead/wiki/wiki/JSON-RPC) spec.
 
-<!-- [![browser support](https://ci.testling.com/bowhead/bowhead.js.png)](https://ci.testling.com/bowhead/bowhead.js) -->
 
-You need to run a local Bowhead node to use this library.
+You need to run a local or remote Bowhead node to use this library.
 
-[Documentation](https://github.com/bowhead/wiki/wiki/JavaScript-API)
+Please read the [documentation][docs] for more.
 
 ## Installation
 
-### Node.js
+### Node
 
 ```bash
 npm install web3
@@ -39,87 +30,90 @@ npm install web3
 yarn add web3
 ```
 
-### Meteor.js
+### Meteor
+
+*Note*: works only in the Browser for now. (PR welcome).
 
 ```bash
 meteor add bowhead:web3
 ```
 
-### As Browser module
+### In the Browser
 
-CDN
-
-```html
-<script src="https://cdn.jsdelivr.net/gh/bowhead/web3.js/dist/web3.min.js"></script>
-```
-
-Bower
+Use the prebuild ``dist/web3.min.js``, or
+build using the [web3.js][repo] repository:
 
 ```bash
-bower install web3
+npm run-script build
 ```
 
-Component
-
-```bash
-component install bowhead/web3.js
-```
-
-* Include `web3.min.js` in your html file. (not required for the meteor package)
+Then include `dist/web3.js` in your html file.
+This will expose `Web3` on the window object.
 
 ## Usage
-Use the `web3` object directly from global namespace:
 
 ```js
-console.log(web3); // .aht: .., shh: ...} // it's here!
-```
+// in node.js
+var Web3 = require('web3');
 
-Set a provider (HttpProvider)
-
-```js
-if (typeof web3 !== 'undefined') {
-  web3 = new Web3(web3.currentProvider);
-} else {
-  // set the provider you want from Web3.providers
-  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9634"));
+var web3 = new Web3('ws://localhost:8546');
+console.log(web3);
+> {
+    aht: ... ,
+    shh: ... ,
+    utils: ...,
+    ...
 }
 ```
 
-Set a provider (HttpProvider using [HTTP Basic Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication))
+Additionally you can set a provider using `web3.setProvider()` (e.g. WebsocketProvider)
 
 ```js
-web3.setProvider(new web3.providers.HttpProvider('http://host.url', 0, BasicAuthUsername, BasicAuthPassword));
+web3.setProvider('ws://localhost:8546');
+// or
+web3.setProvider(new Web3.providers.WebsocketProvider('ws://localhost:8546'));
 ```
 
 There you go, now you can use it:
 
 ```js
-var coinbase = web3.aht.coinbase;
-var balance = web3.aht.getBalance(coinbase);
+web3.aht.getAccounts()
+.then(console.log);
 ```
 
-You can find more examples in [`example`](https://github.com/bowhead/web3.js/tree/master/example) directory.
+## Documentation
+
+Documentation can be found at [read the docs][docs]
 
 
-## Contribute!
+## Building
 
 ### Requirements
 
-* Node.js
+* [Node.js](https://nodejs.org)
 * npm
 
 ```bash
 sudo apt-get update
 sudo apt-get install nodejs
 sudo apt-get install npm
-sudo apt-get install nodejs-legacy
 ```
 
 ### Building (gulp)
 
+Build only the web3.js package
+
 ```bash
 npm run-script build
 ```
+
+Or build all sub packages as well
+
+```bash
+npm run-script build-all
+```
+
+This will put all the browser build files into the `dist` folder.
 
 
 ### Testing (mocha)
@@ -128,22 +122,28 @@ npm run-script build
 npm test
 ```
 
+### Contributing
+
+- All contributions have to go into develop, or the 1.0 branch
+- Please follow the code style of the other files, we use 4 spaces as tabs.
+
 ### Community
  - [Gitter](https://gitter.im/bowhead/web3.js?source=orgpage)
  - [Forum](https://forum.bowhead.org/categories/bowhead-js)
 
 
-### Other implementations
- - Python [Web3.py](https://github.com/bowhead/web3.py)
- - Haskell [hs-web3](https://github.com/airalab/hs-web3)
- - Java [web3j](https://github.com/web3j/web3j)
+### Similar libraries in other languages
+ - Python [Web3.py](https://github.com/pipermerriam/web3.py)
+ - Haskell [hs-web3](https://github.com/airalab/hs-web3)		   - Haskell [hs-web3](https://github.com/airalab/hs-web3)
+ - Java [web3j](https://github.com/web3j/web3j)		   - Java [web3j](https://github.com/web3j/web3j)
  - Scala [web3j-scala](https://github.com/mslinn/web3j-scala)
  - Purescript [purescript-web3](https://github.com/f-o-a-m/purescript-web3)
  - PHP [web3.php](https://github.com/sc0Vu/web3.php)
- - PHP [bowhead-php](https://github.com/digitaldonkey/bowhead-php)
 
 
-[npm-image]: https://badge.fury.io/js/web3.svg
+[repo]: https://github.com/bowhead/web3.js
+[docs]: http://web3js.readthedocs.io/en/1.0/
+[npm-image]: https://badge.fury.io/js/web3.png
 [npm-url]: https://npmjs.org/package/web3
 [travis-image]: https://travis-ci.org/bowhead/web3.js.svg
 [travis-url]: https://travis-ci.org/bowhead/web3.js

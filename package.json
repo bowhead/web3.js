@@ -1,46 +1,23 @@
 {
   "name": "web3",
   "namespace": "bowhead",
-  "version": "0.20.6",
-  "description": "Bowhead JavaScript API, middleware to talk to a bowhead node over RPC",
-  "main": "./index.js",
+  "version": "1.0.0-beta.34",
+  "description": "Bowhead JavaScript API wrapper repository",
+  "license": "LGPL-3.0",
+  "main": "./packages/web3/src/index.js",
   "directories": {
-    "lib": "./lib"
-  },
-  "dependencies": {
-    "bignumber.js": "git+https://github.com/frozeman/bignumber.js-nolookahead.git",
-    "crypto-js": "^3.1.4",
-    "utf8": "^2.1.1",
-    "xhr2-cookies": "^1.1.0",
-    "xmlhttprequest": "*"
-  },
-  "browser": {
-    "xmlhttprequest": "./lib/utils/browser-xhr.js"
-  },
-  "devDependencies": {
-    "bower": ">=1.4.1",
-    "browserify": ">=10.0",
-    "chai": "^3.0.0",
-    "coveralls": "^2.11.2",
-    "del": ">=2.0.2",
-    "exorcist": "^0.4.0",
-    "gulp": ">=3.9.0",
-    "gulp-jshint": ">=1.5.0",
-    "gulp-rename": ">=1.2.0",
-    "gulp-replace": "^0.5.3",
-    "gulp-streamify": "0.0.5",
-    "gulp-uglify": ">=1.2.0",
-    "istanbul": "^0.4.4",
-    "jshint": ">=2.5.0",
-    "mocha": ">=2.3.3",
-    "sandboxed-module": "^2.0.2",
-    "vinyl-source-stream": "^1.1.0"
+    "doc": "./doc",
+    "test": "./test"
   },
   "scripts": {
+    "postinstall": "lerna bootstrap",
     "build": "gulp",
+    "build-all": "gulp all",
+    "release": "lerna bootstrap; lerna publish; gulp version; gulp; gulp publishTag; git push --tags",
     "watch": "gulp watch",
-    "lint": "jshint *.js lib",
-    "test": "mocha; jshint *.js lib",
+    "docs": "cd docs; make html;",
+    "lint": "jshint *.js packages",
+    "test": "mocha; jshint *.js packages",
     "test-coveralls": "istanbul cover _mocha -- -R spec && cat coverage/lcov.info | coveralls --verbose"
   },
   "repository": {
@@ -49,20 +26,69 @@
   },
   "homepage": "https://github.com/bowhead/web3.js",
   "bugs": {
-    "url": "https://github.com/bowhead/web3.js/issues"
+    "url    ": "https://github.com/bowhead/web3.js/issues"
   },
   "keywords": [
-    "bowhead",
-    "javascript",
+    "Bowhead",
+    "JavaScript",
     "API"
   ],
-  "author":  "ahtdev.com",
+  "author": "bowhead.org",
   "authors": [
     {
-      "name": "Ami Rajpal",
-      "email": "Ami@BowheadHealth.com",
-      "url": "https://github.com/bowhead"
+      "name": "Fabian Vogelsteller",
+      "email": "fabian@bowhead.org",
+      "homepage": "http://frozeman.de"
+    },
+    {
+      "name": "Marek Kotewicz",
+      "email": "marek@parity.io",
+      "url": "https://github.com/debris"
+    },
+    {
+      "name": "Marian Oancea",
+      "url": "https://github.com/cubedro"
+    },
+    {
+      "name": "Gav Wood",
+      "email": "g@parity.io",
+      "homepage": "http://gavwood.com"
+    },
+    {
+      "name": "Jeffery Wilcke",
+      "email": "jeffrey.wilcke@bowhead.org",
+      "url": "https://github.com/obscuren"
     }
   ],
-  "license": "LGPL-3.0"
+  "devDependencies": {
+    "@types/bignumber.js": "^4.0.2",
+    "@types/underscore": "^1.8.0",
+    "babel-preset-env": "^1.6.0",
+    "bignumber.js": "^4.0.0",
+    "bluebird": "3.3.1",
+    "bn.js": "^4.11.6",
+    "bower": ">=1.4.1",
+    "browserify": "^14.4.0",
+    "chai": "^4.0.0",
+    "coveralls": "^2.11.2",
+    "crypto-js": "^3.1.4",
+    "del": ">=2.0.2",
+    "bowheadjs-wallet": "^0.6.0",
+    "ethjs-signer": "^0.1.1",
+    "exorcist": "^0.4.0",
+    "gulp": ">=3.9.0",
+    "gulp-babel": "^6.1.2",
+    "gulp-jshint": "^2.0.4",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.6.1",
+    "gulp-streamify": "^1.0.2",
+    "gulp-uglify": "^3.0.0",
+    "istanbul": "^0.4.4",
+    "jshint": ">=2.5.0",
+    "lerna": "^2.5.1",
+    "mocha": ">=2.3.3",
+    "sandboxed-module": "^2.0.2",
+    "underscore": "^1.8.3",
+    "vinyl-source-stream": "^1.1.0"
+  }
 }

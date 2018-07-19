@@ -1,50 +1,63 @@
 {
-  "name": "web3",
   "namespace": "bowhead",
-  "version": "0.17.0-alpha",
-  "description": "Bowhead Compatible JavaScript API",
+  "name": "web3",
+  "version": "1.0.0-beta.34",
+  "description": "Bowhead JavaScript API",
+  "license": "LGPL-3.0",
   "main": [
-    "./dist/web3.js",
     "./dist/web3.min.js"
   ],
+  "moduleType": "global",
   "dependencies": {
-    "bignumber.js": ">=2.0.0 <=5.0.0",
-    "crypto-js": "~3.1.4"
+    "bn.js": ">=4.11.6"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bowhead/web3.js.git"
+    "url": "git://github.com/bowhead/web3.js.git"
   },
   "homepage": "https://github.com/bowhead/web3.js",
   "bugs": {
     "url": "https://github.com/bowhead/web3.js/issues"
   },
   "keywords": [
-    "bowhead",
-    "javascript",
+    "Bowhead",
+    "JavaScript",
+    "RPC",
+    "Swarm",
+    "Whisper",
+    "Smart Contracts",
     "API"
   ],
   "authors": [
     {
+      "name": "Fabian Vogelsteller",
+      "email": "fabian@bowhead.org",
+      "homepage": "http://frozeman.de"
+    },
+    {
       "name": "Marek Kotewicz",
-      "email": "marek.ahtdev.com",
-      "homepage": "https://github.com/debris"
+      "email": "marek@parity.io",
+      "url": "https://github.com/debris"
     },
     {
       "name": "Marian Oancea",
-      "email": "marian.ahtdev.com",
-      "homepage": "https://github.com/cubedro"
+      "url": "https://github.com/cubedro"
     },
     {
-      "name": "Fabian Vogelsteller",
-      "email": "fabian.ahtdev.com",
-      "homepage": "https://github.com/frozeman"
+      "name": "Gav Wood",
+      "email": "g@parity.io",
+      "homepage": "http://gavwood.com"
+    },
+    {
+      "name": "Jeffery Wilcke",
+      "email": "jeffrey.wilcke@bowhead.org",
+      "url": "https://github.com/obscuren"
     }
   ],
-  "license": "LGPL-3.0",
   "ignore": [
-    "example",
-    "lib",
+    "test",
+    "packages",
+    "src",
     "node_modules",
     "package.json",
     "package.js",

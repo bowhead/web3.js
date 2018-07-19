@@ -1,13 +1,13 @@
 var chai = require('chai');
 var assert = chai.assert;
-var method = require('../lib/web3/method');
+var Method = require('../packages/web3-core-method');
 
 describe('lib/web3/method', function () {
     describe('extractCallback', function () {
         it('should extract callback', function () {
-            
+
             // given
-            var method = new method({});
+            var method = new Method({name: 'something', call: 'aht_something'});
             var callback = function () { };
             var args = [1, callback]
 
@@ -18,11 +18,11 @@ describe('lib/web3/method', function () {
             assert.equal(args.length, 1);
             assert.equal(callback, result);
         });
-        
+
         it('should extract callback created using newFunction', function () {
-            
+
             // given
-            var method = new method({});
+            var method = new Method({name: 'something', call: 'aht_something'});
             var callback = new Function ();
             var args = [1, callback]
 
@@ -35,9 +35,9 @@ describe('lib/web3/method', function () {
         });
 
         it('should not extract the callback', function () {
-            
+
             // given
-            var method = new method({});
+            var method = new Method({name: 'something', call: 'aht_something'});
             var args = [1, 2]
 
             // when
