@@ -9,8 +9,8 @@ var tests = [{
     formattedArgs: [],
     result: true,
     formattedResult: true,
-    call: .aht_'+ method
+    call: 'aht_'+ method
 }];
 
-testmethod.runTests(.aht', method, tests);
+testmethod.runTests('aht', method, tests);
 

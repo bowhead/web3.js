@@ -18,8 +18,8 @@ var tests = [{
     }],
     result: '0x31981',
     formattedResult: 203137,
-    call: .aht_'+ method
+    call: 'aht_'+ method
 }];
 
-testmethod.runTests(.aht', method, tests);
+testmethod.runTests('aht', method, tests);
 
