@@ -2483,7 +2483,7 @@ module.exports={
 
 var RequestManager = require('./web3/requestmanager');
 var Iban = require('./web3/iban');
-var Aht = require('./web3/methods/aht);
+var Aht = require('./web3/methods/aht');
 var DB = require('./web3/methods/db');
 var Shh = require('./web3/methods/shh');
 var Net = require('./web3/methods/net');
@@ -5995,7 +5995,7 @@ module.exports = Swarm;
 var method = require('../method');
 
 /// @returns an array of objects describing web._aht.filter api methods
-va._aht.= function () {
+var aht = function () {
     var newFilterCall = function (args) {
         var type = args[0];
 
