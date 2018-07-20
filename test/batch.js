@@ -200,8 +200,8 @@ describe('lib/web3/batch', function () {
 
 
             var address = '0x1000000000000000000000000000000000000001';
-            var result = 'Somaht.ng went wrong';
-            var result2 = 'Somaht.ng went wrong 2';
+            var result = 'Something went wrong';
+            var result2 = 'Something went wrong 2';
 
 
             var counter = 0;

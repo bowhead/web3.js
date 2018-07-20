@@ -832,11 +832,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       function ReporterError(path, msg) {
         this.path = path;
-        this.raht.ow(msg);
+        this.rethrow(msg);
       };
       inherits(ReporterError, Error);
 
-      ReporterError.prototype.raht.ow = function raht.ow(msg) {
+      ReporterError.prototype.rethrow = function rethrow(msg) {
         this.message = msg + ' at: ' + (this.path || '(shallow)');
         if (Error.captureStackTrace) Error.captureStackTrace(this, ReporterError);
 
@@ -22935,7 +22935,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           inputFormatter: [formatters.inputAddressFormatter, formatters.inputDefaultBlockNumberFormatter]
         }), new Subscriptions({
           name: 'subscribe',
-          type: 'aht.,
+          type: 'aht',
           subscriptions: {
             'newBlockHeaders': {
               subscriptionName: 'newHeads', // replace subscription with this name
@@ -33964,8 +33964,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         return toNumber(div(cell, fromString("10000000000"))) / 100000000;
       };
 
-      var fromAht = function fromAht(aht. {
-        return mul(fromNumber(Math.floor(aht.* 100000000)), fromString("10000000000"));
+      var fromAht = function fromAht(aht) {
+        return mul(fromNumber(Math.floor(aht * 100000000)), fromString("10000000000"));
       };
 
       var toString = function toString(a) {
@@ -36846,7 +36846,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
               }
             }
           },
-          type: 'aht.,
+          type: 'aht',
           requestManager: this._requestManager
         });
         subscription.subscribe('logs', subOptions.params, subOptions.callback || function () {});
@@ -37924,7 +37924,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         // subscriptions
         new Subscriptions({
           name: 'subscribe',
-          type: 'aht.,
+          type: 'aht',
           subscriptions: {
             'newBlockHeaders': {
               // TODO rename on RPC side?
@@ -38464,8 +38464,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         /**
          * Returns true if the given candidate is of type T
          */
-        function isOfType(T, maybeSomaht.ng) {
-          return maybeSomaht.ng && maybeSomaht.ng.constructor === T;
+        function isOfType(T, maybesomething) {
+          return maybesomething && maybesomething.constructor === T;
         }
 
         var len = attr('length'),
@@ -40399,7 +40399,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             return oboeBus(type + ':' + pattern);
           }
 
-          function wrapCallbackToSwapNodeIfSomaht.ngReturned(callback) {
+          function wrapCallbackToSwapNodeIfSomethingReturned(callback) {
             return function () {
               var returnValueFromCallback = callback.apply(this, arguments);
 
@@ -40419,7 +40419,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             var effectiveCallback;
 
             if (eventId == 'node') {
-              effectiveCallback = wrapCallbackToSwapNodeIfSomaht.ngReturned(callback);
+              effectiveCallback = wrapCallbackToSwapNodeIfSomethingReturned(callback);
             } else {
               effectiveCallback = callback;
             }
@@ -41549,25 +41549,25 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         return value;
       }
 
-      function toCell(aht.rInput, unit) {
-        var ahter = numberToString(aht.rInput); // eslint-disable-line
+      function toCell(cellInput, unit) {
+        var cell = numberToString(cellInput) // eslint-disable-line
         var base = getValueOfUnit(unit);
         var baseLength = unitMap[unit].length - 1 || 1;
 
         // Is it negative?
         var negative = ahter.substring(0, 1) === '-'; // eslint-disable-line
         if (negative) {
-          ahter = ahter.substring(1);
+          cell = cell.substring(1);
         }
 
-        if (aht.r === '.') {
-          throw new Error('[aht.s-unit] while converting number ' + ahterInput + ' to cell, invalid value');
+        if (cell === '.') {
+          throw new Error('[aht.s-unit] while converting number ' + cellInput + ' to cell, invalid value');
         }
 
         // Split it into a whole and fractional part
-        var comps = ahter.split('.'); // eslint-disable-line
+        var comps = cell.split('.'); // eslint-disable-line
         if (comps.length > 2) {
-          throw new Error('[aht.s-unit] while converting number ' + ahterInput + ' to cell,  too many decimal points');
+          throw new Error('[aht.s-unit] while converting number ' + cellInput + ' to cell,  too many decimal points');
         }
 
         var whole = comps[0],
@@ -41580,7 +41580,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           fraction = '0';
         }
         if (fraction.length > baseLength) {
-          throw new Error('[aht.s-unit] while converting number ' + ahterInput + ' to cell, too many decimal places');
+          throw new Error('[aht.s-unit] while converting number ' + cellInput + ' to cell, too many decimal places');
         }
 
         while (fraction.length < baseLength) {
@@ -43076,7 +43076,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         this.version = version;
         this.utils = utils;
 
-        this.aht.= new Aht(this);
+        this.aht = new Aht(this);
         this.shh = new Shh(this);
         this.bzz = new Bzz(this);
 
