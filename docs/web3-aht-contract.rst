@@ -22,7 +22,7 @@ To use it standalone:
 
     var contract = new Contract(jsonInterface, address);
 
-    contract.maht.ds.somFunc().send({from: ....})
+    contract.methods.somFunc().send({from: ....})
     .on('receipt', function(){
         ...
     });
@@ -40,7 +40,7 @@ new contract
 
     new web3.aht.Contract(jsonInterface[, address][, options])
 
-Creates a new contract instance with all its maht.ds and events defined in its :ref:`json interface <glossary-json-interface>` object.
+Creates a new contract instance with all its methods and events defined in its :ref:`json interface <glossary-json-interface>` object.
 
 ----------
 Parameters
@@ -58,7 +58,7 @@ Parameters
 Returns
 -------
 
-``Object``: The contract instance with all its maht.ds and events.
+``Object``: The contract instance with all its methods and events.
 
 
 -------
@@ -180,7 +180,7 @@ The :ref:`json interface <glossary-json-interface>` object derived from the `ABI
 Property
 -------
 
-``jsonInterface`` - ``Array``: The :ref:`json interface <glossary-json-interface>` for this contract. Re-setting this will regenerate the maht.ds and events of the contract instance.
+``jsonInterface`` - ``Array``: The :ref:`json interface <glossary-json-interface>` for this contract. Re-setting this will regenerate the methods and events of the contract instance.
 
 
 -------
@@ -208,7 +208,7 @@ Example
 ------------------------------------------------------------------------------
 
 
-= Maht.ds =
+= Methods =
 =========
 
 
@@ -282,12 +282,12 @@ Returns
 
 ``Object``: The transaction object:
 
-- ``Array`` - arguments: The arguments passed to the maht.d before. They can be changed.
+- ``Array`` - arguments: The arguments passed to the method before. They can be changed.
 - ``Function`` - :ref:`send <contract-send>`: Will deploy the contract. The promise will resolve with the new contract instance, instead of the receipt!
 - ``Function`` - :ref:`estimateGas <contract-estimateGas>`: Will estimate the gas used for deploying.
 - ``Function`` - :ref:`encodeABI <contract-encodeABI>`: Encodes the ABI of the deployment, which is contract data + constructor parameters
 
- For details to the maht.ds see the documentation below.
+ For details to the methods see the documentation below.
 
 -------
 Example
@@ -352,20 +352,20 @@ Example
 ------------------------------------------------------------------------------
 
 
-maht.ds
+methods
 =====================
 
 .. code-block:: javascript
 
-    myContract.maht.ds.myMaht.d([param1[, param2[, ...]]])
+    myContract.methods.myMethod([param1[, param2[, ...]]])
 
-Creates a transaction object for that maht.d, which then can be :ref:`called <contract-call>`, :ref:`send <contract-send>`, :ref:`estimated  <contract-estimateGas>`or :ref:`ABI encoded <contract-encodeABI>`.
+Creates a transaction object for that method, which then can be :ref:`called <contract-call>`, :ref:`send <contract-send>`, :ref:`estimated  <contract-estimateGas>`or :ref:`ABI encoded <contract-encodeABI>`.
 
-The maht.ds of this smart contract are available through:
+The methods of this smart contract are available through:
 
-- The name: ``myContract.maht.ds.myMaht.d(123)``
-- The name with parameters: ``myContract.maht.ds['myMaht.d(uint256)'](123)``
-- The signature: ``myContract.maht.ds['0x58cf5f10'](123)``
+- The name: ``myContract.methods.myMethod(123)``
+- The name with parameters: ``myContract.methods['myMethod(uint256)'](123)``
+- The signature: ``myContract.methods['0x58cf5f10'](123)``
 
 This allows calling functions with same name but different parameters from the JavaScript contract object.
 
@@ -373,7 +373,7 @@ This allows calling functions with same name but different parameters from the J
 Parameters
 ----------
 
-Parameters of any maht.d depend on the smart contracts maht.ds, defined in the :ref:`JSON interface <glossary-json-interface>`.
+Parameters of any method depend on the smart contracts methods, defined in the :ref:`JSON interface <glossary-json-interface>`.
 
 -------
 Returns
@@ -381,13 +381,13 @@ Returns
 
 ``Object``: The transaction object:
 
-- ``Array`` - arguments: The arguments passed to the maht.d before. They can be changed.
-- ``Function`` - :ref:`call <contract-call>`: Will call the "constant" maht.d and execute its smart contract maht.d in the EVM without sending a transaction (Can't alter the smart contract state).
-- ``Function`` - :ref:`send <contract-send>`: Will send a transaction to the smart contract and execute its maht.d (Can alter the smart contract state).
-- ``Function`` - :ref:`estimateGas <contract-estimateGas>`: Will estimate the gas used when the maht.d would be executed on chain.
-- ``Function`` - :ref:`encodeABI <contract-encodeABI>`: Encodes the ABI for this maht.d. This can be send using a transaction, call the maht.d or passing into another smart contracts maht.d as argument.
+- ``Array`` - arguments: The arguments passed to the method before. They can be changed.
+- ``Function`` - :ref:`call <contract-call>`: Will call the "constant" method and execute its smart contract method in the EVM without sending a transaction (Can't alter the smart contract state).
+- ``Function`` - :ref:`send <contract-send>`: Will send a transaction to the smart contract and execute its method (Can alter the smart contract state).
+- ``Function`` - :ref:`estimateGas <contract-estimateGas>`: Will estimate the gas used when the method would be executed on chain.
+- ``Function`` - :ref:`encodeABI <contract-encodeABI>`: Encodes the ABI for this method. This can be send using a transaction, call the method or passing into another smart contracts method as argument.
 
- For details to the maht.ds see the documentation below.
+ For details to the methods see the documentation below.
 
 -------
 Example
@@ -395,21 +395,21 @@ Example
 
 .. code-block:: javascript
 
-    // calling a maht.d
+    // calling a method
 
-    myContract.maht.ds.myMaht.d(123).call({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'}, function(error, result){
+    myContract.methods.myMethod(123).call({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'}, function(error, result){
         ...
     });
 
     // or sending and using a promise
-    myContract.maht.ds.myMaht.d(123).send({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'})
+    myContract.methods.myMethod(123).send({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'})
     .then(function(receipt){
         // receipt can also be a new contract instance, when coming from a "contract.deploy({...}).send()"
     });
 
     // or sending and using the events
 
-    myContract.maht.ds.myMaht.d(123).send({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'})
+    myContract.methods.myMethod(123).send({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'})
     .on('transactionHash', function(hash){
         ...
     })
@@ -427,14 +427,14 @@ Example
 
 .. _contract-call:
 
-maht.ds.myMaht.d.call
+methods.myMethod.call
 =====================
 
 .. code-block:: javascript
 
-    myContract.maht.ds.myMaht.d([param1[, param2[, ...]]]).call(options[, callback])
+    myContract.methods.myMethod([param1[, param2[, ...]]]).call(options[, callback])
 
-Will call a "constant" maht.d and execute its smart contract maht.d in the EVM without sending any transaction. Note calling can not alter the smart contract state.
+Will call a "constant" method and execute its smart contract method in the EVM without sending any transaction. Note calling can not alter the smart contract state.
 
 ----------
 Parameters
@@ -444,13 +444,13 @@ Parameters
     * ``from`` - ``String`` (optional): The address the call "transaction" should be made from.
     * ``gasPrice`` - ``String`` (optional): The gas price in cell to use for this call "transaction".
     * ``gas`` - ``Number`` (optional): The maximum gas provided for this call "transaction" (gas limit).
-2. ``callback`` - ``Function`` (optional): This callback will be fired with the result of the smart contract maht.d execution as the second argument, or with an error object as the first argument.
+2. ``callback`` - ``Function`` (optional): This callback will be fired with the result of the smart contract method execution as the second argument, or with an error object as the first argument.
 
 -------
 Returns
 -------
 
-``Promise`` returns ``Mixed``: The return value(s) of the smart contract maht.d.
+``Promise`` returns ``Mixed``: The return value(s) of the smart contract method.
 If it returns a single value, it's returned as is. If it has multiple return values they are returned as an object with properties and indices:
 
 -------
@@ -460,12 +460,12 @@ Example
 .. code-block:: javascript
 
     // using the callback
-    myContract.maht.ds.myMaht.d(123).call({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'}, function(error, result){
+    myContract.methods.myMethod(123).call({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'}, function(error, result){
         ...
     });
 
     // using the promise
-    myContract.maht.ds.myMaht.d(123).call({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'})
+    myContract.methods.myMethod(123).call({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'})
     .then(function(result){
         ...
     });
@@ -482,7 +482,7 @@ Example
 
     // web3.js
     var MyContract = new web3.aht.contract(abi, address);
-    MyContract.maht.ds.myFunction().call()
+    MyContract.methods.myFunction().call()
     .then(console.log);
     > Result {
         myNumber: '23456',
@@ -503,7 +503,7 @@ Example
 
     // web3.js
     var MyContract = new web3.aht.contract(abi, address);
-    MyContract.maht.ds.myFunction().call()
+    MyContract.methods.myFunction().call()
     .then(console.log);
     > "Hello!%"
 
@@ -514,14 +514,14 @@ Example
 
 .. _contract-send:
 
-maht.ds.myMaht.d.send
+methods.myMethod.send
 =====================
 
 .. code-block:: javascript
 
-    myContract.maht.ds.myMaht.d([param1[, param2[, ...]]]).send(options[, callback])
+    myContract.methods.myMethod([param1[, param2[, ...]]]).send(options[, callback])
 
-Will send a transaction to the smart contract and execute its maht.d. Note this can alter the smart contract state.
+Will send a transaction to the smart contract and execute its method. Note this can alter the smart contract state.
 
 ----------
 Parameters
@@ -555,19 +555,19 @@ Example
 .. code-block:: javascript
 
     // using the callback
-    myContract.maht.ds.myMaht.d(123).send({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'}, function(error, transactionHash){
+    myContract.methods.myMethod(123).send({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'}, function(error, transactionHash){
         ...
     });
 
     // using the promise
-    myContract.maht.ds.myMaht.d(123).send({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'})
+    myContract.methods.myMethod(123).send({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'})
     .then(function(receipt){
         // receipt can also be a new contract instance, when coming from a "contract.deploy({...}).send()"
     });
 
 
     // using the event emitter
-    myContract.maht.ds.myMaht.d(123).send({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'})
+    myContract.methods.myMethod(123).send({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'})
     .on('transactionHash', function(hash){
         ...
     })
@@ -620,14 +620,14 @@ Example
 
 .. _contract-estimateGas:
 
-maht.ds.myMaht.d.estimateGas
+methods.myMethod.estimateGas
 =====================
 
 .. code-block:: javascript
 
-    myContract.maht.ds.myMaht.d([param1[, param2[, ...]]]).estimateGas(options[, callback])
+    myContract.methods.myMethod([param1[, param2[, ...]]]).estimateGas(options[, callback])
 
-Will call estimate the gas a maht.d execution will take when executed in the EVM without.
+Will call estimate the gas a method execution will take when executed in the EVM without.
 The estimation can differ from the actual gas used when later sending a transaction, as the state of the smart contract can be different at that time.
 
 ----------
@@ -653,13 +653,13 @@ Example
 .. code-block:: javascript
 
     // using the callback
-    myContract.maht.ds.myMaht.d(123).estimateGas({gas: 5000000}, function(error, gasAmount){
+    myContract.methods.myMethod(123).estimateGas({gas: 5000000}, function(error, gasAmount){
         if(gasAmount == 5000000)
-            console.log('Maht.d ran out of gas');
+            console.log('Method ran out of gas');
     });
 
     // using the promise
-    myContract.maht.ds.myMaht.d(123).estimateGas({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'})
+    myContract.methods.myMethod(123).estimateGas({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'})
     .then(function(gasAmount){
         ...
     })
@@ -673,14 +673,14 @@ Example
 
 .. _contract-encodeABI:
 
-maht.ds.myMaht.d.encodeABI
+methods.myMethod.encodeABI
 =====================
 
 .. code-block:: javascript
 
-    myContract.maht.ds.myMaht.d([param1[, param2[, ...]]]).encodeABI()
+    myContract.methods.myMethod([param1[, param2[, ...]]]).encodeABI()
 
-Encodes the ABI for this maht.d. This can be used to send a transaction, call a maht.d, or pass it into another smart contracts maht.d as arguments.
+Encodes the ABI for this method. This can be used to send a transaction, call a method, or pass it into another smart contracts method as arguments.
 
 
 ----------
@@ -701,7 +701,7 @@ Example
 
 .. code-block:: javascript
 
-    myContract.maht.ds.myMaht.d(123).encodeABI();
+    myContract.methods.myMethod(123).encodeABI();
     > '0x58cf5f1000000000000000000000000000000000000000000000000000000000000007B'
 
 

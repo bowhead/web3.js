@@ -5,10 +5,10 @@ var Aht = require('../packages/web3-aht');
 var aht = new Aht();
 
 describe('web3.net', function() {
-    describe('maht.ds', function() {
-        u.maht.dExists(aht.net, 'getId');
-        u.maht.dExists(aht.net, 'getNetworkType');
-        u.maht.dExists(aht.net, 'isListening');
-        u.maht.dExists(aht.net, 'getPeerCount');
+    describe('methods', function() {
+        u.methodExists(aht.net, 'getId');
+        u.methodExists(aht.net, 'getNetworkType');
+        u.methodExists(aht.net, 'isListening');
+        u.methodExists(aht.net, 'getPeerCount');
     });
 });

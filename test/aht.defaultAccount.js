@@ -13,7 +13,7 @@ describe('web3.aht., function () {
             assert.equal(aht.defaultAccount, null);
             assert.equal(aht.personal.defaultAccount, null);
             assert.equal(aht.Contract.defaultAccount, null);
-            assert.equal(aht.getCode.maht.d.defaultAccount, null);
+            assert.equal(aht.getCode.method.defaultAccount, null);
         });
         it('should set defaultAccount for all sub packages is set to proper value, if Aht package is changed', function () {
             aht.defaultAccount = setValue;
@@ -21,7 +21,7 @@ describe('web3.aht., function () {
             assert.equal(aht.defaultAccount, setValue);
             assert.equal(aht.personal.defaultAccount, setValue);
             assert.equal(aht.Contract.defaultAccount, setValue);
-            assert.equal(aht.getCode.maht.d.defaultAccount, setValue);
+            assert.equal(aht.getCode.method.defaultAccount, setValue);
         });
         it('should fail if address is invalid, wich is to be set to defaultAccount', function () {
 

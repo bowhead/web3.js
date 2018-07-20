@@ -1,4 +1,4 @@
-var testMaht.d = require('./helpers/test.maht.d.js');
+var testMethod = require('./helpers/test.method.js');
 var chai = require('chai');
 var assert = chai.assert;
 var FakeHttpProvider = require('./helpers/FakeHttpProvider');
@@ -7,7 +7,7 @@ var Web3 = require('../packages/web3');
 var clone = function (object) { return object ? JSON.parse(JSON.stringify(object)) : []; };
 
 
-var maht.d = 'sendTransaction';
+var method = 'sendTransaction';
 
 
 var tests = [{
@@ -26,7 +26,7 @@ var tests = [{
     result: '0x1234567',
     formattedResult: '0x1234567',
     notification: {
-        maht.d: 'aht.subscription',
+        method: 'aht.subscription',
         params: {
             subscription: '0x1234567',
             result: {
@@ -34,7 +34,7 @@ var tests = [{
             }
         }
     },
-    call: 'aht.'+ maht.d
+    call: 'aht.'+ method
 },
 // test with gasPrice missing
 {
@@ -44,7 +44,7 @@ var tests = [{
         value: '1234567654321'
     }],
     notification: {
-        maht.d: 'aht.subscription',
+        method: 'aht.subscription',
         params: {
             subscription: '0x1234567',
             result: {
@@ -57,7 +57,7 @@ var tests = [{
     result: '0x1234567',
     formattedResult: '0x1234567',
 
-    call2: 'aht.'+ maht.d,
+    call2: 'aht.'+ method,
     formattedArgs2: [{
         from: "0xdbdbdb2cbd23b783741e8d7fcf51e459b497e4a6",
         to: "0xdbdbdb2cbd23b783741e8d7fcf51e459b497e4a6",
@@ -83,7 +83,7 @@ var tests = [{
     result: '0x12345678976543213456786543212345675432',
     formattedResult: '0x12345678976543213456786543212345675432',
     notification: {
-        maht.d: 'aht.subscription',
+        method: 'aht.subscription',
         params: {
             subscription: '0x12345678976543213456786543212345675432',
             result: {
@@ -91,7 +91,7 @@ var tests = [{
             }
         }
     },
-    call: 'aht.'+ maht.d
+    call: 'aht.'+ method
 },{
     args: [{
         from: 'XE7338O073KYGTWWZN0F2WZ0R8PX5ZPPZS', // iban address
@@ -108,7 +108,7 @@ var tests = [{
     result: '0x12345678976543213456786543212345675432',
     formattedResult: '0x12345678976543213456786543212345675432',
     notification: {
-        maht.d: 'aht.subscription',
+        method: 'aht.subscription',
         params: {
             subscription: '0x12345678976543213456786543212345675432',
             result: {
@@ -116,7 +116,7 @@ var tests = [{
             }
         }
     },
-    call: 'aht.'+ maht.d
+    call: 'aht.'+ method
 
 // using local wallet
 },{
@@ -135,7 +135,7 @@ var tests = [{
     result: '0x12345678976543213456786543212345675432',
     formattedResult: '0x12345678976543213456786543212345675432',
     notification: {
-        maht.d: 'aht.subscription',
+        method: 'aht.subscription',
         params: {
             subscription: '0x12345678976543213456786543212345675432',
             result: {
@@ -160,7 +160,7 @@ var tests = [{
     result: '0x12345678976543213456786543212345675432',
     formattedResult: '0x12345678976543213456786543212345675432',
     notification: {
-        maht.d: 'aht.subscription',
+        method: 'aht.subscription',
         params: {
             subscription: '0x12345678976543213456786543212345675432',
             result: {
@@ -188,7 +188,7 @@ var tests = [{
     result: '0x12345678976543213456786543212345675432',
     formattedResult: '0x12345678976543213456786543212345675432',
     notification: {
-        maht.d: 'aht.subscription',
+        method: 'aht.subscription',
         params: {
             subscription: '0x12345678976543213456786543212345675432',
             result: {
@@ -204,14 +204,14 @@ var tests = [{
         to: '0xdbdbdb2cbd23b783741e8d7fcf51e459b497e4a6',
         value: '1234567654321'
     }],
-    call: 'aht.'+ maht.d
+    call: 'aht.'+ method
 }];
 
-testMaht.d.runTests('aht., maht.d, tests);
+testMethod.runTests('aht., method, tests);
 
 
 // Test HTTPProvider with interval
-describe(maht.d, function () {
+describe(method, function () {
     tests.forEach(function (test, index) {
         it('promise test: ' + index, function (done) {
 
@@ -230,7 +230,7 @@ describe(maht.d, function () {
             provider.injectResult(clone(test.result));
             provider.injectValidation(function (payload) {
                 assert.equal(payload.jsonrpc, '2.0');
-                assert.equal(payload.maht.d, test.call);
+                assert.equal(payload.method, test.call);
                 assert.deepEqual(payload.params, test.formattedArgs || []);
             });
 
@@ -238,14 +238,14 @@ describe(maht.d, function () {
                 provider.injectResult(clone(test.result2));
                 provider.injectValidation(function (payload) {
                     assert.equal(payload.jsonrpc, '2.0');
-                    assert.equal(payload.maht.d, test.call2);
+                    assert.equal(payload.method, test.call2);
                     assert.deepEqual(payload.params, test.formattedArgs2 || []);
                 });
             }
 
             provider.injectResult(null);
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.getTransactionReceipt');
+                assert.equal(payload.method, 'aht.getTransactionReceipt');
             });
 
 
@@ -267,14 +267,14 @@ describe(maht.d, function () {
 
             if(test.error) {
 
-                assert.throws(function(){ web3.aht.maht.d].apply(web3, args); });
+                assert.throws(function(){ web3.aht.method].apply(web3, args); });
                 done();
 
 
             } else {
 
 
-                result = web3.aht.maht.d].apply(web3, args);
+                result = web3.aht.method].apply(web3, args);
 
                 result.then(function(result){
                     if(test.notification) {
@@ -313,7 +313,7 @@ describe(maht.d, function () {
             provider.injectResult(clone(test.result));
             provider.injectValidation(function (payload) {
                 assert.equal(payload.jsonrpc, '2.0');
-                assert.equal(payload.maht.d, test.call);
+                assert.equal(payload.method, test.call);
                 assert.deepEqual(payload.params, test.formattedArgs || []);
             });
 
@@ -321,7 +321,7 @@ describe(maht.d, function () {
                 provider.injectResult(clone(test.result2));
                 provider.injectValidation(function (payload) {
                     assert.equal(payload.jsonrpc, '2.0');
-                    assert.equal(payload.maht.d, test.call2);
+                    assert.equal(payload.method, test.call2);
                     assert.deepEqual(payload.params, test.formattedArgs2 || []);
                 });
             }
@@ -329,7 +329,7 @@ describe(maht.d, function () {
 
             provider.injectResult(null);
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.getTransactionReceipt');
+                assert.equal(payload.method, 'aht.getTransactionReceipt');
             });
 
 
@@ -350,7 +350,7 @@ describe(maht.d, function () {
             var args = clone(test.args);
 
             if(test.error) {
-                assert.throws(function(){ web3.aht.maht.d].apply(web3, args); });
+                assert.throws(function(){ web3.aht.method].apply(web3, args); });
 
                 done();
 
@@ -362,7 +362,7 @@ describe(maht.d, function () {
                     done();
                 });
 
-                web3.aht.maht.d].apply(web3, args);
+                web3.aht.method].apply(web3, args);
             }
         });
     });

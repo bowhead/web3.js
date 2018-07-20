@@ -16,7 +16,7 @@ json interface
 
 The json interface is a json object describing the `Application Binary Interface (ABI) <https://github.com/bowhead/wiki/wiki/Bowhead-Contract-ABI>`_ for an Bowhead smart contract.
 
-Using this json interface web3.js is able to create JavaScript object representing the smart contract and its maht.ds and events using the :ref:`web3.aht.Contract object <aht-contract>`.
+Using this json interface web3.js is able to create JavaScript object representing the smart contract and its methods and events using the :ref:`web3.aht.Contract object <aht-contract>`.
 
 -------
 Specification

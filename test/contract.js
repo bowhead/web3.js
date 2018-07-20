@@ -286,7 +286,7 @@ var runTests = function(contractFactory) {
             contract2.options.gas = 300;
             contract2.options.gasPrice = '234234';
 
-            assert.isFunction(contract2.maht.ds.ballerRo);
+            assert.isFunction(contract2.methods.ballerRo);
             assert.equal(contract2.options.address, fromAddress);
             assert.equal(contract2.options.gas, 300);
             assert.equal(contract2.options.gasPrice, '234234');
@@ -307,7 +307,7 @@ var runTests = function(contractFactory) {
         });
     });
 
-    describe('internal maht.d', function () {
+    describe('internal method', function () {
         it('_encodeEventABI should return the encoded event object without topics', function () {
             var provider = new FakeIpcProvider();
 
@@ -435,13 +435,13 @@ var runTests = function(contractFactory) {
             assert.equal(result.returnValues.t2, 8);
 
         });
-        it('_decodeMaht.dReturn should return the decoded values', function () {
+        it('_decodeMethodReturn should return the decoded values', function () {
             var provider = new FakeIpcProvider();
             var signature = 'Changed(address,uint256,uint256,uint256)';
 
             var contract = contractFactory(abi, address, provider);
 
-            var result = contract._decodeMaht.dReturn([{
+            var result = contract._decodeMethodReturn([{
                 "name": "myAddress",
                 "type": "address"
             },{
@@ -457,13 +457,13 @@ var runTests = function(contractFactory) {
             assert.equal(result.value, 10);
 
         });
-        it('_decodeMaht.dReturn should return a single decoded value', function () {
+        it('_decodeMethodReturn should return a single decoded value', function () {
             var provider = new FakeIpcProvider();
             var signature = 'Changed(address,uint256,uint256,uint256)';
 
             var contract = contractFactory(abi, address, provider);
 
-            var result = contract._decodeMaht.dReturn([{
+            var result = contract._decodeMethodReturn([{
                 "name": "myAddress",
                 "type": "address"
             }], '0x000000000000000000000000'+ address.replace('0x',''));
@@ -471,12 +471,12 @@ var runTests = function(contractFactory) {
             assert.equal(result, address);
 
         });
-        it('_executeMaht.d as instantSealEngine should sendTransaction and check for receipts', function (done) {
+        it('_executeMethod as instantSealEngine should sendTransaction and check for receipts', function (done) {
             var provider = new FakeIpcProvider();
             var signature = sha3('mySend(address,uint256)').slice(0, 10);
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.sendTransaction');
+                assert.equal(payload.method, 'aht.sendTransaction');
                 assert.deepEqual(payload.params, [{
                     data: signature +'000000000000000000000000'+ addressLowercase.replace('0x','') +'000000000000000000000000000000000000000000000000000000000000000a',
                     from: address2,
@@ -487,7 +487,7 @@ var runTests = function(contractFactory) {
             provider.injectResult('0x1234000000000000000000000000000000000000000000000000000000056789');
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.getTransactionReceipt');
+                assert.equal(payload.method, 'aht.getTransactionReceipt');
                 assert.deepEqual(payload.params, ['0x1234000000000000000000000000000000000000000000000000000000056789']);
             });
             // with instant seal we get the receipt right away
@@ -503,7 +503,7 @@ var runTests = function(contractFactory) {
             var contract = contractFactory(abi, address, provider);
 
             var txObject = {};
-            txObject._maht.d = {
+            txObject._method = {
                 signature: signature,
                 "name": "send",
                 "type": "function",
@@ -517,10 +517,10 @@ var runTests = function(contractFactory) {
                 "outputs": []
             };
             txObject._parent = contract;
-            txObject.encodeABI = contract._encodeMaht.dABI.bind(txObject);
+            txObject.encodeABI = contract._encodeMethodABI.bind(txObject);
             txObject.arguments = [address, 10];
 
-            var deploy = contract._executeMaht.d.call(txObject, 'send', {from: address2, gasPrice: '100000000000000' }, function (err, result) {
+            var deploy = contract._executeMethod.call(txObject, 'send', {from: address2, gasPrice: '100000000000000' }, function (err, result) {
                 // tx hash
                 assert.equal(result, '0x1234000000000000000000000000000000000000000000000000000000056789');
             })
@@ -538,12 +538,12 @@ var runTests = function(contractFactory) {
             });
 
         });
-        it('_executeMaht.d should sendTransaction and check for receipts', function (done) {
+        it('_executeMethod should sendTransaction and check for receipts', function (done) {
             var provider = new FakeIpcProvider();
             var signature = sha3('mySend(address,uint256)').slice(0, 10);
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.sendTransaction');
+                assert.equal(payload.method, 'aht.sendTransaction');
                 assert.deepEqual(payload.params, [{
                     data: signature +'000000000000000000000000'+ addressLowercase.replace('0x','') +'000000000000000000000000000000000000000000000000000000000000000a',
                     from: address2,
@@ -554,20 +554,20 @@ var runTests = function(contractFactory) {
             provider.injectResult('0x1234000000000000000000000000000000000000000000000000000000056789');
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.getTransactionReceipt');
+                assert.equal(payload.method, 'aht.getTransactionReceipt');
                 assert.deepEqual(payload.params, ['0x1234000000000000000000000000000000000000000000000000000000056789']);
             });
             provider.injectResult(null);
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.subscribe');
+                assert.equal(payload.method, 'aht.subscribe');
                 assert.deepEqual(payload.params, ['newHeads']);
             });
             provider.injectResult('0x1234567');
 
             // fake newBlock
             provider.injectNotification({
-                maht.d: 'aht.subscription',
+                method: 'aht.subscription',
                 params: {
                     subscription: '0x1234567',
                     result: {
@@ -577,7 +577,7 @@ var runTests = function(contractFactory) {
             });
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.getTransactionReceipt');
+                assert.equal(payload.method, 'aht.getTransactionReceipt');
                 assert.deepEqual(payload.params, ['0x1234000000000000000000000000000000000000000000000000000000056789']);
             });
             provider.injectResult({
@@ -589,7 +589,7 @@ var runTests = function(contractFactory) {
                 gasUsed: '0x0'
             });
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.unsubscribe');
+                assert.equal(payload.method, 'aht.unsubscribe');
                 assert.deepEqual(payload.params, ['0x1234567']);
             });
             provider.injectResult('0x321');
@@ -598,7 +598,7 @@ var runTests = function(contractFactory) {
             var contract = contractFactory(abi, address, provider);
 
             var txObject = {};
-            txObject._maht.d = {
+            txObject._method = {
                 signature: signature,
                 "name": "send",
                 "type": "function",
@@ -612,10 +612,10 @@ var runTests = function(contractFactory) {
                 "outputs": []
             };
             txObject._parent = contract;
-            txObject.encodeABI = contract._encodeMaht.dABI.bind(txObject);
+            txObject.encodeABI = contract._encodeMethodABI.bind(txObject);
             txObject.arguments = [address, 10];
 
-            var deploy = contract._executeMaht.d.call(txObject, 'send', {from: address2, gasPrice: '100000000000000' }, function (err, result) {
+            var deploy = contract._executeMethod.call(txObject, 'send', {from: address2, gasPrice: '100000000000000' }, function (err, result) {
                 // tx hash
                 assert.equal(result, '0x1234000000000000000000000000000000000000000000000000000000056789');
             })
@@ -632,12 +632,12 @@ var runTests = function(contractFactory) {
             }).catch(console.log);
 
         });
-        it('_executeMaht.d should call and return values', function (done) {
+        it('_executeMethod should call and return values', function (done) {
             var provider = new FakeIpcProvider();
             var signature = sha3('balance(address)').slice(0, 10);
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.call');
+                assert.equal(payload.method, 'aht.call');
                 assert.deepEqual(payload.params, [{
                     data: signature + '000000000000000000000000'+ addressLowercase.replace('0x',''),
                     from: address2,
@@ -650,7 +650,7 @@ var runTests = function(contractFactory) {
             var contract = contractFactory(abi, address, provider);
 
             var txObject = {};
-            txObject._maht.d = {
+            txObject._method = {
                 signature: signature,
                 "name": "balance",
                 "type": "function",
@@ -665,10 +665,10 @@ var runTests = function(contractFactory) {
                 }]
             };
             txObject._parent = contract;
-            txObject.encodeABI = contract._encodeMaht.dABI.bind(txObject);
+            txObject.encodeABI = contract._encodeMethodABI.bind(txObject);
             txObject.arguments = [address];
 
-            var deploy = contract._executeMaht.d.call(txObject, 'call', {from: address2}, function (err, result) {
+            var deploy = contract._executeMethod.call(txObject, 'call', {from: address2}, function (err, result) {
                 assert.equal(result, '10');
             })
             .then(function(result){
@@ -685,7 +685,7 @@ var runTests = function(contractFactory) {
             var signature = 'Changed(address,uint256,uint256,uint256)';
             provider.injectValidation(function (payload) {
                 assert.equal(payload.jsonrpc, '2.0');
-                assert.equal(payload.maht.d, 'aht.subscribe');
+                assert.equal(payload.method, 'aht.subscribe');
                 assert.deepEqual(payload.params[1], {
                     topics: [
                         sha3(signature),
@@ -698,13 +698,13 @@ var runTests = function(contractFactory) {
             provider.injectResult('0x123');
             provider.injectValidation(function (payload) {
                 assert.equal(payload.jsonrpc, '2.0');
-                assert.equal(payload.maht.d, 'aht.unsubscribe');
+                assert.equal(payload.method, 'aht.unsubscribe');
                 done();
 
             });
 
             provider.injectNotification({
-                maht.d: 'aht.subscription',
+                method: 'aht.subscription',
                 params: {
                     subscription: '0x123',
                     result: {
@@ -743,7 +743,7 @@ var runTests = function(contractFactory) {
 
             provider.injectValidation(function (payload) {
                 assert.equal(payload.jsonrpc, '2.0');
-                assert.equal(payload.maht.d, 'aht.getLogs');
+                assert.equal(payload.method, 'aht.getLogs');
             });
             provider.injectResult([{
                     address: addressLowercase,
@@ -776,7 +776,7 @@ var runTests = function(contractFactory) {
 
             provider.injectValidation(function (payload) {
                 assert.equal(payload.jsonrpc, '2.0');
-                assert.equal(payload.maht.d, 'aht.subscribe');
+                assert.equal(payload.method, 'aht.subscribe');
                 assert.deepEqual(payload.params[1], {
                     topics: [
                         sha3(signature),
@@ -790,13 +790,13 @@ var runTests = function(contractFactory) {
 
             provider.injectValidation(function (payload) {
                 assert.equal(payload.jsonrpc, '2.0');
-                assert.equal(payload.maht.d, 'aht.unsubscribe');
+                assert.equal(payload.method, 'aht.unsubscribe');
                 done();
             });
             provider.injectResult(true);
 
             provider.injectNotification({
-                maht.d: 'aht.subscription',
+                method: 'aht.subscription',
                 params: {
                     subscription: '0x321',
                     result: {
@@ -855,7 +855,7 @@ var runTests = function(contractFactory) {
 
             provider.injectValidation(function (payload) {
                 assert.equal(payload.jsonrpc, '2.0');
-                assert.equal(payload.maht.d, 'aht.subscribe');
+                assert.equal(payload.method, 'aht.subscribe');
                 assert.deepEqual(payload.params[1], {
                     topics: [
                         sha3(signature),
@@ -869,13 +869,13 @@ var runTests = function(contractFactory) {
 
             provider.injectValidation(function (payload) {
                 assert.equal(payload.jsonrpc, '2.0');
-                assert.equal(payload.maht.d, 'aht.unsubscribe');
+                assert.equal(payload.method, 'aht.unsubscribe');
                 done();
             });
             provider.injectResult(true);
 
             provider.injectNotification({
-                maht.d: 'aht.subscription',
+                method: 'aht.subscription',
                 params: {
                     subscription: '0x321',
                     result: {
@@ -912,7 +912,7 @@ var runTests = function(contractFactory) {
 
             provider.injectValidation(function (payload) {
                 assert.equal(payload.jsonrpc, '2.0');
-                assert.equal(payload.maht.d, 'aht.subscribe');
+                assert.equal(payload.method, 'aht.subscribe');
                 assert.deepEqual(payload.params[1], {
                     topics: [
                         sha3(signature),
@@ -926,13 +926,13 @@ var runTests = function(contractFactory) {
 
             provider.injectValidation(function (payload) {
                 assert.equal(payload.jsonrpc, '2.0');
-                assert.equal(payload.maht.d, 'aht.unsubscribe');
+                assert.equal(payload.method, 'aht.unsubscribe');
                 done();
             });
             provider.injectResult(true);
 
             provider.injectNotification({
-                maht.d: 'aht.subscription',
+                method: 'aht.subscription',
                 params: {
                     subscription: '0x321',
                     result: {
@@ -969,7 +969,7 @@ var runTests = function(contractFactory) {
 
             provider.injectValidation(function (payload) {
                 assert.equal(payload.jsonrpc, '2.0');
-                assert.equal(payload.maht.d, 'aht.subscribe');
+                assert.equal(payload.method, 'aht.subscribe');
                 assert.deepEqual(payload.params[1], {
                     topics: [
                         sha3(signature),
@@ -983,12 +983,12 @@ var runTests = function(contractFactory) {
 
             provider.injectValidation(function (payload) {
                 assert.equal(payload.jsonrpc, '2.0');
-                assert.equal(payload.maht.d, 'aht.unsubscribe');
+                assert.equal(payload.method, 'aht.unsubscribe');
             });
             provider.injectResult(true);
 
             provider.injectNotification({
-                maht.d: 'aht.subscription',
+                method: 'aht.subscription',
                 params: {
                     subscription: '0x321',
                     result: {
@@ -1009,7 +1009,7 @@ var runTests = function(contractFactory) {
             });
 
             provider.injectNotification({
-                maht.d: 'aht.subscription',
+                method: 'aht.subscription',
                 params: {
                     subscription: '0x321',
                     result: {
@@ -1051,7 +1051,7 @@ var runTests = function(contractFactory) {
 
             provider.injectValidation(function (payload) {
                 assert.equal(payload.jsonrpc, '2.0');
-                assert.equal(payload.maht.d, 'aht.subscribe');
+                assert.equal(payload.method, 'aht.subscribe');
                 assert.deepEqual(payload.params[1], {
                     topics: [
                         sha3(signature),
@@ -1065,12 +1065,12 @@ var runTests = function(contractFactory) {
 
             provider.injectValidation(function (payload) {
                 assert.equal(payload.jsonrpc, '2.0');
-                assert.equal(payload.maht.d, 'aht.unsubscribe');
+                assert.equal(payload.method, 'aht.unsubscribe');
             });
             provider.injectResult(true);
 
             provider.injectNotification({
-                maht.d: 'aht.subscription',
+                method: 'aht.subscription',
                 params: {
                     subscription: '0x321',
                     result: {
@@ -1091,7 +1091,7 @@ var runTests = function(contractFactory) {
             });
 
             provider.injectNotification({
-                maht.d: 'aht.subscription',
+                method: 'aht.subscription',
                 params: {
                     subscription: '0x321',
                     result: {
@@ -1140,7 +1140,7 @@ var runTests = function(contractFactory) {
 
             provider.injectValidation(function (payload) {
                 assert.equal(payload.jsonrpc, '2.0');
-                assert.equal(payload.maht.d, 'aht.subscribe');
+                assert.equal(payload.method, 'aht.subscribe');
                 assert.deepEqual(payload.params[1], {
                     topics: [
                         sha3(signature),
@@ -1154,12 +1154,12 @@ var runTests = function(contractFactory) {
 
             provider.injectValidation(function (payload) {
                 assert.equal(payload.jsonrpc, '2.0');
-                assert.equal(payload.maht.d, 'aht.unsubscribe');
+                assert.equal(payload.method, 'aht.unsubscribe');
             });
             provider.injectResult(true);
 
             provider.injectNotification({
-                maht.d: 'aht.subscription',
+                method: 'aht.subscription',
                 params: {
                     subscription: '0x321',
                     result: {
@@ -1180,7 +1180,7 @@ var runTests = function(contractFactory) {
             });
 
             provider.injectNotification({
-                maht.d: 'aht.subscription',
+                method: 'aht.subscription',
                 params: {
                     subscription: '0x321',
                     result: {
@@ -1234,7 +1234,7 @@ var runTests = function(contractFactory) {
 
             provider.injectValidation(function (payload) {
                 assert.equal(payload.jsonrpc, '2.0');
-                assert.equal(payload.maht.d, 'aht.subscribe');
+                assert.equal(payload.method, 'aht.subscribe');
                 assert.deepEqual(payload.params[1], {
                     topics: [],
                     address: addressLowercase
@@ -1244,7 +1244,7 @@ var runTests = function(contractFactory) {
 
             provider.injectValidation(function (payload) {
                 assert.equal(payload.jsonrpc, '2.0');
-                assert.equal(payload.maht.d, 'aht.unsubscribe');
+                assert.equal(payload.method, 'aht.unsubscribe');
                 done();
             });
             provider.injectResult(true);
@@ -1274,7 +1274,7 @@ var runTests = function(contractFactory) {
 
 
             provider.injectNotification({
-                maht.d: 'aht.subscription',
+                method: 'aht.subscription',
                 params: {
                     subscription: '0x333',
                     result: {
@@ -1296,7 +1296,7 @@ var runTests = function(contractFactory) {
 
 
             provider.injectNotification({
-                maht.d: 'aht.subscription',
+                method: 'aht.subscription',
                 params: {
                     subscription: '0x333',
                     result: {
@@ -1316,7 +1316,7 @@ var runTests = function(contractFactory) {
             });
         });
     });
-    describe('with maht.ds', function () {
+    describe('with methods', function () {
         it('should change the address', function () {
             var provider = new FakeIpcProvider();
             var signature = 'balance(address)';
@@ -1324,7 +1324,7 @@ var runTests = function(contractFactory) {
             var contract = contractFactory(abi, address, provider);
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.call');
+                assert.equal(payload.method, 'aht.call');
                 assert.deepEqual(payload.params, [{
                     data: sha3(signature).slice(0, 10) + '000000000000000000000000'+ addressLowercase.replace('0x',''),
                     to: addressLowercase,
@@ -1332,13 +1332,13 @@ var runTests = function(contractFactory) {
                 }, 'latest']);
             });
 
-            contract.maht.ds.balance(address).call({from: address2});
+            contract.methods.balance(address).call({from: address2});
 
             // change address
             contract.options.address = address2;
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.call');
+                assert.equal(payload.method, 'aht.call');
                 assert.deepEqual(payload.params, [{
                     data: sha3(signature).slice(0, 10) + '000000000000000000000000'+ addressLowercase.replace('0x',''),
                     to: address2,
@@ -1346,7 +1346,7 @@ var runTests = function(contractFactory) {
                 }, 'latest']);
             });
 
-            contract.maht.ds.balance(address).call({from: address});
+            contract.methods.balance(address).call({from: address});
         });
 
         it('should reset functions when resetting json interface', function () {
@@ -1354,7 +1354,7 @@ var runTests = function(contractFactory) {
 
             var contract = contractFactory(abi, provider);
 
-            assert.isFunction(contract.maht.ds.mySend);
+            assert.isFunction(contract.methods.mySend);
             assert.isFunction(contract.events.Changed);
 
             contract.options.jsonInterface = [{
@@ -1378,10 +1378,10 @@ var runTests = function(contractFactory) {
                 ]
             }];
 
-            assert.isFunction(contract.maht.ds.otherSend);
+            assert.isFunction(contract.methods.otherSend);
             assert.isFunction(contract.events.Unchanged);
 
-            assert.isUndefined(contract.maht.ds.mySend);
+            assert.isUndefined(contract.methods.mySend);
             assert.isUndefined(contract.events.Changed);
         });
 
@@ -1391,7 +1391,7 @@ var runTests = function(contractFactory) {
 
             var contract = contractFactory(abi, provider);
 
-            var result = contract.maht.ds.balance(address).encodeABI();
+            var result = contract.methods.balance(address).encodeABI();
 
             assert.equal(result, sha3(signature).slice(0, 10) + '000000000000000000000000'+ addressLowercase.replace('0x',''));
         });
@@ -1429,7 +1429,7 @@ var runTests = function(contractFactory) {
             var signature = 'balance(address)';
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.estimateGas');
+                assert.equal(payload.method, 'aht.estimateGas');
                 assert.deepEqual(payload.params, [{
                     data: sha3(signature).slice(0, 10) + '000000000000000000000000'+ addressLowercase.replace('0x',''),
                     to: addressLowercase
@@ -1439,7 +1439,7 @@ var runTests = function(contractFactory) {
 
             var contract = contractFactory(abi, address, provider);
 
-            contract.maht.ds.balance(address).estimateGas(function (err, res) {
+            contract.methods.balance(address).estimateGas(function (err, res) {
                 assert.deepEqual(res, 50);
                 done();
             });
@@ -1450,7 +1450,7 @@ var runTests = function(contractFactory) {
             var signature = 'balance(address)';
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.estimateGas');
+                assert.equal(payload.method, 'aht.estimateGas');
                 assert.deepEqual(payload.params, [{
                     data: '0x1234000000000000000000000000'+ addressLowercase.replace('0x','') +'0000000000000000000000000000000000000000000000000000000000000032'
                 }]);
@@ -1471,7 +1471,7 @@ var runTests = function(contractFactory) {
             var provider = new FakeIpcProvider();
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.call');
+                assert.equal(payload.method, 'aht.call');
                 assert.deepEqual(payload.params, [{
                     data: '0x8708f4a12454534500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000000000000000000000000000c30786666323435343533343500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004ff24545345000000000000000000000000000000000000000000000000000000534500000000000000000000000000000000000000000000000000000000000045450000000000000000000000000000000000000000000000000000000000004533450000000000000000000000000000000000000000000000000000000000',
                     to: addressLowercase
@@ -1481,7 +1481,7 @@ var runTests = function(contractFactory) {
 
             var contract = contractFactory(abi, address, provider);
 
-            contract.maht.ds.hasALotOfParams("0x24545345", "0xff24545345", ["0xff24545345", "0x5345", "0x4545", "0x453345"]).call(function (err, res) {
+            contract.methods.hasALotOfParams("0x24545345", "0xff24545345", ["0xff24545345", "0x5345", "0x4545", "0x453345"]).call(function (err, res) {
                 assert.deepEqual(res, address);
                 done();
             });
@@ -1491,7 +1491,7 @@ var runTests = function(contractFactory) {
             var provider = new FakeIpcProvider();
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.call');
+                assert.equal(payload.method, 'aht.call');
                 assert.deepEqual(payload.params, [{
                     data: '0xbb853481',
                     to: addressLowercase
@@ -1500,7 +1500,7 @@ var runTests = function(contractFactory) {
             provider.injectResult('0x0000000000000000000000000000000000000000000000000000000000000005');
 
             var contract = contractFactory(abi, address, provider);
-            contract.maht.ds.overloadedFunction().call(function (err, res) {
+            contract.methods.overloadedFunction().call(function (err, res) {
                 assert.equal(res, 5);
                 done();
             });
@@ -1510,7 +1510,7 @@ var runTests = function(contractFactory) {
             var provider = new FakeIpcProvider();
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.call');
+                assert.equal(payload.method, 'aht.call');
                 assert.deepEqual(payload.params, [{
                     data: '0x533678270000000000000000000000000000000000000000000000000000000000000006',
                     to: addressLowercase
@@ -1520,7 +1520,7 @@ var runTests = function(contractFactory) {
 
             var contract = contractFactory(abi, address, provider);
 
-            contract.maht.ds.overloadedFunction(6).call(function (err, res) {
+            contract.methods.overloadedFunction(6).call(function (err, res) {
                 assert.equal(res, 6);
                 done();
             });
@@ -1531,7 +1531,7 @@ var runTests = function(contractFactory) {
             var signature = 'balance(address)';
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.call');
+                assert.equal(payload.method, 'aht.call');
                 assert.deepEqual(payload.params, [{
                     data: sha3(signature).slice(0, 10) + '000000000000000000000000'+ addressLowercase.replace('0x',''),
                     to: addressLowercase
@@ -1541,7 +1541,7 @@ var runTests = function(contractFactory) {
 
             var contract = contractFactory(abi, address, provider);
 
-            contract.maht.ds.balance(address).call(function (err, res) {
+            contract.methods.balance(address).call(function (err, res) {
                 assert.deepEqual(res, '50');
                 done();
             });
@@ -1552,7 +1552,7 @@ var runTests = function(contractFactory) {
             var signature = 'balance(address)';
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.call');
+                assert.equal(payload.method, 'aht.call');
                 assert.deepEqual(payload.params, [{
                     data: sha3(signature).slice(0, 10) + '000000000000000000000000'+ addressLowercase.replace('0x',''),
                     to: addressLowercase
@@ -1562,7 +1562,7 @@ var runTests = function(contractFactory) {
 
             var contract = contractFactory(abi, address, provider);
 
-            contract.maht.ds.balance(address).call(11)
+            contract.methods.balance(address).call(11)
             .then(function (r) {
                 assert.deepEqual(r, '50');
                 done();
@@ -1573,7 +1573,7 @@ var runTests = function(contractFactory) {
             var provider = new FakeIpcProvider();
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.call');
+                assert.equal(payload.method, 'aht.call');
                 assert.deepEqual(payload.params, [{
                     data: sha3('balance(address)').slice(0, 10) + '000000000000000000000000'+ addressLowercase.replace('0x',''),
                     to: addressLowercase
@@ -1581,7 +1581,7 @@ var runTests = function(contractFactory) {
             });
             provider.injectResult('0x000000000000000000000000000000000000000000000000000000000000000a');
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.call');
+                assert.equal(payload.method, 'aht.call');
                 assert.deepEqual(payload.params, [{
                     data: sha3('owner()').slice(0, 10),
                     to: addressLowercase
@@ -1589,7 +1589,7 @@ var runTests = function(contractFactory) {
             });
             provider.injectResult('0x00000000000000000000000011f4d0a3c12e86b4b5f39b213f7e19d048276dae');
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.call');
+                assert.equal(payload.method, 'aht.call');
                 assert.deepEqual(payload.params, [{
                     data: sha3('getStr()').slice(0, 10),
                     to: addressLowercase
@@ -1601,9 +1601,9 @@ var runTests = function(contractFactory) {
 
 
             Promise.join(
-                contract.maht.ds.balance(address).call(),
-                contract.maht.ds.owner().call(),
-                contract.maht.ds.getStr().call()
+                contract.methods.balance(address).call(),
+                contract.methods.owner().call(),
+                contract.methods.getStr().call()
             ).spread(function(m1, m2, m3) {
                 assert.deepEqual(m1, '10');
                 assert.deepEqual(m2, '0x11f4d0A3c12e86B4b5F39B213F7E19D048276DAe');
@@ -1620,7 +1620,7 @@ var runTests = function(contractFactory) {
             var contract = contractFactory(abi, address, provider);
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.call');
+                assert.equal(payload.method, 'aht.call');
                 assert.deepEqual(payload.params, [{
                     data: sha3(signature).slice(0, 10),
                     to: addressLowercase,
@@ -1630,7 +1630,7 @@ var runTests = function(contractFactory) {
 
             provider.injectResult('0x');
 
-            contract.maht.ds.getStr().call({from: address2}, function (err, result) {
+            contract.methods.getStr().call({from: address2}, function (err, result) {
                 // console.log(err, result)
                 assert.isTrue(err instanceof Error);
                 done();
@@ -1645,7 +1645,7 @@ var runTests = function(contractFactory) {
             var contract = contractFactory(abi, address, provider);
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.call');
+                assert.equal(payload.method, 'aht.call');
                 assert.deepEqual(payload.params, [{
                     data: sha3(signature).slice(0, 10),
                     to: addressLowercase,
@@ -1655,7 +1655,7 @@ var runTests = function(contractFactory) {
 
             provider.injectResult('0x0');
 
-            contract.maht.ds.getStr().call({from: address2}, function (err, result) {
+            contract.methods.getStr().call({from: address2}, function (err, result) {
                 assert.equal(result, '');
                 done();
             });
@@ -1667,7 +1667,7 @@ var runTests = function(contractFactory) {
             var signature = sha3('mySend(address,uint256)').slice(0, 10);
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.sendTransaction');
+                assert.equal(payload.method, 'aht.sendTransaction');
                 assert.deepEqual(payload.params, [{
                     data: signature +'000000000000000000000000'+ addressLowercase.replace('0x','') +'000000000000000000000000000000000000000000000000000000000000000a',
                     from: address2,
@@ -1678,20 +1678,20 @@ var runTests = function(contractFactory) {
             provider.injectResult('0x1234000000000000000000000000000000000000000000000000000000056789');
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.getTransactionReceipt');
+                assert.equal(payload.method, 'aht.getTransactionReceipt');
                 assert.deepEqual(payload.params, ['0x1234000000000000000000000000000000000000000000000000000000056789']);
             });
             provider.injectResult(null);
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.subscribe');
+                assert.equal(payload.method, 'aht.subscribe');
                 assert.deepEqual(payload.params, ['newHeads']);
             });
             provider.injectResult('0x1234567');
 
             // fake newBlock
             provider.injectNotification({
-                maht.d: 'aht.subscription',
+                method: 'aht.subscription',
                 params: {
                     subscription: '0x1234567',
                     result: {
@@ -1701,7 +1701,7 @@ var runTests = function(contractFactory) {
             });
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.getTransactionReceipt');
+                assert.equal(payload.method, 'aht.getTransactionReceipt');
                 assert.deepEqual(payload.params, ['0x1234000000000000000000000000000000000000000000000000000000056789']);
             });
             provider.injectResult({
@@ -1742,7 +1742,7 @@ var runTests = function(contractFactory) {
                 }]
             });
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.unsubscribe');
+                assert.equal(payload.method, 'aht.unsubscribe');
                 assert.deepEqual(payload.params, ['0x1234567']);
             });
             provider.injectResult('0x321');
@@ -1750,7 +1750,7 @@ var runTests = function(contractFactory) {
 
             var contract = contractFactory(abi, address, provider);
 
-            contract.maht.ds.mySend(address, 10).send({from: address2, gasPrice: '21345678654321'})
+            contract.methods.mySend(address, 10).send({from: address2, gasPrice: '21345678654321'})
             .on('receipt', function (receipt) {
                 // console.log(receipt);
                 // console.log(receipt.events[0].raw);
@@ -1832,7 +1832,7 @@ var runTests = function(contractFactory) {
             var signature = sha3('mySend(address,uint256)').slice(0, 10);
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.sendTransaction');
+                assert.equal(payload.method, 'aht.sendTransaction');
                 assert.deepEqual(payload.params, [{
                     data: signature +'000000000000000000000000'+ addressLowercase.replace('0x','') +'000000000000000000000000000000000000000000000000000000000000000a',
                     from: address2,
@@ -1843,20 +1843,20 @@ var runTests = function(contractFactory) {
             provider.injectResult('0x1234000000000000000000000000000000000000000000000000000000056789');
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.getTransactionReceipt');
+                assert.equal(payload.method, 'aht.getTransactionReceipt');
                 assert.deepEqual(payload.params, ['0x1234000000000000000000000000000000000000000000000000000000056789']);
             });
             provider.injectResult(null);
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.subscribe');
+                assert.equal(payload.method, 'aht.subscribe');
                 assert.deepEqual(payload.params, ['newHeads']);
             });
             provider.injectResult('0x1234567');
 
             // fake newBlock
             provider.injectNotification({
-                maht.d: 'aht.subscription',
+                method: 'aht.subscription',
                 params: {
                     subscription: '0x1234567',
                     result: {
@@ -1866,7 +1866,7 @@ var runTests = function(contractFactory) {
             });
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.getTransactionReceipt');
+                assert.equal(payload.method, 'aht.getTransactionReceipt');
                 assert.deepEqual(payload.params, ['0x1234000000000000000000000000000000000000000000000000000000056789']);
             });
             provider.injectResult({
@@ -1908,7 +1908,7 @@ var runTests = function(contractFactory) {
                 }]
             });
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.unsubscribe');
+                assert.equal(payload.method, 'aht.unsubscribe');
                 assert.deepEqual(payload.params, ['0x1234567']);
             });
             provider.injectResult('0x321');
@@ -1916,7 +1916,7 @@ var runTests = function(contractFactory) {
 
             var contract = contractFactory(abi, address, provider);
 
-            contract.maht.ds.mySend(address, 10).send({from: address2, gasPrice: '21345678654321'})
+            contract.methods.mySend(address, 10).send({from: address2, gasPrice: '21345678654321'})
                 .on('receipt', function (receipt) {
 
                     // wont throw if it errors ?! nope: causes a timeout
@@ -1998,7 +1998,7 @@ var runTests = function(contractFactory) {
             var signature = sha3('mySend(address,uint256)').slice(0, 10);
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.sendTransaction');
+                assert.equal(payload.method, 'aht.sendTransaction');
                 assert.deepEqual(payload.params, [{
                     data: signature +'000000000000000000000000'+ addressLowercase.replace('0x','') +'000000000000000000000000000000000000000000000000000000000000000a',
                     from: address2,
@@ -2009,14 +2009,14 @@ var runTests = function(contractFactory) {
             provider.injectResult('0x1234000000000000000000000000000000000000000000000000000000056789');
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.getTransactionReceipt');
+                assert.equal(payload.method, 'aht.getTransactionReceipt');
                 assert.deepEqual(payload.params, ['0x1234000000000000000000000000000000000000000000000000000000056789']);
             });
             provider.injectResult(null);
 
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.getTransactionReceipt');
+                assert.equal(payload.method, 'aht.getTransactionReceipt');
                 assert.deepEqual(payload.params, ['0x1234000000000000000000000000000000000000000000000000000000056789']);
             });
             provider.injectResult({
@@ -2057,7 +2057,7 @@ var runTests = function(contractFactory) {
                 }]
             });
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.unsubscribe');
+                assert.equal(payload.method, 'aht.unsubscribe');
                 assert.deepEqual(payload.params, ['0x1234567']);
             });
             provider.injectResult('0x321');
@@ -2065,7 +2065,7 @@ var runTests = function(contractFactory) {
 
             var contract = contractFactory(abi, address, provider);
 
-            contract.maht.ds.mySend(address, 10).send({from: address2, gasPrice: '21345678654321'})
+            contract.methods.mySend(address, 10).send({from: address2, gasPrice: '21345678654321'})
                 .on('receipt', function (receipt) {
                     // console.log(receipt);
                     // console.log(receipt.events[0].raw);
@@ -2147,7 +2147,7 @@ var runTests = function(contractFactory) {
             var signature = sha3('mySend(address,uint256)').slice(0, 10);
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.sendTransaction');
+                assert.equal(payload.method, 'aht.sendTransaction');
                 assert.deepEqual(payload.params, [{
                     data: signature +'000000000000000000000000'+ addressLowercase.replace('0x','') +'000000000000000000000000000000000000000000000000000000000000000a',
                     from: address2,
@@ -2158,7 +2158,7 @@ var runTests = function(contractFactory) {
             provider.injectResult('0x1234000000000000000000000000000000000000000000000000000000056789');
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.getTransactionReceipt');
+                assert.equal(payload.method, 'aht.getTransactionReceipt');
                 assert.deepEqual(payload.params, ['0x1234000000000000000000000000000000000000000000000000000000056789']);
             });
 
@@ -2174,7 +2174,7 @@ var runTests = function(contractFactory) {
             });
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.subscribe');
+                assert.equal(payload.method, 'aht.subscribe');
                 assert.deepEqual(payload.params, ['newHeads']);
             });
             provider.injectResult('0x1234567');
@@ -2182,7 +2182,7 @@ var runTests = function(contractFactory) {
             var contract = contractFactory(abi, address, provider);
 
             var count = 0;
-            contract.maht.ds.mySend(address, 10).send({from: address2, gasPrice: '21345678654321'})
+            contract.methods.mySend(address, 10).send({from: address2, gasPrice: '21345678654321'})
             .on('confirmation', function (confirmationNumber, receipt) {
                 count++;
                 if(count === 1) {
@@ -2218,7 +2218,7 @@ var runTests = function(contractFactory) {
 
             // fake newBlocks
             provider.injectNotification({
-                maht.d: 'aht.subscription',
+                method: 'aht.subscription',
                 params: {
                     subscription: '0x1234567',
                     result: {
@@ -2228,7 +2228,7 @@ var runTests = function(contractFactory) {
             });
 
             provider.injectNotification({
-                maht.d: 'aht.subscription',
+                method: 'aht.subscription',
                 params: {
                     subscription: '0x1234567',
                     result: {
@@ -2243,7 +2243,7 @@ var runTests = function(contractFactory) {
             var signature = 'mySend(address,uint256)';
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.sendTransaction');
+                assert.equal(payload.method, 'aht.sendTransaction');
                 assert.deepEqual(payload.params, [{
                     data: sha3(signature).slice(0, 10) +
                     '000000000000000000000000'+ addressLowercase.replace('0x','') +
@@ -2256,7 +2256,7 @@ var runTests = function(contractFactory) {
 
             var contract = contractFactory(abi, address, provider);
 
-            contract.maht.ds.mySend(address, 17).send({from: address, gasPrice: '234564321234'});
+            contract.methods.mySend(address, 17).send({from: address, gasPrice: '234564321234'});
         });
 
         it('should throw error when trying to send ahter to a non payable contract function', function () {
@@ -2265,7 +2265,7 @@ var runTests = function(contractFactory) {
             var contract = contractFactory(abi, address, provider);
 
             try{
-                contract.maht.ds.myDisallowedSend(address, 17).send({from: address, value: 123})
+                contract.methods.myDisallowedSend(address, 17).send({from: address, value: 123})
                 .on('error', function (e) {
                     assert.isTrue(e instanceof Error, 'Should throw error');
                 })
@@ -2283,7 +2283,7 @@ var runTests = function(contractFactory) {
             var signature = 'myDisallowedSend(address,uint256)';
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.sendTransaction');
+                assert.equal(payload.method, 'aht.sendTransaction');
                 assert.deepEqual(payload.params, [{
                     data: sha3(signature).slice(0, 10) +
                     '000000000000000000000000'+ addressLowercase.replace('0x','') +
@@ -2299,7 +2299,7 @@ var runTests = function(contractFactory) {
             var contract = contractFactory(abi, address, provider);
 
             try{
-                contract.maht.ds.myDisallowedSend(address, 17).send({from: address, gasPrice: '23456787654321'})
+                contract.methods.myDisallowedSend(address, 17).send({from: address, gasPrice: '23456787654321'})
                 .on('error', function (e) {
                     assert.isFalse(e instanceof Error, 'Should not throw error');
                 })
@@ -2318,7 +2318,7 @@ var runTests = function(contractFactory) {
             var signature = sha3('mySend(address,uint256)').slice(0, 10);
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.sendTransaction');
+                assert.equal(payload.method, 'aht.sendTransaction');
                 assert.deepEqual(payload.params, [{
                     data: signature +
                     '000000000000000000000000'+ addressLowercase.replace('0x','') +
@@ -2331,7 +2331,7 @@ var runTests = function(contractFactory) {
 
             var contract = contractFactory(abi, address, provider);
 
-            contract.maht.ds['mySend(address,uint256)'](address, 17).send({from: address, gasPrice: '23456787654321'});
+            contract.methods['mySend(address,uint256)'](address, 17).send({from: address, gasPrice: '23456787654321'});
         });
 
         it('should sendTransaction to contract function using the signature', function () {
@@ -2339,7 +2339,7 @@ var runTests = function(contractFactory) {
             var signature = sha3('mySend(address,uint256)').slice(0, 10);
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.sendTransaction');
+                assert.equal(payload.method, 'aht.sendTransaction');
                 assert.deepEqual(payload.params, [{
                     data: signature +
                     '000000000000000000000000'+ addressLowercase.replace('0x','') +
@@ -2352,7 +2352,7 @@ var runTests = function(contractFactory) {
 
             var contract = contractFactory(abi, address, provider);
 
-            contract.maht.ds[signature](address, 17).send({from: address, gasPrice: '1230000000'});
+            contract.methods[signature](address, 17).send({from: address, gasPrice: '1230000000'});
         });
 
         it('should throw when trying to create a tx object and wrong amount of params', function (done) {
@@ -2360,7 +2360,7 @@ var runTests = function(contractFactory) {
             var signature = 'mySend(address,uint256)';
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.sendTransaction');
+                assert.equal(payload.method, 'aht.sendTransaction');
                 assert.deepEqual(payload.params, [{
                     data: sha3(signature).slice(0, 10) +
                     '000000000000000000000000'+ addressLowercase.replace('0x','') +
@@ -2378,7 +2378,7 @@ var runTests = function(contractFactory) {
             var contract = contractFactory(abi, address, provider);
 
             assert.throws(function () {
-                contract.maht.ds.mySend(address);
+                contract.methods.mySend(address);
             });
 
             setTimeout(done, 1);
@@ -2394,7 +2394,7 @@ var runTests = function(contractFactory) {
                 count++;
                 if(count > 1) return;
 
-                assert.equal(payload.maht.d, 'aht.call');
+                assert.equal(payload.method, 'aht.call');
                 assert.deepEqual(payload.params, [{
                     data: sha3(signature).slice(0, 10) + '000000000000000000000000'+ addressLowercase.replace('0x',''),
                     to: addressLowercase,
@@ -2407,7 +2407,7 @@ var runTests = function(contractFactory) {
 
             var contract = contractFactory(abi, address, provider);
 
-            contract.maht.ds.balance(address).call({from: address, gas: 50000})
+            contract.methods.balance(address).call({from: address, gas: 50000})
             .then(function (r) {
                 assert.deepEqual(r, '50');
                 done();
@@ -2419,7 +2419,7 @@ var runTests = function(contractFactory) {
             var signature = 'balance(address)';
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.call');
+                assert.equal(payload.method, 'aht.call');
                 assert.deepEqual(payload.params, [{
                     data: sha3(signature).slice(0, 10) + '000000000000000000000000'+ addressLowercase.replace('0x',''),
                     to: addressLowercase,
@@ -2431,7 +2431,7 @@ var runTests = function(contractFactory) {
 
             var contract = contractFactory(abi, address, provider);
 
-            contract.maht.ds.balance(address).call({from: address, gas: 50000})
+            contract.methods.balance(address).call({from: address, gas: 50000})
             .then(function (r) {
                 assert.deepEqual(r, '50');
                 done();
@@ -2444,7 +2444,7 @@ var runTests = function(contractFactory) {
             var signature = 'balance(address)';
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.call');
+                assert.equal(payload.method, 'aht.call');
                 assert.deepEqual(payload.params, [{
                     data: sha3(signature).slice(0, 10) + '000000000000000000000000'+ addressLowercase.replace('0x',''),
                     to: addressLowercase,
@@ -2456,7 +2456,7 @@ var runTests = function(contractFactory) {
 
             var contract = contractFactory(abi, address, provider);
 
-            contract.maht.ds.balance(address).call({from: address, gas: 50000}, 11)
+            contract.methods.balance(address).call({from: address, gas: 50000}, 11)
             .then(function (r) {
                 assert.deepEqual(r, '50');
                 done();
@@ -2469,7 +2469,7 @@ var runTests = function(contractFactory) {
             var signature = 'mySend(address,uint256)';
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.sendTransaction');
+                assert.equal(payload.method, 'aht.sendTransaction');
                 assert.deepEqual(payload.params, [{
                     data: sha3(signature).slice(0, 10) +
                         '000000000000000000000000'+ addressLowercase.replace('0x','') +
@@ -2486,7 +2486,7 @@ var runTests = function(contractFactory) {
 
             var contract = contractFactory(abi, address, provider);
 
-            contract.maht.ds.mySend(address, 17).send({from: address, gas: 50000, gasPrice: 3000, value: 10000});
+            contract.methods.mySend(address, 17).send({from: address, gas: 50000, gasPrice: 3000, value: 10000});
         });
 
         it('should sendTransaction and fill in default gasPrice', function (done) {
@@ -2494,7 +2494,7 @@ var runTests = function(contractFactory) {
             var signature = 'mySend(address,uint256)';
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.gasPrice');
+                assert.equal(payload.method, 'aht.gasPrice');
                 assert.deepEqual(payload.params, []);
             });
 
@@ -2502,7 +2502,7 @@ var runTests = function(contractFactory) {
 
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.sendTransaction');
+                assert.equal(payload.method, 'aht.sendTransaction');
                 assert.deepEqual(payload.params, [{
                     data: sha3(signature).slice(0, 10) +
                     '000000000000000000000000'+ addressLowercase.replace('0x','') +
@@ -2517,7 +2517,7 @@ var runTests = function(contractFactory) {
 
             var contract = contractFactory(abi, address, provider);
 
-            contract.maht.ds.mySend(address, 17).send({from: address});
+            contract.methods.mySend(address, 17).send({from: address});
         });
 
         it('should explicitly sendTransaction with optional params', function (done) {
@@ -2525,7 +2525,7 @@ var runTests = function(contractFactory) {
             var signature = 'mySend(address,uint256)';
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.sendTransaction');
+                assert.equal(payload.method, 'aht.sendTransaction');
                 assert.deepEqual(payload.params, [{
                     data: sha3(signature).slice(0, 10) +
                         '000000000000000000000000'+ addressLowercase.replace('0x','') +
@@ -2542,7 +2542,7 @@ var runTests = function(contractFactory) {
 
             var contract = contractFactory(abi, address, provider);
 
-            contract.maht.ds.mySend(address, 17).send({from: address, gas: 50000, gasPrice: 3000, value: 10000});
+            contract.methods.mySend(address, 17).send({from: address, gas: 50000, gasPrice: 3000, value: 10000});
         });
 
 
@@ -2552,7 +2552,7 @@ var runTests = function(contractFactory) {
 
             provider.injectValidation(function (payload) {
 
-                assert.equal(payload.maht.d, 'aht.sendTransaction');
+                assert.equal(payload.method, 'aht.sendTransaction');
                 assert.deepEqual(payload.params, [{
                     data: sha3(signature).slice(0, 10) +
                         '000000000000000000000000'+ addressLowercase.replace('0x','') +
@@ -2567,7 +2567,7 @@ var runTests = function(contractFactory) {
 
             var contract = contractFactory(abi, address, provider);
 
-            contract.maht.ds.mySend(address, 17).send({from: address, gas: 50000, gasPrice: 3000, value: 10000}, function (err) {
+            contract.methods.mySend(address, 17).send({from: address, gas: 50000, gasPrice: 3000, value: 10000}, function (err) {
                 assert.equal(err, null);
                 done();
             });
@@ -2578,7 +2578,7 @@ var runTests = function(contractFactory) {
             var signature = 'mySend(address,uint256)';
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.estimateGas');
+                assert.equal(payload.method, 'aht.estimateGas');
                 assert.deepEqual(payload.params, [{
                     data: sha3(signature).slice(0, 10) +
                         '000000000000000000000000' + addressLowercase.replace('0x','') +
@@ -2593,7 +2593,7 @@ var runTests = function(contractFactory) {
 
             var contract = contractFactory(abi, address, provider);
 
-            contract.maht.ds.mySend(address, 17).estimateGas({from: address, gas: 50000, gasPrice: 3000, value: 10000});
+            contract.methods.mySend(address, 17).estimateGas({from: address, gas: 50000, gasPrice: 3000, value: 10000});
         });
 
         it('getPastEvents should get past events and format them correctly', function (done) {
@@ -2601,7 +2601,7 @@ var runTests = function(contractFactory) {
             var signature = 'testArr(int[])';
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.getLogs');
+                assert.equal(payload.method, 'aht.getLogs');
                 assert.deepEqual(payload.params, [{
                     address: addressLowercase,
                     topics: [
@@ -2708,12 +2708,12 @@ var runTests = function(contractFactory) {
 
         });
 
-        it('should call testArr maht.d and properly parse result', function (done) {
+        it('should call testArr method and properly parse result', function (done) {
             var provider = new FakeIpcProvider();
             var signature = 'testArr(int[])';
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.call');
+                assert.equal(payload.method, 'aht.call');
                 assert.deepEqual(payload.params, [{
                     data: sha3(signature).slice(0, 10) +
                         '0000000000000000000000000000000000000000000000000000000000000020' +
@@ -2728,7 +2728,7 @@ var runTests = function(contractFactory) {
             provider.injectResult('0x0000000000000000000000000000000000000000000000000000000000000005');
 
             var contract = contractFactory(abi, address, provider);
-            contract.maht.ds.testArr([3]).call()
+            contract.methods.testArr([3]).call()
             .then(function (result) {
                 assert.deepEqual(result, '5');
                 done();
@@ -2736,12 +2736,12 @@ var runTests = function(contractFactory) {
 
         });
 
-        it('should call testArr maht.d, properly parse result and return the result in a callback', function (done) {
+        it('should call testArr method, properly parse result and return the result in a callback', function (done) {
             var provider = new FakeIpcProvider();
             var signature = 'testArr(int[])';
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.call');
+                assert.equal(payload.method, 'aht.call');
                 assert.deepEqual(payload.params, [{
                     data: sha3(signature).slice(0, 10) +
                         '0000000000000000000000000000000000000000000000000000000000000020' +
@@ -2756,19 +2756,19 @@ var runTests = function(contractFactory) {
 
             var contract = contractFactory(abi, address, provider);
 
-            contract.maht.ds.testArr([3]).call(function (err, result) {
+            contract.methods.testArr([3]).call(function (err, result) {
                 assert.deepEqual(result, '5');
                 done();
             });
 
         });
 
-        it('should call owner maht.d, properly', function (done) {
+        it('should call owner method, properly', function (done) {
             var provider = new FakeIpcProvider();
             var signature = 'owner()';
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.call');
+                assert.equal(payload.method, 'aht.call');
                 assert.deepEqual(payload.params, [{
                     data: sha3(signature).slice(0, 10),
                     to: addressLowercase
@@ -2780,7 +2780,7 @@ var runTests = function(contractFactory) {
 
             var contract = contractFactory(abi, address, provider);
 
-            contract.maht.ds.owner().call(function (err, result) {
+            contract.methods.owner().call(function (err, result) {
                 assert.deepEqual(result, address);
                 done();
             });
@@ -2794,7 +2794,7 @@ var runTests = function(contractFactory) {
             provider.injectResult('0x1234567');
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.sendTransaction');
+                assert.equal(payload.method, 'aht.sendTransaction');
                 assert.deepEqual(payload.params, [{
                     data: '0x1234567000000000000000000000000555456789012345678901234567890123456789100000000000000000000000000000000000000000000000000000000000000c8' ,
                     from: addressLowercase,
@@ -2824,7 +2824,7 @@ var runTests = function(contractFactory) {
 
             provider.injectValidation(function (payload) {
 
-                assert.equal(payload.maht.d, 'aht.sendTransaction');
+                assert.equal(payload.method, 'aht.sendTransaction');
                 assert.deepEqual(payload.params, [{
                     data: '0x1234567000000000000000000000000'+ addressLowercase.replace('0x','') +'00000000000000000000000000000000000000000000000000000000000000c8' ,
                     from: addressLowercase,
@@ -2836,21 +2836,21 @@ var runTests = function(contractFactory) {
             provider.injectResult('0x5550000000000000000000000000000000000000000000000000000000000032');
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.getTransactionReceipt');
+                assert.equal(payload.method, 'aht.getTransactionReceipt');
                 assert.deepEqual(payload.params, ['0x5550000000000000000000000000000000000000000000000000000000000032']);
             });
             provider.injectResult(null);
 
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.subscribe');
+                assert.equal(payload.method, 'aht.subscribe');
                 assert.deepEqual(payload.params, ['newHeads']);
             });
             provider.injectResult('0x1234567');
 
             // fake newBlock
             provider.injectNotification({
-                maht.d: 'aht.subscription',
+                method: 'aht.subscription',
                 params: {
                     subscription: '0x1234567',
                     result: {
@@ -2860,7 +2860,7 @@ var runTests = function(contractFactory) {
             });
 
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.getTransactionReceipt');
+                assert.equal(payload.method, 'aht.getTransactionReceipt');
                 assert.deepEqual(payload.params, ['0x5550000000000000000000000000000000000000000000000000000000000032']);
             });
             provider.injectResult({
@@ -2868,7 +2868,7 @@ var runTests = function(contractFactory) {
                 blockHash: '0xffdd'
             });
             provider.injectValidation(function (payload) {
-                assert.equal(payload.maht.d, 'aht.getCode');
+                assert.equal(payload.method, 'aht.getCode');
                 assert.deepEqual(payload.params, [addressLowercase, 'latest']);
             });
             provider.injectResult('0x321');
@@ -2941,7 +2941,7 @@ describe('typical usage', function() {
                 nonce: '0x1',
             }).then(function (tx) {
                 const expected = tx.rawTransaction;
-                assert.equal(payload.maht.d, 'aht.sendRawTransaction');
+                assert.equal(payload.method, 'aht.sendRawTransaction');
                 assert.deepEqual(payload.params, [expected]);
             });
         });
@@ -2949,20 +2949,20 @@ describe('typical usage', function() {
         provider.injectResult('0x5550000000000000000000000000000000000000000000000000000000000032');
 
         provider.injectValidation(function (payload) {
-            assert.equal(payload.maht.d, 'aht.getTransactionReceipt');
+            assert.equal(payload.method, 'aht.getTransactionReceipt');
             assert.deepEqual(payload.params, ['0x5550000000000000000000000000000000000000000000000000000000000032']);
         });
         provider.injectResult(null);
 
         provider.injectValidation(function (payload) {
-            assert.equal(payload.maht.d, 'aht.subscribe');
+            assert.equal(payload.method, 'aht.subscribe');
             assert.deepEqual(payload.params, ['newHeads']);
         });
         provider.injectResult('0x1234567');
 
         // fake newBlock
         provider.injectNotification({
-            maht.d: 'aht.subscription',
+            method: 'aht.subscription',
             params: {
                 subscription: '0x1234567',
                 result: {
@@ -2972,7 +2972,7 @@ describe('typical usage', function() {
         });
 
         provider.injectValidation(function (payload) {
-            assert.equal(payload.maht.d, 'aht.getTransactionReceipt');
+            assert.equal(payload.method, 'aht.getTransactionReceipt');
             assert.deepEqual(payload.params, ['0x5550000000000000000000000000000000000000000000000000000000000032']);
         });
 
@@ -2981,7 +2981,7 @@ describe('typical usage', function() {
             blockHash: '0xffdd'
         });
         provider.injectValidation(function (payload) {
-            assert.equal(payload.maht.d, 'aht.getCode');
+            assert.equal(payload.method, 'aht.getCode');
             assert.deepEqual(payload.params, [addressLowercase, 'latest']);
         });
         provider.injectResult('0x321');

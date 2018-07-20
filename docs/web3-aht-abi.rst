@@ -43,7 +43,7 @@ Example
 
     // From a JSON interface object
     web3.aht.abi.encodeFunctionSignature({
-        name: 'myMaht.d',
+        name: 'myMethod',
         type: 'function',
         inputs: [{
             type: 'uint256',
@@ -56,7 +56,7 @@ Example
     > 0x24ee0097
 
     // Or string
-    web3.aht.abi.encodeFunctionSignature('myMaht.d(uint256,string)')
+    web3.aht.abi.encodeFunctionSignature('myMethod(uint256,string)')
     > '0x24ee0097'
 
 
@@ -220,7 +220,7 @@ Example
 .. code-block:: javascript
 
     web3.aht.abi.encodeFunctionCall({
-        name: 'myMaht.d',
+        name: 'myMethod',
         type: 'function',
         inputs: [{
             type: 'uint256',

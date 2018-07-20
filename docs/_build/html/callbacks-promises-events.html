@@ -61,7 +61,7 @@
 we provide multiple ways to act on asynchronous functions.</p>
 <p>Most web3.js objects allow a callback as the last parameter, as well as returning promises to chain functions.</p>
 <p>Bowhead as a blockchain has different levels of finality and therefore needs to return multiple &#8220;stages&#8221; of an action.
-To cope with requirement we return a &#8220;promiEvent&#8221; for functions like <code class="docutils literal"><span class="pre">web3.aht.sendTransaction</span></code> or contract maht.ds.
+To cope with requirement we return a &#8220;promiEvent&#8221; for functions like <code class="docutils literal"><span class="pre">web3.aht.sendTransaction</span></code> or contract methods.
 This &#8220;promiEvent&#8221; is a promise combined with an event emitter to allow acting on different stages of action on the blockchain, like a transaction.</p>
 <p>PromiEvents work like a normal promises with added <code class="docutils literal"><span class="pre">on</span></code>, <code class="docutils literal"><span class="pre">once</span></code> and <code class="docutils literal"><span class="pre">off</span></code> functions.
 This way developers can watch for additional events like on &#8220;receipt&#8221; or &#8220;transactionHash&#8221;.</p>
@@ -98,7 +98,7 @@ This way developers can watch for additional events like on &#8220;receipt&#8221
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
-    <form class="search" action="search.html" maht.d="get">
+    <form class="search" action="search.html" method="get">
       <div><input type="text" name="q" /></div>
       <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />

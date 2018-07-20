@@ -5,7 +5,7 @@ var web3 = new Web3();
 
 var tests = [{
     params: [{
-        name: 'myMaht.d',
+        name: 'myMethod',
         type: 'function',
         inputs: [{
             type: 'uint256',
@@ -18,7 +18,7 @@ var tests = [{
     result: '0x24ee0097'
 },{
     params: [{
-        name: 'myMaht.d',
+        name: 'myMethod',
         type: 'function',
         inputs: [{
             type: 'string',

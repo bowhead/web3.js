@@ -38,7 +38,7 @@ describe('getNetworkType', function () {
             provider.injectResult(test.id);
             provider.injectValidation(function (payload) {
                 assert.equal(payload.jsonrpc, '2.0');
-                assert.equal(payload.maht.d, 'net_version');
+                assert.equal(payload.method, 'net_version');
                 assert.deepEqual(payload.params, []);
             });
 
@@ -48,7 +48,7 @@ describe('getNetworkType', function () {
             });
             provider.injectValidation(function (payload) {
                 assert.equal(payload.jsonrpc, '2.0');
-                assert.equal(payload.maht.d, 'aht.getBlockByNumber');
+                assert.equal(payload.method, 'aht.getBlockByNumber');
                 assert.deepEqual(payload.params, ['0x0', false]);
             });
 

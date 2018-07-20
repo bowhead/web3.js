@@ -34,9 +34,9 @@ describe('lib/web3/batch', function () {
                 var first = payload[0];
                 var second = payload[1];
 
-                assert.equal(first.maht.d, 'aht.getBalance');
+                assert.equal(first.method, 'aht.getBalance');
                 assert.deepEqual(first.params, ['0x0000000000000000000000000000000000000000', 'latest']);
-                assert.equal(second.maht.d, 'aht.getBalance');
+                assert.equal(second.method, 'aht.getBalance');
                 assert.deepEqual(second.params, ['0x0000000000000000000000000000000000000005', 'latest']);
             });
 
@@ -71,9 +71,9 @@ describe('lib/web3/batch', function () {
                 var first = payload[0];
                 var second = payload[1];
 
-                assert.equal(first.maht.d, 'aht.accounts');
+                assert.equal(first.method, 'aht.accounts');
                 assert.deepEqual(first.params, []);
-                assert.equal(second.maht.d, 'shh_post');
+                assert.equal(second.method, 'shh_post');
                 assert.deepEqual(second.params, [{}]);
             });
 
@@ -130,10 +130,10 @@ describe('lib/web3/batch', function () {
             provider.injectValidation(function (payload) {
 
 
-                assert.equal(payload[0].maht.d, 'aht.getBalance');
+                assert.equal(payload[0].method, 'aht.getBalance');
                 assert.deepEqual(payload[0].params, ['0x0000000000000000000000000000000000000022', 'latest']);
 
-                assert.equal(payload[1].maht.d, 'aht.call');
+                assert.equal(payload[1].method, 'aht.call');
                 assert.deepEqual(payload[1].params, [{
                     'to': '0x1000000000000000000000000000000000000001',
                     'data': '0xe3d670d70000000000000000000000001000000000000000000000000000000000000001'
@@ -141,7 +141,7 @@ describe('lib/web3/batch', function () {
                     'latest' // default block
                 ]);
 
-                assert.equal(payload[2].maht.d, 'aht.call');
+                assert.equal(payload[2].method, 'aht.call');
                 assert.deepEqual(payload[2].params, [{
                     'to': '0x1000000000000000000000000000000000000001',
                     'from': '0x1000000000000000000000000000000000000002',
@@ -150,7 +150,7 @@ describe('lib/web3/batch', function () {
                     'latest' // default block
                 ]);
 
-                assert.equal(payload[3].maht.d, 'aht.call');
+                assert.equal(payload[3].method, 'aht.call');
                 assert.deepEqual(payload[3].params, [{
                     'to': '0x1000000000000000000000000000000000000001',
                     'from': '0x1000000000000000000000000000000000000003',
@@ -159,7 +159,7 @@ describe('lib/web3/batch', function () {
                     '0xa' // default block
                 ]);
 
-                assert.equal(payload[4].maht.d, 'aht.call');
+                assert.equal(payload[4].method, 'aht.call');
                 assert.deepEqual(payload[4].params, [{
                     'to': '0x1000000000000000000000000000000000000001',
                     'data': '0xe3d670d70000000000000000000000001000000000000000000000000000000000000001'
@@ -171,10 +171,10 @@ describe('lib/web3/batch', function () {
 
             var batch = new web3.BatchRequest();
             batch.add(web3.aht.getBalance.request('0x0000000000000000000000000000000000000022', 'latest', callback));
-            batch.add(new web3.aht.Contract(abi, address).maht.ds.balance(address).call.request(callback2));
-            batch.add(new web3.aht.Contract(abi, address).maht.ds.balance(address).call.request({from: '0x1000000000000000000000000000000000000002'}, callback2));
-            batch.add(new web3.aht.Contract(abi, address).maht.ds.balance(address).call.request({from: '0x1000000000000000000000000000000000000003'}, 10, callback2));
-            batch.add(new web3.aht.Contract(abi, address).maht.ds.balance(address).call.request(10, callback3));
+            batch.add(new web3.aht.Contract(abi, address).methods.balance(address).call.request(callback2));
+            batch.add(new web3.aht.Contract(abi, address).methods.balance(address).call.request({from: '0x1000000000000000000000000000000000000002'}, callback2));
+            batch.add(new web3.aht.Contract(abi, address).methods.balance(address).call.request({from: '0x1000000000000000000000000000000000000003'}, 10, callback2));
+            batch.add(new web3.aht.Contract(abi, address).methods.balance(address).call.request(10, callback3));
             provider.injectBatchResults([result, result2, result2, result2, result2]);
             batch.execute();
         });
@@ -220,9 +220,9 @@ describe('lib/web3/batch', function () {
                 var first = payload[0];
                 var second = payload[1];
 
-                assert.equal(first.maht.d, 'aht.getBalance');
+                assert.equal(first.method, 'aht.getBalance');
                 assert.deepEqual(first.params, ['0x0000000000000000000000000000000000000000', 'latest']);
-                assert.equal(second.maht.d, 'aht.call');
+                assert.equal(second.method, 'aht.call');
                 assert.deepEqual(second.params, [{
                     'to': '0x1000000000000000000000000000000000000001',
                     'from': '0x0000000000000000000000000000000000000000',
@@ -233,7 +233,7 @@ describe('lib/web3/batch', function () {
 
             var batch = new web3.BatchRequest();
             batch.add(web3.aht.getBalance.request('0x0000000000000000000000000000000000000000', 'latest', callback));
-            batch.add(new web3.aht.Contract(abi, address).maht.ds.balance(address).call.request({from: '0x0000000000000000000000000000000000000000'}, 10, callback2));
+            batch.add(new web3.aht.Contract(abi, address).methods.balance(address).call.request({from: '0x0000000000000000000000000000000000000000'}, 10, callback2));
             provider.injectBatchResults([result, result2], true); // injects error
             batch.execute();
         });
@@ -262,7 +262,7 @@ describe('lib/web3/batch', function () {
             };
 
             provider.injectValidation((payload) => {
-                assert.equal(payload[0].maht.d, 'aht.call');
+                assert.equal(payload[0].method, 'aht.call');
                 assert.deepEqual(payload[0].params, [{
                     to: '0x1000000000000000000000000000000000000001',
                     data: '0x95d89b41'
@@ -272,7 +272,7 @@ describe('lib/web3/batch', function () {
 
             const batch = new web3.BatchRequest();
             batch.add(new web3.aht.Contract(abi, address)
-                .maht.ds.symbol()
+                .methods.symbol()
                 .call.request(callback));
             provider.injectBatchResults([result]); // no explicit error, it'll be thrown when formatting
             batch.execute();
@@ -307,9 +307,9 @@ describe('lib/web3/batch', function () {
                 var first = payload[0];
                 var second = payload[1];
 
-                assert.equal(first.maht.d, 'aht.getBalance');
+                assert.equal(first.method, 'aht.getBalance');
                 assert.deepEqual(first.params, ['0x0000000000000000000000000000000000000000', 'latest']);
-                assert.equal(second.maht.d, 'aht.getBalance');
+                assert.equal(second.method, 'aht.getBalance');
                 assert.deepEqual(second.params, ['0x0000000000000000000000000000000000000005', 'latest']);
             });
 

@@ -218,10 +218,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       // Supported tags
       var tags = ['seq', 'seqof', 'set', 'setof', 'objid', 'bool', 'gentime', 'utctime', 'null_', 'enum', 'int', 'objDesc', 'bitstr', 'bmpstr', 'charstr', 'genstr', 'graphstr', 'ia5str', 'iso646str', 'numstr', 'octstr', 'printstr', 't61str', 'unistr', 'utf8str', 'videostr'];
 
-      // Public maht.ds list
-      var maht.ds = ['key', 'obj', 'use', 'optional', 'explicit', 'implicit', 'def', 'choice', 'any', 'contains'].concat(tags);
+      // Public methods list
+      var methods = ['key', 'obj', 'use', 'optional', 'explicit', 'implicit', 'def', 'choice', 'any', 'contains'].concat(tags);
 
-      // Overrided maht.ds list
+      // Overrided methods list
       var overrided = ['_peekTag', '_decodeTag', '_use', '_decodeStr', '_decodeObjid', '_decodeTime', '_decodeNull', '_decodeInt', '_decodeBool', '_decodeList', '_encodeComposite', '_encodeStr', '_encodeObjid', '_encodeTime', '_encodeNull', '_encodeInt', '_encodeBool'];
 
       function Node(enc, parent) {
@@ -249,7 +249,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         state.implicit = null;
         state.contains = null;
 
-        // Should create new instance on each maht.d
+        // Should create new instance on each method
         if (!state.parent) {
           state.children = [];
           this._wrap();
@@ -272,11 +272,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       Node.prototype._wrap = function wrap() {
         var state = this._baseState;
-        maht.ds.forEach(function (maht.d) {
-          this[maht.d] = function _wrappedMaht.d() {
+        methods.forEach(function (method) {
+          this[method] = function _wrappedMethod() {
             var clone = new this.constructor(this);
             state.children.push(clone);
-            return clone[maht.d].apply(clone, arguments);
+            return clone[method].apply(clone, arguments);
           };
         }, this);
       };
@@ -332,22 +332,22 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       };
 
       //
-      // Overrided maht.ds
+      // Overrided methods
       //
 
-      overrided.forEach(function (maht.d) {
-        Node.prototype[maht.d] = function _overrided() {
+      overrided.forEach(function (method) {
+        Node.prototype[method] = function _overrided() {
           var state = this._baseState;
-          throw new Error(maht.d + ' not implemented for encoding: ' + state.enc);
+          throw new Error(method + ' not implemented for encoding: ' + state.enc);
         };
       });
 
       //
-      // Public maht.ds
+      // Public methods
       //
 
       tags.forEach(function (tag) {
-        Node.prototype[tag] = function _tagMaht.d() {
+        Node.prototype[tag] = function _tagMethod() {
           var state = this._baseState;
           var args = Array.prototype.slice.call(arguments);
 
@@ -520,7 +520,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
           if (options && options.track && state.tag !== null) options.track(input.path(), input.offset, input.length, 'content');
 
-          // Select proper maht.d for tag
+          // Select proper method for tag
           if (state.any) result = result;else if (state.choice === null) result = this._decodeGeneric(state.tag, input, options);else result = this._decodeChoice(input, options);
 
           if (input.isError(result)) return result;
@@ -939,7 +939,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         return this.tree._decode(data, options);
       };
 
-      // Tree maht.ds
+      // Tree methods
 
       function DERNode(parent) {
         base.Node.call(this, 'der', parent);
@@ -1127,7 +1127,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         return entity._getDecoder('der').tree;
       };
 
-      // Utility maht.ds
+      // Utility methods
 
       function derDecodeTag(buf, fail) {
         var tag = buf.readUInt8(fail);
@@ -1262,7 +1262,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         return this.tree._encode(data, reporter).join();
       };
 
-      // Tree maht.ds
+      // Tree methods
 
       function DERNode(parent) {
         base.Node.call(this, 'der', parent);
@@ -1462,7 +1462,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }return true;
       };
 
-      // Utility maht.ds
+      // Utility methods
 
       function encodeTag(tag, primitive, cls, reporter) {
         var res;
@@ -3172,7 +3172,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           return this;
         };
 
-        Sign.prototype.sign = function signMaht.d(key, enc) {
+        Sign.prototype.sign = function signMethod(key, enc) {
           this.end();
           var hash = this._hash.digest();
           var sig = sign(hash, key, this._hashType, this._signType, this._tag);
@@ -3204,7 +3204,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           return this;
         };
 
-        Verify.prototype.verify = function verifyMaht.d(key, sig, enc) {
+        Verify.prototype.verify = function verifyMethod(key, sig, enc) {
           if (typeof sig === 'string') sig = new Buffer(sig, enc);
 
           this.end();
@@ -3540,8 +3540,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * The Buffer constructor returns instances of `Uint8Array` that have their
        * prototype changed to `Buffer.prototype`. Furthermore, `Buffer` is a subclass of
-       * `Uint8Array`, so the returned instances will have all the node `Buffer` maht.ds
-       * and the `Uint8Array` maht.ds. Square bracket notation works as expected -- it
+       * `Uint8Array`, so the returned instances will have all the node `Buffer` methods
+       * and the `Uint8Array` methods. Square bracket notation works as expected -- it
        * returns a single octet.
        *
        * The `Uint8Array` prototype remains unmodified.
@@ -3946,7 +3946,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       // This property is used by `Buffer.isBuffer` (and the `is-buffer` npm package)
       // to detect a Buffer instance. It's not possible to use `instanceof Buffer`
       // reliably in a browserify context because there could be multiple different
-      // copies of the 'buffer' package in use. This maht.d works even for Buffer
+      // copies of the 'buffer' package in use. This method works even for Buffer
       // instances that were created from another copy of the `buffer` package.
       // See: https://github.com/feross/buffer/issues/154
       Buffer.prototype._isBuffer = true;
@@ -9071,7 +9071,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         this.priv = new BN(key, enc || 16);
 
         // Ensure that the priv won't be bigger than n, otherwise we may fail
-        // in fixed multiplication maht.d
+        // in fixed multiplication method
         this.priv = this.priv.umod(this.ec.curve.n);
       };
 
@@ -9320,8 +9320,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
       * * https://tools.ietf.org/html/draft-josefsson-eddsa-ed25519-03#section-5.2
       *
-      * EDDSA defines maht.ds for encoding and decoding points and integers. These are
-      * helper convenience maht.ds, that pass along to utility functions implied
+      * EDDSA defines methods for encoding and decoding points and integers. These are
+      * helper convenience methods, that pass along to utility functions implied
       * parameters.
       *
       */
@@ -13241,7 +13241,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
              */
             'version': '1.4.1',
             /**
-             * An object of maht.ds to convert from JavaScript's internal character
+             * An object of methods to convert from JavaScript's internal character
              * representation (UCS-2) to Unicode code points, and back.
              * @see <https://mathiasbynens.be/notes/javascript-encoding>
              * @memberOf punycode
@@ -13672,8 +13672,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       var keys = objectKeys(Writable.prototype);
       for (var v = 0; v < keys.length; v++) {
-        var maht.d = keys[v];
-        if (!Duplex.prototype[maht.d]) Duplex.prototype[maht.d] = Writable.prototype[maht.d];
+        var method = keys[v];
+        if (!Duplex.prototype[method]) Duplex.prototype[method] = Writable.prototype[method];
       }
 
       function Duplex(options) {
@@ -13886,7 +13886,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           // This is a hack to make sure that our error handler is attached before any
           // userland ones.  NEVER DO THIS. This is here only because this code needs
           // to continue to work with older versions of Node.js that do not include
-          // the prependListener() maht.d. The goal is to eventually remove this hack.
+          // the prependListener() method. The goal is to eventually remove this hack.
           if (!emitter._events || !emitter._events[event]) emitter.on(event, fn);else if (isArray(emitter._events[event])) emitter._events[event].unshift(fn);else emitter._events[event] = [fn, emitter._events[event]];
         }
 
@@ -14162,7 +14162,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           return state.length;
         }
 
-        // you can override either this maht.d, or the async _read(n) below.
+        // you can override either this method, or the async _read(n) below.
         Readable.prototype.read = function (n) {
           debug('read', n);
           n = parseInt(n, 10);
@@ -14231,7 +14231,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             state.sync = true;
             // if the length is currently zero, then we *need* a readable event.
             if (state.length === 0) state.needReadable = true;
-            // call internal read maht.d
+            // call internal read method
             this._read(state.highWaterMark);
             state.sync = false;
             // If _read pushed data synchronously, then `reading` will be false,
@@ -14322,7 +14322,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           state.readingMore = false;
         }
 
-        // abstract maht.d.  to be overridden in specific implementation classes.
+        // abstract method.  to be overridden in specific implementation classes.
         // call cb(er, data) where data is <= n in length.
         // for virtual (non-string, non-buffer) streams, "length" is somewhat
         // arbitrary, and perhaps not very meaningful.
@@ -14638,13 +14638,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             }
           });
 
-          // proxy all the other maht.ds.
+          // proxy all the other methods.
           // important when wrapping filters and duplexes.
           for (var i in stream) {
             if (this[i] === undefined && typeof stream[i] === 'function') {
-              this[i] = function (maht.d) {
+              this[i] = function (method) {
                 return function () {
-                  return stream[maht.d].apply(stream, arguments);
+                  return stream[method].apply(stream, arguments);
                 };
               }(i);
             }
@@ -14925,7 +14925,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         // start out asking for a readable event once data is transformed.
         this._readableState.needReadable = true;
 
-        // we have implemented the _read maht.d, and done the other things
+        // we have implemented the _read method, and done the other things
         // that Readable wants before the first _read call, so unset the
         // sync guard flag.
         this._readableState.sync = false;
@@ -16194,7 +16194,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         return Buffer(arg, encodingOrOffset, length);
       }
 
-      // Copy static maht.ds from Buffer
+      // Copy static methods from Buffer
       copyProps(Buffer, SafeBuffer);
 
       SafeBuffer.from = function (arg, encodingOrOffset, length) {
@@ -17014,7 +17014,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       // Backwards-compat with node 0.4.x
       Stream.Stream = Stream;
 
-      // old-style streams.  Note that the pipe maht.d (the only relevant
+      // old-style streams.  Note that the pipe method (the only relevant
       // part of this class) is overridden in the Readable class.
 
       function Stream() {
@@ -18110,7 +18110,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         module.exports = deprecate;
 
         /**
-         * Mark that a maht.d should not be used.
+         * Mark that a method should not be used.
          * Returns a modified function which warns once by default.
          *
          * If `localStorage.noDeprecation = true` is set, then it is a no-op.
@@ -19716,7 +19716,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           return function (data) {
             return request(swarmUrl + "/bzzr:/", {
               body: typeof data === "string" ? fromString(data) : data,
-              maht.d: "POST" });
+              method: "POST" });
           };
         };
 
@@ -19733,7 +19733,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                   var slashRoute = route[0] === "/" ? route : "/" + route;
                   var url = swarmUrl + "/bzz:/" + hash + slashRoute;
                   var opt = {
-                    maht.d: "PUT",
+                    method: "PUT",
                     headers: { "Content-Type": file.type },
                     body: file.data };
                   return request(url, opt).then(function (response) {
@@ -20279,7 +20279,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           };
         };
 
-        // Helper for collection maht.ds to determine whaht.r a collection
+        // Helper for collection methods to determine whaht.r a collection
         // should be iterated as an array or as an object
         // Related: http://people.mozilla.org/~jorendorff/es6-draft.html#sec-tolength
         // Avoids a very nasty iOS 8 JIT bug on ARM-64. #2094
@@ -20419,12 +20419,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           return _.indexOf(obj, item, fromIndex) >= 0;
         };
 
-        // Invoke a maht.d (with arguments) on every item in a collection.
-        _.invoke = function (obj, maht.d) {
+        // Invoke a method (with arguments) on every item in a collection.
+        _.invoke = function (obj, method) {
           var args = slice.call(arguments, 2);
-          var isFunc = _.isFunction(maht.d);
+          var isFunc = _.isFunction(method);
           return _.map(obj, function (value) {
-            var func = isFunc ? maht.d : value[maht.d];
+            var func = isFunc ? method : value[method];
             return func == null ? func : func.apply(value, args);
           });
         };
@@ -20897,8 +20897,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           return bound;
         };
 
-        // Bind a number of an object's maht.ds to that object. Remaining arguments
-        // are the maht.d names to be bound. Useful for ensuring that all callbacks
+        // Bind a number of an object's methods to that object. Remaining arguments
+        // are the method names to be bound. Useful for ensuring that all callbacks
         // defined on an object belong to it.
         _.bindAll = function (obj) {
           var i,
@@ -21159,8 +21159,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         };
 
         // Return a sorted list of the function names available on the object.
-        // Aliased as `maht.ds`
-        _.functions = _.maht.ds = function (obj) {
+        // Aliased as `methods`
+        _.functions = _.methods = function (obj) {
           var names = [];
           for (var key in obj) {
             if (_.isFunction(obj[key])) names.push(key);
@@ -21243,7 +21243,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         };
 
         // Invokes interceptor with the obj, and then returns obj.
-        // The primary purpose of this maht.d is to "tap into" a maht.d chain, in
+        // The primary purpose of this method is to "tap into" a method chain, in
         // order to perform operations on intermediate results within the chain.
         _.tap = function (obj, interceptor) {
           interceptor(obj);
@@ -21386,14 +21386,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           return type === 'function' || type === 'object' && !!obj;
         };
 
-        // Add some isType maht.ds: isArguments, isFunction, isString, isNumber, isDate, isRegExp, isError.
+        // Add some isType methods: isArguments, isFunction, isString, isNumber, isDate, isRegExp, isError.
         _.each(['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp', 'Error'], function (name) {
           _['is' + name] = function (obj) {
             return toString.call(obj) === '[object ' + name + ']';
           };
         });
 
-        // Define a fallback version of the maht.d in browsers (ahem, IE < 9), where
+        // Define a fallback version of the method in browsers (ahem, IE < 9), where
         // there isn't any inspectable "Arguments" type.
         if (!_.isArguments(arguments)) {
           _.isArguments = function (obj) {
@@ -21670,10 +21670,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
         // Add all mutator Array functions to the wrapper.
         _.each(['pop', 'push', 'reverse', 'shift', 'sort', 'splice', 'unshift'], function (name) {
-          var maht.d = ArrayProto[name];
+          var method = ArrayProto[name];
           _.prototype[name] = function () {
             var obj = this._wrapped;
-            maht.d.apply(obj, arguments);
+            method.apply(obj, arguments);
             if ((name === 'shift' || name === 'splice') && obj.length === 0) delete obj[0];
             return result(this, obj);
           };
@@ -21681,9 +21681,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
         // Add all accessor Array functions to the wrapper.
         _.each(['concat', 'join', 'slice'], function (name) {
-          var maht.d = ArrayProto[name];
+          var method = ArrayProto[name];
           _.prototype[name] = function () {
-            return result(this, maht.d.apply(this._wrapped, arguments));
+            return result(this, method.apply(this._wrapped, arguments));
           };
         });
 
@@ -21692,7 +21692,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           return this._wrapped;
         };
 
-        // Provide unwrapping proxy for some maht.ds used in engine operations
+        // Provide unwrapping proxy for some methods used in engine operations
         // such as arithmetic and JSON stringification.
         _.prototype.valueOf = _.prototype.toJSON = _.prototype.value;
 
@@ -21780,7 +21780,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         opt = assign({ responseType: defaultResponse }, opt);
 
         var headers = opt.headers || {};
-        var maht.d = (opt.maht.d || 'GET').toUpperCase();
+        var method = (opt.method || 'GET').toUpperCase();
         var query = opt.query;
         if (query) {
           if (typeof query !== 'string') {
@@ -21795,12 +21795,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
 
         // if body content is json
-        if (opt.json && maht.d !== 'GET' && maht.d !== 'HEAD') {
+        if (opt.json && method !== 'GET' && method !== 'HEAD') {
           ensureHeader(headers, 'Content-Type', mimeTypeJson);
           opt.body = JSON.stringify(opt.body);
         }
 
-        opt.maht.d = maht.d;
+        opt.method = method;
         opt.url = url;
         opt.headers = headers;
         delete opt.query;
@@ -21823,7 +21823,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         return {
           statusCode: resp.statusCode,
           headers: resp.headers,
-          maht.d: opt.maht.d,
+          method: opt.method,
           url: opt.url,
           // the XHR object in browser, http response in Node
           rawRequest: resp.rawRequest ? resp.rawRequest : resp
@@ -21883,10 +21883,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       createXHR.XMLHttpRequest = window.XMLHttpRequest || noop;
       createXHR.XDomainRequest = "withCredentials" in new createXHR.XMLHttpRequest() ? createXHR.XMLHttpRequest : window.XDomainRequest;
 
-      forEachArray(["get", "put", "post", "patch", "head", "delete"], function (maht.d) {
-        createXHR[maht.d === "delete" ? "del" : maht.d] = function (uri, options, callback) {
+      forEachArray(["get", "put", "post", "patch", "head", "delete"], function (method) {
+        createXHR[method === "delete" ? "del" : method] = function (uri, options, callback) {
           options = initParams(uri, options, callback);
-          options.maht.d = maht.d.toUpperCase();
+          options.method = method.toUpperCase();
           return _createXHR(options);
         };
       });
@@ -21990,7 +21990,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             response = {
               body: getBody(),
               statusCode: status,
-              maht.d: maht.d,
+              method: method,
               headers: {},
               url: uri,
               rawRequest: xhr
@@ -22018,7 +22018,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         var key;
         var aborted;
         var uri = xhr.url = options.uri || options.url;
-        var maht.d = xhr.maht.d = options.maht.d || "GET";
+        var method = xhr.method = options.method || "GET";
         var body = options.body || options.data;
         var headers = xhr.headers = options.headers || {};
         var sync = !!options.sync;
@@ -22028,7 +22028,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           body: undefined,
           headers: {},
           statusCode: 0,
-          maht.d: maht.d,
+          method: method,
           url: uri,
           rawRequest: xhr
         };
@@ -22036,7 +22036,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         if ("json" in options && options.json !== false) {
           isJson = true;
           headers["accept"] || headers["Accept"] || (headers["Accept"] = "application/json"); //Don't override existing accept header declared by user
-          if (maht.d !== "GET" && maht.d !== "HEAD") {
+          if (method !== "GET" && method !== "HEAD") {
             headers["content-type"] || headers["Content-Type"] || (headers["Content-Type"] = "application/json"); //Don't override existing accept header declared by user
             body = JSON.stringify(options.json === true ? body : options.json);
           }
@@ -22053,7 +22053,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           aborted = true;
         };
         xhr.ontimeout = errorFunc;
-        xhr.open(maht.d, uri, !sync, options.username, options.password);
+        xhr.open(method, uri, !sync, options.username, options.password);
         //has to be after open
         if (!sync) {
           xhr.withCredentials = !!options.withCredentials;
@@ -22254,8 +22254,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           var message = !!result && !!result.error && !!result.error.message ? result.error.message : JSON.stringify(result);
           return new Error('Returned error: ' + message);
         },
-        InvalidNumberOfParams: function InvalidNumberOfParams(got, expected, maht.d) {
-          return new Error('Invalid number of parameters for "' + maht.d + '". Got ' + got + ' expected ' + expected + '!');
+        InvalidNumberOfParams: function InvalidNumberOfParams(got, expected, method) {
+          return new Error('Invalid number of parameters for "' + method + '". Got ' + got + ' expected ' + expected + '!');
         },
         InvalidConnection: function InvalidConnection(host) {
           return new Error('CONNECTION ERROR: Couldn\'t connect to node ' + host + '.');
@@ -22304,7 +22304,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should the format output to a big number
        *
-       * @maht.d outputBigNumberFormatter
+       * @method outputBigNumberFormatter
        * @param {String|Number|BigNumber} number
        * @returns {BigNumber} object
        */
@@ -22338,7 +22338,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Formats the input of a transaction and converts all values to HEX
        *
-       * @maht.d _txInputFormatter
+       * @method _txInputFormatter
        * @param {Object} transaction options
        * @returns object
        */
@@ -22379,7 +22379,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Formats the input of a transaction and converts all values to HEX
        *
-       * @maht.d inputCallFormatter
+       * @method inputCallFormatter
        * @param {Object} transaction options
        * @returns object
       */
@@ -22399,7 +22399,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Formats the input of a transaction and converts all values to HEX
        *
-       * @maht.d inputTransactionFormatter
+       * @method inputTransactionFormatter
        * @param {Object} options
        * @returns object
       */
@@ -22424,7 +22424,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Hex encodes the data passed to aht_sign and personal_sign
        *
-       * @maht.d inputSignFormatter
+       * @method inputSignFormatter
        * @param {String} data
        * @returns {String}
        */
@@ -22435,7 +22435,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Formats the output of a transaction to its proper values
        *
-       * @maht.d outputTransactionFormatter
+       * @method outputTransactionFormatter
        * @param {Object} tx
        * @returns {Object}
       */
@@ -22464,7 +22464,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Formats the output of a transaction receipt to its proper values
        *
-       * @maht.d outputTransactionReceiptFormatter
+       * @method outputTransactionReceiptFormatter
        * @param {Object} receipt
        * @returns {Object}
       */
@@ -22496,7 +22496,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Formats the output of a block to its proper values
        *
-       * @maht.d outputBlockFormatter
+       * @method outputBlockFormatter
        * @param {Object} block
        * @returns {Object}
       */
@@ -22526,7 +22526,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Formats the input of a log
        *
-       * @maht.d inputLogFormatter
+       * @method inputLogFormatter
        * @param {Object} log object
        * @returns {Object} log
       */
@@ -22560,7 +22560,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Formats the output of a log
        *
-       * @maht.d outputLogFormatter
+       * @method outputLogFormatter
        * @param {Object} log object
        * @returns {Object} log
       */
@@ -22588,7 +22588,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Formats the input of a whisper post and converts all values to HEX
        *
-       * @maht.d inputPostFormatter
+       * @method inputPostFormatter
        * @param {Object} transaction object
        * @returns {Object}
       */
@@ -22617,7 +22617,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Formats the output of a received post message
        *
-       * @maht.d outputPostFormatter
+       * @method outputPostFormatter
        * @param {Object}
        * @returns {Object}
        */
@@ -22756,10 +22756,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       var POLLINGTIMEOUT = 15 * TIMEOUTBLOCK; // ~average block time (seconds) * TIMEOUTBLOCK
       var CONFIRMATIONBLOCKS = 24;
 
-      var Maht.d = function Maht.d(options) {
+      var Method = function Method(options) {
 
         if (!options.call || !options.name) {
-          throw new Error('When creating a maht.d you need to provide at least the "name" and "call" property.');
+          throw new Error('When creating a method you need to provide at least the "name" and "call" property.');
         }
 
         this.name = options.name;
@@ -22779,7 +22779,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         this.defaultAccount = options.defaultAccount || null;
       };
 
-      Maht.d.prototype.setRequestManager = function (requestManager, accounts) {
+      Method.prototype.setRequestManager = function (requestManager, accounts) {
         this.requestManager = requestManager;
 
         // reference to aht.accounts
@@ -22788,7 +22788,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
       };
 
-      Maht.d.prototype.createFunction = function (requestManager, accounts) {
+      Method.prototype.createFunction = function (requestManager, accounts) {
         var func = this.buildCall();
         func.call = this.call;
 
@@ -22797,7 +22797,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         return func;
       };
 
-      Maht.d.prototype.attachToObject = function (obj) {
+      Method.prototype.attachToObject = function (obj) {
         var func = this.buildCall();
         func.call = this.call;
         var name = this.name.split('.');
@@ -22810,24 +22810,24 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       };
 
       /**
-       * Should be used to determine name of the jsonrpc maht.d based on arguments
+       * Should be used to determine name of the jsonrpc method based on arguments
        *
-       * @maht.d getCall
+       * @method getCall
        * @param {Array} arguments
-       * @return {String} name of jsonrpc maht.d
+       * @return {String} name of jsonrpc method
        */
-      Maht.d.prototype.getCall = function (args) {
+      Method.prototype.getCall = function (args) {
         return _.isFunction(this.call) ? this.call(args) : this.call;
       };
 
       /**
        * Should be used to extract callback from array of arguments. Modifies input param
        *
-       * @maht.d extractCallback
+       * @method extractCallback
        * @param {Array} arguments
        * @return {Function|Null} callback, if exists
        */
-      Maht.d.prototype.extractCallback = function (args) {
+      Method.prototype.extractCallback = function (args) {
         if (_.isFunction(args[args.length - 1])) {
           return args.pop(); // modify the args array!
         }
@@ -22836,24 +22836,24 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be called to check if the number of arguments is correct
        *
-       * @maht.d validateArgs
+       * @method validateArgs
        * @param {Array} arguments
        * @throws {Error} if it is not
        */
-      Maht.d.prototype.validateArgs = function (args) {
+      Method.prototype.validateArgs = function (args) {
         if (args.length !== this.params) {
           throw errors.InvalidNumberOfParams(args.length, this.params, this.name);
         }
       };
 
       /**
-       * Should be called to format input args of maht.d
+       * Should be called to format input args of method
        *
-       * @maht.d formatInput
+       * @method formatInput
        * @param {Array}
        * @return {Array}
        */
-      Maht.d.prototype.formatInput = function (args) {
+      Method.prototype.formatInput = function (args) {
         var _this = this;
 
         if (!this.inputFormatter) {
@@ -22867,13 +22867,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       };
 
       /**
-       * Should be called to format output(result) of maht.d
+       * Should be called to format output(result) of method
        *
-       * @maht.d formatOutput
+       * @method formatOutput
        * @param {Object}
        * @return {Object}
        */
-      Maht.d.prototype.formatOutput = function (result) {
+      Method.prototype.formatOutput = function (result) {
         var _this = this;
 
         if (_.isArray(result)) {
@@ -22888,18 +22888,18 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should create payload from given input args
        *
-       * @maht.d toPayload
+       * @method toPayload
        * @param {Array} args
        * @return {Object}
        */
-      Maht.d.prototype.toPayload = function (args) {
+      Method.prototype.toPayload = function (args) {
         var call = this.getCall(args);
         var callback = this.extractCallback(args);
         var params = this.formatInput(args);
         this.validateArgs(params);
 
         var payload = {
-          maht.d: call,
+          method: call,
           params: params,
           callback: callback
         };
@@ -22911,8 +22911,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         return payload;
       };
 
-      Maht.d.prototype._confirmTransaction = function (defer, result, payload) {
-        var maht.d = this,
+      Method.prototype._confirmTransaction = function (defer, result, payload) {
+        var method = this,
             promiseResolved = false,
             canUnsubscribe = true,
             timeoutCount = 0,
@@ -22921,14 +22921,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             gasProvided = _.isObject(payload.params[0]) && payload.params[0].gas ? payload.params[0].gas : null,
             isContractDeployment = _.isObject(payload.params[0]) && payload.params[0].data && payload.params[0].from && !payload.params[0].to;
 
-        // add custom send Maht.ds
-        var _bowheadCalls = [new Maht.d({
+        // add custom send Methods
+        var _bowheadCalls = [new Method({
           name: 'getTransactionReceipt',
           call: 'aht.getTransactionReceipt',
           params: 1,
           inputFormatter: [null],
           outputFormatter: formatters.outputTransactionReceiptFormatter
-        }), new Maht.d({
+        }), new Method({
           name: 'getCode',
           call: 'aht.getCode',
           params: 2,
@@ -22944,11 +22944,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             }
           }
         })];
-        // attach maht.ds to this._bowheadCall
+        // attach methods to this._bowheadCall
         var _bowheadCall = {};
         _.each(_bowheadCalls, function (mthd) {
           mthd.attachToObject(_bowheadCall);
-          mthd.requestManager = maht.d.requestManager; // assign rather than call setRequestManager()
+          mthd.requestManager = method.requestManager; // assign rather than call setRequestManager()
         });
 
         // fire "receipt" and confirmation events and resolve after
@@ -22977,8 +22977,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
               }
 
               // apply extra formatters
-              if (maht.d.extraFormatters && maht.d.extraFormatters.receiptFormatter) {
-                receipt = maht.d.extraFormatters.receiptFormatter(receipt);
+              if (method.extraFormatters && method.extraFormatters.receiptFormatter) {
+                receipt = method.extraFormatters.receiptFormatter(receipt);
               }
 
               // check if confirmation listener exists
@@ -23029,8 +23029,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                     defer.eventEmitter.emit('receipt', receipt);
 
                     // if contract, return instance instead of receipt
-                    if (maht.d.extraFormatters && maht.d.extraFormatters.contractDeployFormatter) {
-                      defer.resolve(maht.d.extraFormatters.contractDeployFormatter(receipt));
+                    if (method.extraFormatters && method.extraFormatters.contractDeployFormatter) {
+                      defer.resolve(method.extraFormatters.contractDeployFormatter(receipt));
                     } else {
                       defer.resolve(receipt);
                     }
@@ -23154,19 +23154,19 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         return wallet;
       };
 
-      Maht.d.prototype.buildCall = function () {
-        var maht.d = this,
-            isSendTx = maht.d.call === 'aht.sendTransaction' || maht.d.call === 'aht.sendRawTransaction'; // || maht.d.call === 'personal_sendTransaction'
+      Method.prototype.buildCall = function () {
+        var method = this,
+            isSendTx = method.call === 'aht.sendTransaction' || method.call === 'aht.sendRawTransaction'; // || method.call === 'personal_sendTransaction'
 
         // actual send function
         var send = function send() {
           var defer = promiEvent(!isSendTx),
-              payload = maht.d.toPayload(Array.prototype.slice.call(arguments));
+              payload = method.toPayload(Array.prototype.slice.call(arguments));
 
           // CALLBACK function
           var sendTxCallback = function sendTxCallback(err, result) {
             try {
-              result = maht.d.formatOutput(result);
+              result = method.formatOutput(result);
             } catch (e) {
               err = e;
             }
@@ -23198,7 +23198,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             } else {
               defer.eventEmitter.emit('transactionHash', result);
 
-              maht.d._confirmTransaction(defer, result, payload);
+              method._confirmTransaction(defer, result, payload);
             }
           };
 
@@ -23206,36 +23206,36 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           var sendSignedTx = function sendSignedTx(sign) {
 
             var signedPayload = _.extend({}, payload, {
-              maht.d: 'aht.sendRawTransaction',
+              method: 'aht.sendRawTransaction',
               params: [sign.rawTransaction]
             });
 
-            maht.d.requestManager.send(signedPayload, sendTxCallback);
+            method.requestManager.send(signedPayload, sendTxCallback);
           };
 
-          var sendRequest = function sendRequest(payload, maht.d) {
+          var sendRequest = function sendRequest(payload, method) {
 
-            if (maht.d && maht.d.accounts && maht.d.accounts.wallet && maht.d.accounts.wallet.length) {
+            if (method && method.accounts && method.accounts.wallet && method.accounts.wallet.length) {
               var wallet;
 
               // AHT_SENDTRANSACTION
-              if (payload.maht.d === 'aht.sendTransaction') {
+              if (payload.method === 'aht.sendTransaction') {
                 var tx = payload.params[0];
-                wallet = getWallet(_.isObject(tx) ? tx.from : null, maht.d.accounts);
+                wallet = getWallet(_.isObject(tx) ? tx.from : null, method.accounts);
 
                 // If wallet was found, sign tx, and send using sendRawTransaction
                 if (wallet && wallet.privateKey) {
-                  return maht.d.accounts.signTransaction(_.omit(tx, 'from'), wallet.privateKey).then(sendSignedTx);
+                  return method.accounts.signTransaction(_.omit(tx, 'from'), wallet.privateKey).then(sendSignedTx);
                 }
 
                 // AHT_SIGN
-              } else if (payload.maht.d === 'aht.sign') {
+              } else if (payload.method === 'aht.sign') {
                 var data = payload.params[1];
-                wallet = getWallet(payload.params[0], maht.d.accounts);
+                wallet = getWallet(payload.params[0], method.accounts);
 
                 // If wallet was found, sign tx, and send using sendRawTransaction
                 if (wallet && wallet.privateKey) {
-                  var sign = maht.d.accounts.sign(data, wallet.privateKey);
+                  var sign = method.accounts.sign(data, wallet.privateKey);
 
                   if (payload.callback) {
                     payload.callback(null, sign.signature);
@@ -23247,34 +23247,34 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
               }
             }
 
-            return maht.d.requestManager.send(payload, sendTxCallback);
+            return method.requestManager.send(payload, sendTxCallback);
           };
 
           // Send the actual transaction
           if (isSendTx && _.isObject(payload.params[0]) && !payload.params[0].gasPrice) {
 
-            var getGasPrice = new Maht.d({
+            var getGasPrice = new Method({
               name: 'getGasPrice',
               call: 'aht.gasPrice',
               params: 0
-            }).createFunction(maht.d.requestManager);
+            }).createFunction(method.requestManager);
 
             getGasPrice(function (err, gasPrice) {
 
               if (gasPrice) {
                 payload.params[0].gasPrice = gasPrice;
               }
-              sendRequest(payload, maht.d);
+              sendRequest(payload, method);
             });
           } else {
-            sendRequest(payload, maht.d);
+            sendRequest(payload, method);
           }
 
           return defer.eventEmitter;
         };
 
-        // necessary to attach things to the maht.d
-        send.maht.d = maht.d;
+        // necessary to attach things to the method
+        send.method = method;
         // necessary for batch requests
         send.request = this.request.bind(this);
         return send;
@@ -23283,16 +23283,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be called to create the pure JSONRPC request which can be used in a batch request
        *
-       * @maht.d request
+       * @method request
        * @return {Object} jsonrpc request
        */
-      Maht.d.prototype.request = function () {
+      Method.prototype.request = function () {
         var payload = this.toPayload(Array.prototype.slice.call(arguments));
         payload.format = this.formatOutput.bind(this);
         return payload;
       };
 
-      module.exports = Maht.d;
+      module.exports = Method;
     }, { "underscore": 192, "web3-core-helpers": 191, "web3-core-promievent": 198, "web3-core-subscriptions": 206, "web3-utils": 393 }], 194: [function (require, module, exports) {
       module.exports = require('./register')().Promise;
     }, { "./register": 196 }], 195: [function (require, module, exports) {
@@ -23624,7 +23624,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       };
 
       //
-      // Alias maht.ds names because people roll like that.
+      // Alias methods names because people roll like that.
       //
       EventEmitter.prototype.off = EventEmitter.prototype.removeListener;
       EventEmitter.prototype.addListener = EventEmitter.prototype.on;
@@ -23678,7 +23678,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * This function generates a defer promise and adds eventEmitter functionality to it
        *
-       * @maht.d eventifiedPromise
+       * @method eventifiedPromise
        */
       var PromiEvent = function PromiEvent(justPromise) {
         var resolve,
@@ -23762,7 +23762,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be called to add create new request to batch request
        *
-       * @maht.d add
+       * @method add
        * @param {Object} jsonrpc requet object
        */
       Batch.prototype.add = function (request) {
@@ -23772,7 +23772,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be called to execute batch request
        *
-       * @maht.d execute
+       * @method execute
        */
       Batch.prototype.execute = function () {
         var requests = this.requests;
@@ -23862,7 +23862,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                   }
 
                   // notification
-                  if (!result.id && result.maht.d.indexOf('_subscription') !== -1) {
+                  if (!result.id && result.method.indexOf('_subscription') !== -1) {
                     callback(null, result);
                   }
                 });
@@ -23936,7 +23936,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be used to set provider of request manager
        *
-       * @maht.d setProvider
+       * @method setProvider
        * @param {Object} p
        */
       RequestManager.prototype.setProvider = function (p, net) {
@@ -23971,8 +23971,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           this.provider.on('data', function requestManagerNotification(result, deprecatedResult) {
             result = result || deprecatedResult; // this is for possible old providers, which may had the error first handler
 
-            // check for result.maht.d, to prevent old providers errors to pass as result
-            if (result.maht.d && _this.subscriptions[result.params.subscription] && _this.subscriptions[result.params.subscription].callback) {
+            // check for result.method, to prevent old providers errors to pass as result
+            if (result.method && _this.subscriptions[result.params.subscription] && _this.subscriptions[result.params.subscription].callback) {
               _this.subscriptions[result.params.subscription].callback(null, result.params.result);
             }
           });
@@ -23989,7 +23989,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be used to asynchronously send request
        *
-       * @maht.d sendAsync
+       * @method sendAsync
        * @param {Object} data
        * @param {Function} callback
        */
@@ -24000,7 +24000,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           return callback(errors.InvalidProvider());
         }
 
-        var payload = Jsonrpc.toPayload(data.maht.d, data.params);
+        var payload = Jsonrpc.toPayload(data.method, data.params);
         this.provider[this.provider.sendAsync ? 'sendAsync' : 'send'](payload, function (err, result) {
           if (result && result.id && payload.id !== result.id) return callback(new Error('Wrong response id "' + result.id + '" (expected: "' + payload.id + '") in ' + JSON.stringify(payload)));
 
@@ -24023,7 +24023,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be called to asynchronously send batch request
        *
-       * @maht.d sendBatch
+       * @method sendBatch
        * @param {Array} batch data
        * @param {Function} callback
        */
@@ -24049,7 +24049,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Waits for notifications
        *
-       * @maht.d addSubscription
+       * @method addSubscription
        * @param {String} id           the subscription id
        * @param {String} name         the subscription name
        * @param {String} type         the subscription namespace (aht. personal, etc)
@@ -24070,7 +24070,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Waits for notifications
        *
-       * @maht.d removeSubscription
+       * @method removeSubscription
        * @param {String} id           the subscription id
        * @param {Function} callback   fired once the subscription is removed
        */
@@ -24080,7 +24080,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         if (this.subscriptions[id]) {
 
           this.send({
-            maht.d: this.subscriptions[id].type + '_unsubscribe',
+            method: this.subscriptions[id].type + '_unsubscribe',
             params: [id]
           }, callback);
 
@@ -24092,7 +24092,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be called to reset the subscriptions
        *
-       * @maht.d reset
+       * @method reset
        */
       RequestManager.prototype.clearSubscriptions = function (keepIsSyncing) {
         var _this = this;
@@ -24146,14 +24146,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be called to valid json create payload object
        *
-       * @maht.d toPayload
-       * @param {Function} maht.d of jsonrpc call, required
-       * @param {Array} params, an array of maht.d params, optional
+       * @method toPayload
+       * @param {Function} method of jsonrpc call, required
+       * @param {Array} params, an array of method params, optional
        * @returns {Object} valid jsonrpc payload object
        */
-      Jsonrpc.toPayload = function (maht.d, params) {
-        if (!maht.d) {
-          throw new Error('JSONRPC maht.d should be specified for params: "' + JSON.stringify(params) + '"!');
+      Jsonrpc.toPayload = function (method, params) {
+        if (!method) {
+          throw new Error('JSONRPC method should be specified for params: "' + JSON.stringify(params) + '"!');
         }
 
         // advance message ID
@@ -24162,7 +24162,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         return {
           jsonrpc: '2.0',
           id: Jsonrpc.messageId,
-          maht.d: maht.d,
+          method: method,
           params: params || []
         };
       };
@@ -24170,7 +24170,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be called to check if jsonrpc response is valid
        *
-       * @maht.d isValidResponse
+       * @method isValidResponse
        * @param {Object}
        * @returns {Boolean} true if response is valid, otherwise false
        */
@@ -24185,13 +24185,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be called to create batch payload object
        *
-       * @maht.d toBatchPayload
-       * @param {Array} messages, an array of objects with maht.d (required) and params (optional) fields
+       * @method toBatchPayload
+       * @param {Array} messages, an array of objects with method (required) and params (optional) fields
        * @returns {Array} batch payload
        */
       Jsonrpc.toBatchPayload = function (messages) {
         return messages.map(function (message) {
-          return Jsonrpc.toPayload(message.maht.d, message.params);
+          return Jsonrpc.toPayload(message.method, message.params);
         });
       };
 
@@ -24323,7 +24323,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be used to extract callback from array of arguments. Modifies input param
        *
-       * @maht.d extractCallback
+       * @method extractCallback
        * @param {Array} arguments
        * @return {Function|Null} callback, if exists
        */
@@ -24337,7 +24337,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be called to check if the number of arguments is correct
        *
-       * @maht.d validateArgs
+       * @method validateArgs
        * @param {Array} arguments
        * @throws {Error} if it is not
        */
@@ -24355,9 +24355,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       };
 
       /**
-       * Should be called to format input args of maht.d
+       * Should be called to format input args of method
        *
-       * @maht.d formatInput
+       * @method formatInput
        * @param {Array}
        * @return {Array}
        */
@@ -24381,9 +24381,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       };
 
       /**
-       * Should be called to format output(result) of maht.d
+       * Should be called to format output(result) of method
        *
-       * @maht.d formatOutput
+       * @method formatOutput
        * @param {Object}
        * @return {Object}
        */
@@ -24397,7 +24397,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should create payload from given input args
        *
-       * @maht.d toPayload
+       * @method toPayload
        * @param {Array} args
        * @return {Object}
        */
@@ -24405,12 +24405,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         var params = [];
         this.callback = this._extractCallback(args);
 
-        if (!this.subscriptionMaht.d) {
-          this.subscriptionMaht.d = args.shift();
+        if (!this.subscriptionMethod) {
+          this.subscriptionMethod = args.shift();
 
           // replace subscription with given name
           if (this.options.subscription.subscriptionName) {
-            this.subscriptionMaht.d = this.options.subscription.subscriptionName;
+            this.subscriptionMethod = this.options.subscription.subscriptionName;
           }
         }
 
@@ -24421,7 +24421,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
 
         // re-add subscriptionName
-        params.push(this.subscriptionMaht.d);
+        params.push(this.subscriptionMethod);
         params = params.concat(this.arguments);
 
         if (args.length) {
@@ -24429,7 +24429,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         }
 
         return {
-          maht.d: this.options.type + '_subscribe',
+          method: this.options.type + '_subscribe',
           params: params
         };
       };
@@ -24437,7 +24437,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Unsubscribes and clears callbacks
        *
-       * @maht.d unsubscribe
+       * @method unsubscribe
        * @return {Object}
        */
       Subscription.prototype.unsubscribe = function (callback) {
@@ -24450,7 +24450,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Subscribes and watches for changes
        *
-       * @maht.d subscribe
+       * @method subscribe
        * @param {String} subscription the subscription
        * @param {Object} options the options object with address topics and fromBlock
        * @return {Object}
@@ -24491,7 +24491,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         if (payload.params[0] === 'logs' && _.isObject(payload.params[1]) && payload.params[1].hasOwnProperty('fromBlock') && isFinite(payload.params[1].fromBlock)) {
           // send the subscription request
           this.options.requestManager.send({
-            maht.d: 'aht.getLogs',
+            method: 'aht.getLogs',
             params: [payload.params[1]]
           }, function (err, logs) {
             if (!err) {
@@ -24606,7 +24606,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       "use strict";
 
       var formatters = require('web3-core-helpers').formatters;
-      var Maht.d = require('web3-core-maht.d');
+      var Method = require('web3-core-method');
       var utils = require('web3-utils');
 
       var extend = function extend(pckg) {
@@ -24623,14 +24623,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             extendedObject = pckg;
           }
 
-          if (extension.maht.ds) {
-            extension.maht.ds.forEach(function (maht.d) {
-              if (!(maht.d instanceof Maht.d)) {
-                maht.d = new Maht.d(maht.d);
+          if (extension.methods) {
+            extension.methods.forEach(function (method) {
+              if (!(method instanceof Method)) {
+                method = new Method(method);
               }
 
-              maht.d.attachToObject(extendedObject);
-              maht.d.setRequestManager(pckg._requestManager);
+              method.attachToObject(extendedObject);
+              method.setRequestManager(pckg._requestManager);
             });
           }
 
@@ -24639,13 +24639,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
         ex.formatters = formatters;
         ex.utils = utils;
-        ex.Maht.d = Maht.d;
+        ex.Method = Method;
 
         return ex;
       };
 
       module.exports = extend;
-    }, { "web3-core-helpers": 191, "web3-core-maht.d": 193, "web3-utils": 393 }], 209: [function (require, module, exports) {
+    }, { "web3-core-helpers": 191, "web3-core-method": 193, "web3-utils": 393 }], 209: [function (require, module, exports) {
       /*
           This file is part of web3.js.
       
@@ -28011,7 +28011,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         };
 
         //
-        // Montgomery maht.d engine
+        // Montgomery method engine
         //
 
         BN.mont = function mont(num) {
@@ -28125,7 +28125,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
        * If value is negative, return it's two's complement
        * If the value is floating point, round it down
        *
-       * @maht.d formatInputInt
+       * @method formatInputInt
        * @param {String|Number|BN} value that needs to be formatted
        * @returns {SolidityParam}
        */
@@ -28139,7 +28139,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Formats input bytes
        *
-       * @maht.d formatInputBytes
+       * @method formatInputBytes
        * @param {String} value
        * @returns {SolidityParam}
        */
@@ -28166,7 +28166,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Formats input bytes
        *
-       * @maht.d formatDynamicInputBytes
+       * @method formatDynamicInputBytes
        * @param {String} value
        * @returns {SolidityParam}
        */
@@ -28190,7 +28190,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Formats input value to byte representation of string
        *
-       * @maht.d formatInputString
+       * @method formatInputString
        * @param {String}
        * @returns {SolidityParam}
        */
@@ -28209,7 +28209,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Formats input value to byte representation of bool
        *
-       * @maht.d formatInputBool
+       * @method formatInputBool
        * @param {Boolean}
        * @returns {SolidityParam}
        */
@@ -28221,7 +28221,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Check if input value is negative
        *
-       * @maht.d signedIsNegative
+       * @method signedIsNegative
        * @param {String} value is hex format
        * @returns {Boolean} true if it is negative, otherwise false
        */
@@ -28232,7 +28232,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Formats right-aligned output bytes to int
        *
-       * @maht.d formatOutputInt
+       * @method formatOutputInt
        * @param {SolidityParam} param
        * @returns {BN} right-aligned output bytes formatted to big number
        */
@@ -28254,7 +28254,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Formats right-aligned output bytes to uint
        *
-       * @maht.d formatOutputUInt
+       * @method formatOutputUInt
        * @param {SolidityParam} param
        * @returns {BN} right-aligned output bytes formatted to uint
        */
@@ -28271,7 +28271,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be used to format output bool
        *
-       * @maht.d formatOutputBool
+       * @method formatOutputBool
        * @param {SolidityParam} param
        * @param {String} name type name
        * @returns {Boolean} right-aligned input bytes formatted to bool
@@ -28289,7 +28289,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be used to format output bytes
        *
-       * @maht.d formatOutputBytes
+       * @method formatOutputBytes
        * @param {SolidityParam} param left-aligned hex representation of string
        * @param {String} name type name
        * @returns {String} hex string
@@ -28308,7 +28308,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be used to format output bytes
        *
-       * @maht.d formatOutputDynamicBytes
+       * @method formatOutputDynamicBytes
        * @param {SolidityParam} param left-aligned hex representation of string
        * @param {String} name type name
        * @returns {String} hex string
@@ -28327,7 +28327,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be used to format output string
        *
-       * @maht.d formatOutputString
+       * @method formatOutputString
        * @param {SolidityParam} left-aligned hex representation of string
        * @returns {String} ascii string
        */
@@ -28345,7 +28345,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be used to format output address
        *
-       * @maht.d formatOutputAddress
+       * @method formatOutputAddress
        * @param {SolidityParam} param right-aligned input bytes
        * @param {String} name type name
        * @returns {String} address
@@ -28416,7 +28416,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         return solidityType.isDynamicType(type) || solidityType.isDynamicArray(type);
       };
 
-      // result maht.d
+      // result method
       function Result() {}
 
       /**
@@ -28427,9 +28427,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       };
 
       /**
-       * This maht.d should be used to transform type to SolidityType
+       * This method should be used to transform type to SolidityType
        *
-       * @maht.d _requireType
+       * @method _requireType
        * @param {String} type
        * @returns {SolidityType}
        * @throws {Error} throws if no matching type is found
@@ -28561,13 +28561,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Encodes the function name to its ABI representation, which are the first 4 bytes of the sha3 of the function name including  types.
        *
-       * @maht.d encodeFunctionSignature
+       * @method encodeFunctionSignature
        * @param {String|Object} functionName
        * @return {String} encoded function name
        */
       ABICoder.prototype.encodeFunctionSignature = function (functionName) {
         if (_.isObject(functionName)) {
-          functionName = utils._jsonInterfaceMaht.dToString(functionName);
+          functionName = utils._jsonInterfaceMethodToString(functionName);
         }
 
         return utils.sha3(functionName).slice(0, 10);
@@ -28576,13 +28576,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Encodes the function name to its ABI representation, which are the first 4 bytes of the sha3 of the function name including  types.
        *
-       * @maht.d encodeEventSignature
+       * @method encodeEventSignature
        * @param {String|Object} functionName
        * @return {String} encoded function name
        */
       ABICoder.prototype.encodeEventSignature = function (functionName) {
         if (_.isObject(functionName)) {
-          functionName = utils._jsonInterfaceMaht.dToString(functionName);
+          functionName = utils._jsonInterfaceMethodToString(functionName);
         }
 
         return utils.sha3(functionName);
@@ -28591,7 +28591,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be used to encode plain param
        *
-       * @maht.d encodeParameter
+       * @method encodeParameter
        * @param {String} type
        * @param {Object} param
        * @return {String} encoded plain param
@@ -28603,7 +28603,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be used to encode list of params
        *
-       * @maht.d encodeParameters
+       * @method encodeParameters
        * @param {Array} types
        * @param {Array} params
        * @return {String} encoded list of params
@@ -28635,7 +28635,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Encodes a function call from its json interface and parameters.
        *
-       * @maht.d encodeFunctionCall
+       * @method encodeFunctionCall
        * @param {Array} jsonInterface
        * @param {Array} params
        * @return {String} The encoded ABI for this function call
@@ -28647,7 +28647,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be used to decode bytes to plain param
        *
-       * @maht.d decodeParameter
+       * @method decodeParameter
        * @param {String} type
        * @param {String} bytes
        * @return {Object} plain param
@@ -28664,7 +28664,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be used to decode list of params
        *
-       * @maht.d decodeParameter
+       * @method decodeParameter
        * @param {Array} outputs
        * @param {String} bytes
        * @return {Array} array of plain params
@@ -28706,7 +28706,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Decodes events non- and indexed parameters.
        *
-       * @maht.d decodeLog
+       * @method decodeLog
        * @param {Object} inputs
        * @param {String} data
        * * @param {Array} topics
@@ -28797,9 +28797,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       };
 
       /**
-       * This maht.d should be used to get length of params's dynamic part
+       * This method should be used to get length of params's dynamic part
        *
-       * @maht.d dynamicPartLength
+       * @method dynamicPartLength
        * @returns {Number} length of dynamic part (in bytes)
        */
       SolidityParam.prototype.dynamicPartLength = function () {
@@ -28807,9 +28807,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       };
 
       /**
-       * This maht.d should be used to create copy of solidity param with different offset
+       * This method should be used to create copy of solidity param with different offset
        *
-       * @maht.d withOffset
+       * @method withOffset
        * @param {Number} offset length in bytes
        * @returns {SolidityParam} new solidity param with applied offset
        */
@@ -28818,10 +28818,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       };
 
       /**
-       * This maht.d should be used to combine solidity params togaht.r
+       * This method should be used to combine solidity params togaht.r
        * eg. when appending an array
        *
-       * @maht.d combine
+       * @method combine
        * @param {SolidityParam} param with which we should combine
        * @param {SolidityParam} result of combination
        */
@@ -28830,10 +28830,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       };
 
       /**
-       * This maht.d should be called to check if param has dynamic size.
+       * This method should be called to check if param has dynamic size.
        * If it has, it returns true, otherwise false
        *
-       * @maht.d isDynamic
+       * @method isDynamic
        * @returns {Boolean}
        */
       SolidityParam.prototype.isDynamic = function () {
@@ -28841,9 +28841,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       };
 
       /**
-       * This maht.d should be called to transform offset to bytes
+       * This method should be called to transform offset to bytes
        *
-       * @maht.d offsetAsBytes
+       * @method offsetAsBytes
        * @returns {String} bytes representation of offset
        */
       SolidityParam.prototype.offsetAsBytes = function () {
@@ -28851,9 +28851,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       };
 
       /**
-       * This maht.d should be called to get static part of param
+       * This method should be called to get static part of param
        *
-       * @maht.d staticPart
+       * @method staticPart
        * @returns {String} offset if it is a dynamic param, otherwise value
        */
       SolidityParam.prototype.staticPart = function () {
@@ -28864,9 +28864,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       };
 
       /**
-       * This maht.d should be called to get dynamic part of param
+       * This method should be called to get dynamic part of param
        *
-       * @maht.d dynamicPart
+       * @method dynamicPart
        * @returns {String} returns a value if it is a dynamic param, otherwise empty string
        */
       SolidityParam.prototype.dynamicPart = function () {
@@ -28874,9 +28874,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       };
 
       /**
-       * This maht.d should be called to encode param
+       * This method should be called to encode param
        *
-       * @maht.d encode
+       * @method encode
        * @returns {String}
        */
       SolidityParam.prototype.encode = function () {
@@ -28884,9 +28884,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       };
 
       /**
-       * This maht.d should be called to encode array of params
+       * This method should be called to encode array of params
        *
-       * @maht.d encodeList
+       * @method encodeList
        * @param {Array[SolidityParam]} params
        * @returns {String}
        */
@@ -28927,18 +28927,18 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be used to determine if this SolidityType do match given name
        *
-       * @maht.d isType
+       * @method isType
        * @param {String} name
        * @return {Bool} true if type match this SolidityType, otherwise false
        */
       SolidityType.prototype.isType = function (name) {
-        throw "This maht.d should be overwritten for type " + name;
+        throw "This method should be overwritten for type " + name;
       };
 
       /**
        * Should be used to determine what is the length of static part in given type
        *
-       * @maht.d staticPartLength
+       * @method staticPartLength
        * @param {String} name
        * @return {Number} length of static part in bytes
        */
@@ -28959,7 +28959,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
        * "type[]" => true
        * "type[4]" => false
        *
-       * @maht.d isDynamicArray
+       * @method isDynamicArray
        * @param {String} name
        * @return {Bool} true if the type is dynamic array
        */
@@ -28974,7 +28974,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
        * "type[]" => false
        * "type[4]" => true
        *
-       * @maht.d isStaticArray
+       * @method isStaticArray
        * @param {String} name
        * @return {Bool} true if the type is static array
        */
@@ -28993,7 +28993,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
        * "int[1]" => 1
        * "int[]" => 1
        *
-       * @maht.d staticArrayLength
+       * @method staticArrayLength
        * @param {String} name
        * @return {Number} static array length
        */
@@ -29014,7 +29014,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
        * "int" => "int"
        * "int[]" => "int"
        *
-       * @maht.d nestedName
+       * @method nestedName
        * @param {String} name
        * @return {String} nested name
        */
@@ -29032,7 +29032,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
        * Should return true if type has dynamic size by default
        * such types are "string", "bytes"
        *
-       * @maht.d isDynamicType
+       * @method isDynamicType
        * @param {String} name
        * @return {Bool} true if is dynamic, otherwise false
        */
@@ -29047,7 +29047,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
        * "int[] => ["[]"]
        * "int" => null
        *
-       * @maht.d nestedTypes
+       * @method nestedTypes
        * @param {String} name
        * @return {Array} array of nested types
        */
@@ -29059,7 +29059,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be used to encode the value
        *
-       * @maht.d encode
+       * @method encode
        * @param {Object} value
        * @param {String} name
        * @return {String} encoded value
@@ -29102,7 +29102,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be used to decode value from bytes
        *
-       * @maht.d decode
+       * @method decode
        * @param {String} bytes
        * @param {Number} offset in bytes
        * @param {String} name type name
@@ -32676,7 +32676,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         };
 
         //
-        // Montgomery maht.d engine
+        // Montgomery method engine
         //
 
         BN.mont = function mont(num) {
@@ -32944,7 +32944,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           return this;
         };
 
-        Sign.prototype.sign = function signMaht.d(key, enc) {
+        Sign.prototype.sign = function signMethod(key, enc) {
           this.end();
           var hash = this._hash.digest();
           var sig = sign(hash, key, this._hashType, this._signType, this._tag);
@@ -32976,7 +32976,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           return this;
         };
 
-        Verify.prototype.verify = function verifyMaht.d(key, sig, enc) {
+        Verify.prototype.verify = function verifyMethod(key, sig, enc) {
           if (typeof sig === 'string') sig = new Buffer(sig, enc);
 
           this.end();
@@ -33984,9 +33984,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         return Bytes.pad(32, a);
       };
 
-      var bin = function bin(maht.d) {
+      var bin = function bin(method) {
         return function (a, b) {
-          return fromBN(toBN(a)[maht.d](toBN(b)));
+          return fromBN(toBN(a)[method](toBN(b)));
         };
       };
 
@@ -35760,7 +35760,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
         var _ = require("underscore");
         var core = require('web3-core');
-        var Maht.d = require('web3-core-maht.d');
+        var Method = require('web3-core-method');
         var Promise = require('any-promise');
         var Account = require("aht-lib/lib/account");
         var Hash = require("aht-lib/lib/hash");
@@ -35801,16 +35801,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           delete this.BatchRequest;
           delete this.extend;
 
-          var _bowheadCall = [new Maht.d({
+          var _bowheadCall = [new Method({
             name: 'getId',
             call: 'net_version',
             params: 0,
             outputFormatter: utils.hexToNumber
-          }), new Maht.d({
+          }), new Method({
             name: 'getGasPrice',
             call: 'aht.gasPrice',
             params: 0
-          }), new Maht.d({
+          }), new Method({
             name: 'getTransactionCount',
             call: 'aht.getTransactionCount',
             params: 2,
@@ -35824,11 +35824,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
               return 'latest';
             }]
           })];
-          // attach maht.ds to this._bowheadCall
+          // attach methods to this._bowheadCall
           this._bowheadCall = {};
-          _.each(_bowheadCall, function (maht.d) {
-            maht.d.attachToObject(_this._bowheadCall);
-            maht.d.setRequestManager(_this._requestManager);
+          _.each(_bowheadCall, function (method) {
+            method.attachToObject(_this._bowheadCall);
+            method.setRequestManager(_this._requestManager);
           });
 
           this.wallet = new Wallet(this);
@@ -36241,7 +36241,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
         module.exports = Accounts;
       }).call(this, typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {}, require("buffer").Buffer);
-    }, { "any-promise": 223, "buffer": 47, "crypto": 56, "crypto-browserify": 277, "aht-lib/lib/account": 304, "aht-lib/lib/bytes": 306, "aht-lib/lib/hash": 307, "aht-lib/lib/nat": 308, "aht-lib/lib/rlp": 309, "scrypt.js": 351, "underscore": 361, "uuid": 363, "web3-core": 209, "web3-core-helpers": 191, "web3-core-maht.d": 193, "web3-utils": 393 }], 365: [function (require, module, exports) {
+    }, { "any-promise": 223, "buffer": 47, "crypto": 56, "crypto-browserify": 277, "aht-lib/lib/account": 304, "aht-lib/lib/bytes": 306, "aht-lib/lib/hash": 307, "aht-lib/lib/nat": 308, "aht-lib/lib/rlp": 309, "scrypt.js": 351, "underscore": 361, "uuid": 363, "web3-core": 209, "web3-core-helpers": 191, "web3-core-method": 193, "web3-utils": 393 }], 365: [function (require, module, exports) {
       arguments[4][178][0].apply(exports, arguments);
     }, { "dup": 178 }], 366: [function (require, module, exports) {
       /*
@@ -36277,7 +36277,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       var _ = require('underscore');
       var core = require('web3-core');
-      var Maht.d = require('web3-core-maht.d');
+      var Method = require('web3-core-method');
       var utils = require('web3-utils');
       var Subscription = require('web3-core-subscriptions').subscription;
       var formatters = require('web3-core-helpers').formatters;
@@ -36288,7 +36288,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be called to create new contract instance
        *
-       * @maht.d Contract
+       * @method Contract
        * @constructor
        * @param {Array} jsonInterface
        * @param {String} address
@@ -36337,61 +36337,61 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           enumerable: true
         });
 
-        // add maht.d and event signatures, when the jsonInterface gets set
+        // add method and event signatures, when the jsonInterface gets set
         Object.defineProperty(this.options, 'jsonInterface', {
           set: function set(value) {
-            _this.maht.ds = {};
+            _this.methods = {};
             _this.events = {};
 
-            _this._jsonInterface = value.map(function (maht.d) {
+            _this._jsonInterface = value.map(function (method) {
               var func, funcName;
 
-              if (maht.d.name) {
-                funcName = utils._jsonInterfaceMaht.dToString(maht.d);
+              if (method.name) {
+                funcName = utils._jsonInterfaceMethodToString(method);
               }
 
               // function
-              if (maht.d.type === 'function') {
-                maht.d.signature = abi.encodeFunctionSignature(funcName);
+              if (method.type === 'function') {
+                method.signature = abi.encodeFunctionSignature(funcName);
                 func = _this._createTxObject.bind({
-                  maht.d: maht.d,
+                  method: method,
                   parent: _this
                 });
 
-                // add maht.d only if not one already exists
-                if (!_this.maht.ds[maht.d.name]) {
-                  _this.maht.ds[maht.d.name] = func;
+                // add method only if not one already exists
+                if (!_this.methods[method.name]) {
+                  _this.methods[method.name] = func;
                 } else {
                   var cascadeFunc = _this._createTxObject.bind({
-                    maht.d: maht.d,
+                    method: method,
                     parent: _this,
-                    nextMaht.d: _this.maht.ds[maht.d.name]
+                    nextMethod: _this.methods[method.name]
                   });
-                  _this.maht.ds[maht.d.name] = cascadeFunc;
+                  _this.methods[method.name] = cascadeFunc;
                 }
 
-                // definitely add the maht.d based on its signature
-                _this.maht.ds[maht.d.signature] = func;
+                // definitely add the method based on its signature
+                _this.methods[method.signature] = func;
 
-                // add maht.d by name
-                _this.maht.ds[funcName] = func;
+                // add method by name
+                _this.methods[funcName] = func;
 
                 // event
-              } else if (maht.d.type === 'event') {
-                maht.d.signature = abi.encodeEventSignature(funcName);
-                var event = _this._on.bind(_this, maht.d.signature);
+              } else if (method.type === 'event') {
+                method.signature = abi.encodeEventSignature(funcName);
+                var event = _this._on.bind(_this, method.signature);
 
-                // add maht.d only if not already exists
-                if (!_this.events[maht.d.name] || _this.events[maht.d.name].name === 'bound ') _this.events[maht.d.name] = event;
+                // add method only if not already exists
+                if (!_this.events[method.name] || _this.events[method.name].name === 'bound ') _this.events[method.name] = event;
 
-                // definitely add the maht.d based on its signature
-                _this.events[maht.d.signature] = event;
+                // definitely add the method based on its signature
+                _this.events[method.signature] = event;
 
                 // add event by name
                 _this.events[funcName] = event;
               }
 
-              return maht.d;
+              return method;
             });
 
             // add allEvents
@@ -36435,7 +36435,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         });
 
         // properties
-        this.maht.ds = {};
+        this.methods = {};
         this.events = {};
 
         this._address = null;
@@ -36456,7 +36456,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Get the callback and modiufy the array if necessary
        *
-       * @maht.d _getCallback
+       * @method _getCallback
        * @param {Array} args
        * @return {Function} the callback
        */
@@ -36469,7 +36469,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Checks that no listener with name "newListener" or "removeListener" is added.
        *
-       * @maht.d _checkListener
+       * @method _checkListener
        * @param {String} type
        * @param {String} event
        * @return {Object} the contract instance
@@ -36483,7 +36483,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Use default values, if options are not available
        *
-       * @maht.d _getOrSetDefaultOptions
+       * @method _getOrSetDefaultOptions
        * @param {Object} options the options gived by the user
        * @return {Object} the options with gaps filled by defaults
        */
@@ -36506,7 +36506,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be used to encode indexed params and options to one final object
        *
-       * @maht.d _encodeEventABI
+       * @method _encodeEventABI
        * @param {Object} event
        * @param {Object} options
        * @return {Object} everything combined togaht.r and encoded
@@ -36572,7 +36572,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be used to decode indexed params and options
        *
-       * @maht.d _decodeEventABI
+       * @method _decodeEventABI
        * @param {Object} data
        * @return {Object} result object with decoded indexed && not indexed params
        */
@@ -36616,25 +36616,25 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       };
 
       /**
-       * Encodes an ABI for a maht.d, including signature or the maht.d.
+       * Encodes an ABI for a method, including signature or the method.
        * Or when constructor encodes only the constructor parameters.
        *
-       * @maht.d _encodeMaht.dABI
+       * @method _encodeMethodABI
        * @param {Mixed} args the arguments to encode
        * @param {String} the encoded ABI
        */
-      Contract.prototype._encodeMaht.dABI = function _encodeMaht.dABI() {
-        var maht.dSignature = this._maht.d.signature,
+      Contract.prototype._encodeMethodABI = function _encodeMethodABI() {
+        var methodSignature = this._method.signature,
             args = this.arguments || [];
 
         var signature = false,
             paramsABI = this._parent.options.jsonInterface.filter(function (json) {
-          return maht.dSignature === 'constructor' && json.type === maht.dSignature || (json.signature === maht.dSignature || json.signature === maht.dSignature.replace('0x', '') || json.name === maht.dSignature) && json.type === 'function';
+          return methodSignature === 'constructor' && json.type === methodSignature || (json.signature === methodSignature || json.signature === methodSignature.replace('0x', '') || json.name === methodSignature) && json.type === 'function';
         }).map(function (json) {
           var inputLength = _.isArray(json.inputs) ? json.inputs.length : 0;
 
           if (inputLength !== args.length) {
-            throw new Error('The number of arguments is not matching the maht.ds required number. You need to pass ' + inputLength + ' arguments.');
+            throw new Error('The number of arguments is not matching the methods required number. You need to pass ' + inputLength + ' arguments.');
           }
 
           if (json.type === 'function') {
@@ -36648,18 +36648,18 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         })[0] || '';
 
         // return constructor
-        if (maht.dSignature === 'constructor') {
+        if (methodSignature === 'constructor') {
           if (!this._deployData) throw new Error('The contract has no contract data option set. This is necessary to append the constructor parameters.');
 
           return this._deployData + paramsABI;
 
-          // return maht.d
+          // return method
         } else {
 
           var returnValue = signature ? signature + paramsABI : paramsABI;
 
           if (!returnValue) {
-            throw new Error('Couldn\'t find a matching contract maht.d named "' + this._maht.d.name + '".');
+            throw new Error('Couldn\'t find a matching contract method named "' + this._method.name + '".');
           } else {
             return returnValue;
           }
@@ -36667,14 +36667,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       };
 
       /**
-       * Decode maht.d return values
+       * Decode method return values
        *
-       * @maht.d _decodeMaht.dReturn
+       * @method _decodeMethodReturn
        * @param {Array} outputs
        * @param {String} returnValues
        * @return {Object} decoded output return values
        */
-      Contract.prototype._decodeMaht.dReturn = function (outputs, returnValues) {
+      Contract.prototype._decodeMethodReturn = function (outputs, returnValues) {
         if (!returnValues) {
           return null;
         }
@@ -36695,7 +36695,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
        *
        * All event listeners will be removed, once the last possible event is fired ("error", or "receipt")
        *
-       * @maht.d deploy
+       * @method deploy
        * @param {Object} options
        * @param {Function} callback
        * @return {Object} EventEmitter possible events are "error", "transactionHash" and "receipt"
@@ -36712,13 +36712,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           return utils._fireError(new Error('No "data" specified in neither the given options, nor the default options.'), null, null, callback);
         }
 
-        var constructor = _.find(this.options.jsonInterface, function (maht.d) {
-          return maht.d.type === 'constructor';
+        var constructor = _.find(this.options.jsonInterface, function (method) {
+          return method.type === 'constructor';
         }) || {};
         constructor.signature = 'constructor';
 
         return this._createTxObject.apply({
-          maht.d: constructor,
+          method: constructor,
           parent: this,
           deployData: options.data,
           _ahtAccounts: this.constructor._ahtAccounts
@@ -36728,7 +36728,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Gets the event signature and outputformatters
        *
-       * @maht.d _generateEventOptions
+       * @method _generateEventOptions
        * @param {Object} event
        * @param {Object} options
        * @param {Function} callback
@@ -36769,7 +36769,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Adds event listeners and creates a subscription, and remove it once its fired.
        *
-       * @maht.d clone
+       * @method clone
        * @return {Object} the event subscription
        */
       Contract.prototype.clone = function () {
@@ -36779,7 +36779,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Adds event listeners and creates a subscription, and remove it once its fired.
        *
-       * @maht.d once
+       * @method once
        * @param {String} event
        * @param {Object} options
        * @param {Function} callback
@@ -36812,7 +36812,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Adds event listeners and creates a subscription.
        *
-       * @maht.d _on
+       * @method _on
        * @param {String} event
        * @param {Object} options
        * @param {Function} callback
@@ -36857,7 +36857,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Get past events from contracts
        *
-       * @maht.d getPastEvents
+       * @method getPastEvents
        * @param {String} event
        * @param {Object} options
        * @param {Function} callback
@@ -36866,7 +36866,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       Contract.prototype.getPastEvents = function () {
         var subOptions = this._generateEventOptions.apply(this, arguments);
 
-        var getPastLogs = new Maht.d({
+        var getPastLogs = new Method({
           name: 'getPastLogs',
           call: 'aht.getLogs',
           params: 1,
@@ -36884,33 +36884,33 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * returns the an object with call, send, estimate functions
        *
-       * @maht.d _createTxObject
-       * @returns {Object} an object with functions to call the maht.ds
+       * @method _createTxObject
+       * @returns {Object} an object with functions to call the methods
        */
       Contract.prototype._createTxObject = function _createTxObject() {
         var args = Array.prototype.slice.call(arguments);
         var txObject = {};
 
-        if (this.maht.d.type === 'function') {
+        if (this.method.type === 'function') {
 
-          txObject.call = this.parent._executeMaht.d.bind(txObject, 'call');
-          txObject.call.request = this.parent._executeMaht.d.bind(txObject, 'call', true); // to make batch requests
+          txObject.call = this.parent._executeMethod.bind(txObject, 'call');
+          txObject.call.request = this.parent._executeMethod.bind(txObject, 'call', true); // to make batch requests
         }
 
-        txObject.send = this.parent._executeMaht.d.bind(txObject, 'send');
-        txObject.send.request = this.parent._executeMaht.d.bind(txObject, 'send', true); // to make batch requests
-        txObject.encodeABI = this.parent._encodeMaht.dABI.bind(txObject);
-        txObject.estimateGas = this.parent._executeMaht.d.bind(txObject, 'estimate');
+        txObject.send = this.parent._executeMethod.bind(txObject, 'send');
+        txObject.send.request = this.parent._executeMethod.bind(txObject, 'send', true); // to make batch requests
+        txObject.encodeABI = this.parent._encodeMethodABI.bind(txObject);
+        txObject.estimateGas = this.parent._executeMethod.bind(txObject, 'estimate');
 
-        if (args && this.maht.d.inputs && args.length !== this.maht.d.inputs.length) {
-          if (this.nextMaht.d) {
-            return this.nextMaht.d.apply(null, args);
+        if (args && this.method.inputs && args.length !== this.method.inputs.length) {
+          if (this.nextMethod) {
+            return this.nextMethod.apply(null, args);
           }
-          throw errors.InvalidNumberOfParams(args.length, this.maht.d.inputs.length, this.maht.d.name);
+          throw errors.InvalidNumberOfParams(args.length, this.method.inputs.length, this.method.name);
         }
 
         txObject.arguments = args || [];
-        txObject._maht.d = this.maht.d;
+        txObject._method = this.method;
         txObject._parent = this.parent;
         txObject._ahtAccounts = this.parent.constructor._ahtAccounts || this._ahtAccounts;
 
@@ -36924,7 +36924,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Generates the options for the execute call
        *
-       * @maht.d _processExecuteArguments
+       * @method _processExecuteArguments
        * @param {Array} args
        * @param {Promise} defer
        */
@@ -36954,7 +36954,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         if (!this._deployData) processedArgs.options.to = this._parent.options.address;
 
         // return error, if no "data" is specified
-        if (!processedArgs.options.data) return utils._fireError(new Error('Couldn\'t find a matching contract maht.d, or the number of parameters is wrong.'), defer.eventEmitter, defer.reject, processedArgs.callback);
+        if (!processedArgs.options.data) return utils._fireError(new Error('Couldn\'t find a matching contract method, or the number of parameters is wrong.'), defer.eventEmitter, defer.reject, processedArgs.callback);
 
         return processedArgs;
       };
@@ -36962,11 +36962,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Executes a call, transact or estimateGas on a contract function
        *
-       * @maht.d _executeMaht.d
+       * @method _executeMethod
        * @param {String} type the type this execute function should execute
        * @param {Boolean} makeRequest if true, it simply returns the request parameters, rather than executing it
        */
-      Contract.prototype._executeMaht.d = function _executeMaht.d() {
+      Contract.prototype._executeMethod = function _executeMethod() {
         var _this = this,
             args = this._parent._processExecuteArguments.call(this, Array.prototype.slice.call(arguments), defer),
             defer = promiEvent(args.type !== 'send'),
@@ -36982,10 +36982,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
           if (args.type === 'call') {
             payload.params.push(formatters.inputDefaultBlockNumberFormatter.call(this._parent, args.defaultBlock));
-            payload.maht.d = 'aht.call';
-            payload.format = this._parent._decodeMaht.dReturn.bind(null, this._maht.d.outputs);
+            payload.method = 'aht.call';
+            payload.format = this._parent._decodeMethodReturn.bind(null, this._method.outputs);
           } else {
-            payload.maht.d = 'aht.sendTransaction';
+            payload.method = 'aht.sendTransaction';
           }
 
           return payload;
@@ -36994,7 +36994,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           switch (args.type) {
             case 'estimate':
 
-              var estimateGas = new Maht.d({
+              var estimateGas = new Method({
                 name: 'estimateGas',
                 call: 'aht.estimateGas',
                 params: 1,
@@ -37012,14 +37012,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
               // TODO check errors: missing "from" should give error on deploy and send, call ?
 
-              var call = new Maht.d({
+              var call = new Method({
                 name: 'call',
                 call: 'aht.call',
                 params: 2,
                 inputFormatter: [formatters.inputCallFormatter, formatters.inputDefaultBlockNumberFormatter],
                 // add output formatter for decoding
                 outputFormatter: function outputFormatter(result) {
-                  return _this._parent._decodeMaht.dReturn(_this._maht.d.outputs, result);
+                  return _this._parent._decodeMethodReturn(_this._method.outputs, result);
                 },
                 requestManager: _this._parent._requestManager,
                 accounts: ahtAccounts, // is aht.accounts (necessary for wallet signing)
@@ -37036,8 +37036,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 return utils._fireError(new Error('No "from" address specified in neither the given options, nor the default options.'), defer.eventEmitter, defer.reject, args.callback);
               }
 
-              if (_.isBoolean(this._maht.d.payable) && !this._maht.d.payable && args.options.value && args.options.value > 0) {
-                return utils._fireError(new Error('Can not send value to non-payable contract maht.d or constructor'), defer.eventEmitter, defer.reject, args.callback);
+              if (_.isBoolean(this._method.payable) && !this._method.payable && args.options.value && args.options.value > 0) {
+                return utils._fireError(new Error('Can not send value to non-payable contract method or constructor'), defer.eventEmitter, defer.reject, args.callback);
               }
 
               // make sure receipt logs are decoded
@@ -37085,7 +37085,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 }
               };
 
-              var sendTransaction = new Maht.d({
+              var sendTransaction = new Method({
                 name: 'sendTransaction',
                 call: 'aht.sendTransaction',
                 params: 1,
@@ -37104,7 +37104,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       };
 
       module.exports = Contract;
-    }, { "underscore": 365, "web3-core": 209, "web3-core-helpers": 191, "web3-core-maht.d": 193, "web3-core-promievent": 198, "web3-core-subscriptions": 206, "web3-aht-abi": 213, "web3-utils": 393 }], 367: [function (require, module, exports) {
+    }, { "underscore": 365, "web3-core": 209, "web3-core-helpers": 191, "web3-core-method": 193, "web3-core-promievent": 198, "web3-core-subscriptions": 206, "web3-aht-abi": 213, "web3-utils": 393 }], 367: [function (require, module, exports) {
       arguments[4][210][0].apply(exports, arguments);
     }, { "dup": 210 }], 368: [function (require, module, exports) {
       /*
@@ -37149,7 +37149,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
        * Prepare an IBAN for mod 97 computation by moving the first 4 chars to the end and transforming the letters to
        * numbers (A = 10, B = 11, ..., Z = 35), as specified in ISO13616.
        *
-       * @maht.d iso13616Prepare
+       * @method iso13616Prepare
        * @param {String} iban the IBAN
        * @returns {String} the prepared IBAN
        */
@@ -37174,7 +37174,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Calculates the MOD 97 10 of the passed IBAN as specified in ISO7064.
        *
-       * @maht.d mod9710
+       * @method mod9710
        * @param {String} iban
        * @returns {Number}
        */
@@ -37200,9 +37200,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       };
 
       /**
-       * This maht.d should be used to create an bowhead address from a direct iban address
+       * This method should be used to create an bowhead address from a direct iban address
        *
-       * @maht.d toAddress
+       * @method toAddress
        * @param {String} iban address
        * @return {String} the bowhead address
        */
@@ -37217,9 +37217,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       };
 
       /**
-       * This maht.d should be used to create iban address from an bowhead address
+       * This method should be used to create iban address from an bowhead address
        *
-       * @maht.d toIban
+       * @method toIban
        * @param {String} address
        * @return {String} the IBAN address
        */
@@ -37228,9 +37228,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       };
 
       /**
-       * This maht.d should be used to create iban object from an bowhead address
+       * This method should be used to create iban object from an bowhead address
        *
-       * @maht.d fromAddress
+       * @method fromAddress
        * @param {String} address
        * @return {Iban} the IBAN object
        */
@@ -37250,9 +37250,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Convert the passed BBAN to an IBAN for this country specification.
        * Please note that <i>"generation of the IBAN shall be the exclusive responsibility of the bank/branch servicing the account"</i>.
-       * This maht.d implements the preferred algorithm described in http://en.wikipedia.org/wiki/International_Bank_Account_Number#Generating_IBAN_check_digits
+       * This method implements the preferred algorithm described in http://en.wikipedia.org/wiki/International_Bank_Account_Number#Generating_IBAN_check_digits
        *
-       * @maht.d fromBban
+       * @method fromBban
        * @param {String} bban the BBAN to convert to IBAN
        * @returns {Iban} the IBAN object
        */
@@ -37268,7 +37268,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be used to create IBAN object for given institution and identifier
        *
-       * @maht.d createIndirect
+       * @method createIndirect
        * @param {Object} options, required options are "institution" and "identifier"
        * @return {Iban} the IBAN object
        */
@@ -37277,9 +37277,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       };
 
       /**
-       * This maht.d should be used to check if given string is valid iban object
+       * This method should be used to check if given string is valid iban object
        *
-       * @maht.d isValid
+       * @method isValid
        * @param {String} iban string
        * @return {Boolean} true if it is valid IBAN
        */
@@ -37291,7 +37291,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be called to check if iban is correct
        *
-       * @maht.d isValid
+       * @method isValid
        * @returns {Boolean} true if it is, otherwise false
        */
       Iban.prototype.isValid = function () {
@@ -37302,7 +37302,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be called to check if iban number is direct
        *
-       * @maht.d isDirect
+       * @method isDirect
        * @returns {Boolean} true if it is, otherwise false
        */
       Iban.prototype.isDirect = function () {
@@ -37312,7 +37312,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be called to check if iban number if indirect
        *
-       * @maht.d isIndirect
+       * @method isIndirect
        * @returns {Boolean} true if it is, otherwise false
        */
       Iban.prototype.isIndirect = function () {
@@ -37323,7 +37323,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
        * Should be called to get iban checksum
        * Uses the mod-97-10 checksumming protocol (ISO/IEC 7064:2003)
        *
-       * @maht.d checksum
+       * @method checksum
        * @returns {String} checksum
        */
       Iban.prototype.checksum = function () {
@@ -37334,7 +37334,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
        * Should be called to get institution identifier
        * eg. XREG
        *
-       * @maht.d institution
+       * @method institution
        * @returns {String} institution identifier
        */
       Iban.prototype.institution = function () {
@@ -37345,7 +37345,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
        * Should be called to get client identifier within institution
        * eg. GAVOFYORK
        *
-       * @maht.d client
+       * @method client
        * @returns {String} client identifier
        */
       Iban.prototype.client = function () {
@@ -37355,7 +37355,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be called to get client direct address
        *
-       * @maht.d toAddress
+       * @method toAddress
        * @returns {String} bowhead address
        */
       Iban.prototype.toAddress = function () {
@@ -37399,7 +37399,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       "use strict";
 
       var core = require('web3-core');
-      var Maht.d = require('web3-core-maht.d');
+      var Method = require('web3-core-method');
       var utils = require('web3-utils');
       var Net = require('web3-net');
 
@@ -37426,8 +37426,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             }
 
             // update defaultBlock
-            maht.ds.forEach(function (maht.d) {
-              maht.d.defaultAccount = defaultAccount;
+            methods.forEach(function (method) {
+              method.defaultAccount = defaultAccount;
             });
 
             return val;
@@ -37442,8 +37442,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             defaultBlock = val;
 
             // update defaultBlock
-            maht.ds.forEach(function (maht.d) {
-              maht.d.defaultBlock = defaultBlock;
+            methods.forEach(function (method) {
+              method.defaultBlock = defaultBlock;
             });
 
             return val;
@@ -37451,64 +37451,64 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           enumerable: true
         });
 
-        var maht.ds = [new Maht.d({
+        var methods = [new Method({
           name: 'getAccounts',
           call: 'personal_listAccounts',
           params: 0,
           outputFormatter: utils.toChecksumAddress
-        }), new Maht.d({
+        }), new Method({
           name: 'newAccount',
           call: 'personal_newAccount',
           params: 1,
           inputFormatter: [null],
           outputFormatter: utils.toChecksumAddress
-        }), new Maht.d({
+        }), new Method({
           name: 'unlockAccount',
           call: 'personal_unlockAccount',
           params: 3,
           inputFormatter: [formatters.inputAddressFormatter, null, null]
-        }), new Maht.d({
+        }), new Method({
           name: 'lockAccount',
           call: 'personal_lockAccount',
           params: 1,
           inputFormatter: [formatters.inputAddressFormatter]
-        }), new Maht.d({
+        }), new Method({
           name: 'importRawKey',
           call: 'personal_importRawKey',
           params: 2
-        }), new Maht.d({
+        }), new Method({
           name: 'sendTransaction',
           call: 'personal_sendTransaction',
           params: 2,
           inputFormatter: [formatters.inputTransactionFormatter, null]
-        }), new Maht.d({
+        }), new Method({
           name: 'signTransaction',
           call: 'personal_signTransaction',
           params: 2,
           inputFormatter: [formatters.inputTransactionFormatter, null]
-        }), new Maht.d({
+        }), new Method({
           name: 'sign',
           call: 'personal_sign',
           params: 3,
           inputFormatter: [formatters.inputSignFormatter, formatters.inputAddressFormatter, null]
-        }), new Maht.d({
+        }), new Method({
           name: 'ecRecover',
           call: 'personal_ecRecover',
           params: 2,
           inputFormatter: [formatters.inputSignFormatter, null]
         })];
-        maht.ds.forEach(function (maht.d) {
-          maht.d.attachToObject(_this);
-          maht.d.setRequestManager(_this._requestManager);
-          maht.d.defaultBlock = _this.defaultBlock;
-          maht.d.defaultAccount = _this.defaultAccount;
+        methods.forEach(function (method) {
+          method.attachToObject(_this);
+          method.setRequestManager(_this._requestManager);
+          method.defaultBlock = _this.defaultBlock;
+          method.defaultAccount = _this.defaultAccount;
         });
       };
 
       core.addProviders(Personal);
 
       module.exports = Personal;
-    }, { "web3-core": 209, "web3-core-helpers": 191, "web3-core-maht.d": 193, "web3-net": 373, "web3-utils": 393 }], 370: [function (require, module, exports) {
+    }, { "web3-core": 209, "web3-core-helpers": 191, "web3-core-method": 193, "web3-net": 373, "web3-utils": 393 }], 370: [function (require, module, exports) {
       arguments[4][178][0].apply(exports, arguments);
     }, { "dup": 178 }], 371: [function (require, module, exports) {
       /*
@@ -37609,7 +37609,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       var core = require('web3-core');
       var helpers = require('web3-core-helpers');
       var Subscriptions = require('web3-core-subscriptions').subscriptions;
-      var Maht.d = require('web3-core-maht.d');
+      var Method = require('web3-core-method');
       var utils = require('web3-utils');
       var Net = require('web3-net');
 
@@ -37675,8 +37675,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             _this.personal.defaultAccount = defaultAccount;
 
             // update defaultBlock
-            maht.ds.forEach(function (maht.d) {
-              maht.d.defaultAccount = defaultAccount;
+            methods.forEach(function (method) {
+              method.defaultAccount = defaultAccount;
             });
 
             return val;
@@ -37694,8 +37694,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             _this.personal.defaultBlock = defaultBlock;
 
             // update defaultBlock
-            maht.ds.forEach(function (maht.d) {
-              maht.d.defaultBlock = defaultBlock;
+            methods.forEach(function (method) {
+              method.defaultBlock = defaultBlock;
             });
 
             return val;
@@ -37747,63 +37747,63 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         // add ABI
         this.abi = abi;
 
-        var maht.ds = [new Maht.d({
+        var methods = [new Method({
           name: 'getNodeInfo',
           call: 'web3_clientVersion'
-        }), new Maht.d({
+        }), new Method({
           name: 'getProtocolVersion',
           call: 'aht.protocolVersion',
           params: 0
-        }), new Maht.d({
+        }), new Method({
           name: 'getCoinbase',
           call: 'aht.coinbase',
           params: 0
-        }), new Maht.d({
+        }), new Method({
           name: 'isMining',
           call: 'aht.mining',
           params: 0
-        }), new Maht.d({
+        }), new Method({
           name: 'getHashrate',
           call: 'aht.hashrate',
           params: 0,
           outputFormatter: utils.hexToNumber
-        }), new Maht.d({
+        }), new Method({
           name: 'isSyncing',
           call: 'aht.syncing',
           params: 0,
           outputFormatter: formatter.outputSyncingFormatter
-        }), new Maht.d({
+        }), new Method({
           name: 'getGasPrice',
           call: 'aht.gasPrice',
           params: 0,
           outputFormatter: formatter.outputBigNumberFormatter
-        }), new Maht.d({
+        }), new Method({
           name: 'getAccounts',
           call: 'aht.accounts',
           params: 0,
           outputFormatter: utils.toChecksumAddress
-        }), new Maht.d({
+        }), new Method({
           name: 'getBlockNumber',
           call: 'aht.blockNumber',
           params: 0,
           outputFormatter: utils.hexToNumber
-        }), new Maht.d({
+        }), new Method({
           name: 'getBalance',
           call: 'aht.getBalance',
           params: 2,
           inputFormatter: [formatter.inputAddressFormatter, formatter.inputDefaultBlockNumberFormatter],
           outputFormatter: formatter.outputBigNumberFormatter
-        }), new Maht.d({
+        }), new Method({
           name: 'getStorageAt',
           call: 'aht.getStorageAt',
           params: 3,
           inputFormatter: [formatter.inputAddressFormatter, utils.numberToHex, formatter.inputDefaultBlockNumberFormatter]
-        }), new Maht.d({
+        }), new Method({
           name: 'getCode',
           call: 'aht.getCode',
           params: 2,
           inputFormatter: [formatter.inputAddressFormatter, formatter.inputDefaultBlockNumberFormatter]
-        }), new Maht.d({
+        }), new Method({
           name: 'getBlock',
           call: blockCall,
           params: 2,
@@ -37811,65 +37811,65 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             return !!val;
           }],
           outputFormatter: formatter.outputBlockFormatter
-        }), new Maht.d({
+        }), new Method({
           name: 'getUncle',
           call: uncleCall,
           params: 2,
           inputFormatter: [formatter.inputBlockNumberFormatter, utils.numberToHex],
           outputFormatter: formatter.outputBlockFormatter
 
-        }), new Maht.d({
+        }), new Method({
           name: 'getBlockTransactionCount',
           call: getBlockTransactionCountCall,
           params: 1,
           inputFormatter: [formatter.inputBlockNumberFormatter],
           outputFormatter: utils.hexToNumber
-        }), new Maht.d({
+        }), new Method({
           name: 'getBlockUncleCount',
           call: uncleCountCall,
           params: 1,
           inputFormatter: [formatter.inputBlockNumberFormatter],
           outputFormatter: utils.hexToNumber
-        }), new Maht.d({
+        }), new Method({
           name: 'getTransaction',
           call: 'aht.getTransactionByHash',
           params: 1,
           inputFormatter: [null],
           outputFormatter: formatter.outputTransactionFormatter
-        }), new Maht.d({
+        }), new Method({
           name: 'getTransactionFromBlock',
           call: transactionFromBlockCall,
           params: 2,
           inputFormatter: [formatter.inputBlockNumberFormatter, utils.numberToHex],
           outputFormatter: formatter.outputTransactionFormatter
-        }), new Maht.d({
+        }), new Method({
           name: 'getTransactionReceipt',
           call: 'aht.getTransactionReceipt',
           params: 1,
           inputFormatter: [null],
           outputFormatter: formatter.outputTransactionReceiptFormatter
-        }), new Maht.d({
+        }), new Method({
           name: 'getTransactionCount',
           call: 'aht.getTransactionCount',
           params: 2,
           inputFormatter: [formatter.inputAddressFormatter, formatter.inputDefaultBlockNumberFormatter],
           outputFormatter: utils.hexToNumber
-        }), new Maht.d({
+        }), new Method({
           name: 'sendSignedTransaction',
           call: 'aht.sendRawTransaction',
           params: 1,
           inputFormatter: [null]
-        }), new Maht.d({
+        }), new Method({
           name: 'signTransaction',
           call: 'aht.signTransaction',
           params: 1,
           inputFormatter: [formatter.inputTransactionFormatter]
-        }), new Maht.d({
+        }), new Method({
           name: 'sendTransaction',
           call: 'aht.sendTransaction',
           params: 1,
           inputFormatter: [formatter.inputTransactionFormatter]
-        }), new Maht.d({
+        }), new Method({
           name: 'sign',
           call: 'aht.sign',
           params: 2,
@@ -37878,42 +37878,42 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             payload.params.reverse();
             return payload;
           }
-        }), new Maht.d({
+        }), new Method({
           name: 'call',
           call: 'aht.call',
           params: 2,
           inputFormatter: [formatter.inputCallFormatter, formatter.inputDefaultBlockNumberFormatter]
-        }), new Maht.d({
+        }), new Method({
           name: 'estimateGas',
           call: 'aht.estimateGas',
           params: 1,
           inputFormatter: [formatter.inputCallFormatter],
           outputFormatter: utils.hexToNumber
-        }), new Maht.d({
+        }), new Method({
           name: 'getCompilers',
           call: 'aht.getCompilers',
           params: 0
-        }), new Maht.d({
+        }), new Method({
           name: 'compile.solidity',
           call: 'aht.compileSolidity',
           params: 1
-        }), new Maht.d({
+        }), new Method({
           name: 'compile.lll',
           call: 'aht.compileLLL',
           params: 1
-        }), new Maht.d({
+        }), new Method({
           name: 'compile.serpent',
           call: 'aht.compileSerpent',
           params: 1
-        }), new Maht.d({
+        }), new Method({
           name: 'submitWork',
           call: 'aht.submitWork',
           params: 3
-        }), new Maht.d({
+        }), new Method({
           name: 'getWork',
           call: 'aht.getWork',
           params: 0
-        }), new Maht.d({
+        }), new Method({
           name: 'getPastLogs',
           call: 'aht.getLogs',
           params: 1,
@@ -38001,18 +38001,18 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           }
         })];
 
-        maht.ds.forEach(function (maht.d) {
-          maht.d.attachToObject(_this);
-          maht.d.setRequestManager(_this._requestManager, _this.accounts); // second param means is aht.accounts (necessary for wallet signing)
-          maht.d.defaultBlock = _this.defaultBlock;
-          maht.d.defaultAccount = _this.defaultAccount;
+        methods.forEach(function (method) {
+          method.attachToObject(_this);
+          method.setRequestManager(_this._requestManager, _this.accounts); // second param means is aht.accounts (necessary for wallet signing)
+          method.defaultBlock = _this.defaultBlock;
+          method.defaultAccount = _this.defaultAccount;
         });
       };
 
       core.addProviders(Aht);
 
       module.exports = Aht;
-    }, { "./getNetworkType.js": 371, "underscore": 370, "web3-core": 209, "web3-core-helpers": 191, "web3-core-maht.d": 193, "web3-core-subscriptions": 206, "web3-aht-abi": 213, "web3-aht-accounts": 364, "web3-aht-contract": 366, "web3-aht-iban": 368, "web3-aht-personal": 369, "web3-net": 373, "web3-utils": 393 }], 373: [function (require, module, exports) {
+    }, { "./getNetworkType.js": 371, "underscore": 370, "web3-core": 209, "web3-core-helpers": 191, "web3-core-method": 193, "web3-core-subscriptions": 206, "web3-aht-abi": 213, "web3-aht-accounts": 364, "web3-aht-contract": 366, "web3-aht-iban": 368, "web3-aht-personal": 369, "web3-net": 373, "web3-utils": 393 }], 373: [function (require, module, exports) {
       /*
           This file is part of web3.js.
       
@@ -38038,7 +38038,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       "use strict";
 
       var core = require('web3-core');
-      var Maht.d = require('web3-core-maht.d');
+      var Method = require('web3-core-method');
       var utils = require('web3-utils');
 
       var Net = function Net() {
@@ -38047,30 +38047,30 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         // sets _requestmanager
         core.packageInit(this, arguments);
 
-        [new Maht.d({
+        [new Method({
           name: 'getId',
           call: 'net_version',
           params: 0,
           outputFormatter: utils.hexToNumber
-        }), new Maht.d({
+        }), new Method({
           name: 'isListening',
           call: 'net_listening',
           params: 0
-        }), new Maht.d({
+        }), new Method({
           name: 'getPeerCount',
           call: 'net_peerCount',
           params: 0,
           outputFormatter: utils.hexToNumber
-        })].forEach(function (maht.d) {
-          maht.d.attachToObject(_this);
-          maht.d.setRequestManager(_this._requestManager);
+        })].forEach(function (method) {
+          method.attachToObject(_this);
+          method.setRequestManager(_this._requestManager);
         });
       };
 
       core.addProviders(Net);
 
       module.exports = Net;
-    }, { "web3-core": 209, "web3-core-maht.d": 193, "web3-utils": 393 }], 374: [function (require, module, exports) {
+    }, { "web3-core": 209, "web3-core-method": 193, "web3-utils": 393 }], 374: [function (require, module, exports) {
       module.exports = XMLHttpRequest;
     }, {}], 375: [function (require, module, exports) {
       /*
@@ -38128,7 +38128,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be used to make async request
        *
-       * @maht.d send
+       * @method send
        * @param {Object} payload
        * @param {Function} callback triggered on end with (err, result)
        */
@@ -39208,10 +39208,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         // based on gist https://gist.github.com/monsur/706839
 
         /**
-         * XmlHttpRequest's getAllResponseHeaders() maht.d returns a string of response
+         * XmlHttpRequest's getAllResponseHeaders() method returns a string of response
          * headers according to the format described here:
-         * http://www.w3.org/TR/XMLHttpRequest/#the-getallresponseheaders-maht.d
-         * This maht.d parses that string into a user-friendly key/value pair object.
+         * http://www.w3.org/TR/XMLHttpRequest/#the-getallresponseheaders-method
+         * This method parses that string into a user-friendly key/value pair object.
          */
         function parseResponseHeaders(headerStr) {
           var headers = {};
@@ -39308,15 +39308,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
          * @param {XMLHttpRequest} xhr the xhr to use as the transport. Under normal
          *          operation, will have been created using httpTransport() above
          *          but for tests a stub can be provided instead.
-         * @param {String} maht.d one of 'GET' 'POST' 'PUT' 'PATCH' 'DELETE'
+         * @param {String} method one of 'GET' 'POST' 'PUT' 'PATCH' 'DELETE'
          * @param {String} url the url to make a request to
          * @param {String|Null} data some content to be sent with the request.
-         *                      Only valid if maht.d is POST or PUT.
+         *                      Only valid if method is POST or PUT.
          * @param {Object} [headers] the http request headers to send
          * @param {boolean} withCredentials the XHR withCredentials property will be
          *    set to this value
          */
-        function streamingHttp(oboeBus, xhr, maht.d, url, data, headers, withCredentials) {
+        function streamingHttp(oboeBus, xhr, method, url, data, headers, withCredentials) {
 
           "use strict";
 
@@ -39409,7 +39409,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
           try {
 
-            xhr.open(maht.d, url, true);
+            xhr.open(method, url, true);
 
             for (var headerName in headers) {
               xhr.setRequestHeader(headerName, headers[headerName]);
@@ -40095,10 +40095,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           }
 
           // add convenience EventEmitter-style uncurried form of 'emit' and 'on'
-          ['emit', 'on', 'un'].forEach(function (maht.dName) {
+          ['emit', 'on', 'un'].forEach(function (methodName) {
 
-            pubSubInstance[maht.dName] = varArgs(function (eventName, parameters) {
-              apply(parameters, pubSubInstance(eventName)[maht.dName]);
+            pubSubInstance[methodName] = varArgs(function (eventName, parameters) {
+              apply(parameters, pubSubInstance(eventName)[methodName]);
             });
           });
 
@@ -40451,7 +40451,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             return oboeApi; // chaining
           }
 
-          // some interface maht.ds are only filled in after we receive
+          // some interface methods are only filled in after we receive
           // values and are noops before that:
           oboeBus(ROOT_PATH_FOUND).on(function (rootNode) {
             oboeApi.root = functor(rootNode);
@@ -40505,7 +40505,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
          * and introduces them to each other.
          */
 
-        function wire(httpMaht.dName, contentSource, body, headers, withCredentials) {
+        function wire(httpMethodName, contentSource, body, headers, withCredentials) {
 
           var oboeBus = pubSub();
 
@@ -40515,7 +40515,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
           if (contentSource) {
 
-            streamingHttp(oboeBus, httpTransport(), httpMaht.dName, contentSource, body, headers, withCredentials);
+            streamingHttp(oboeBus, httpTransport(), httpMethodName, contentSource, body, headers, withCredentials);
           }
 
           clarinet(oboeBus);
@@ -40527,7 +40527,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           return instanceApi(oboeBus, contentSource);
         }
 
-        function applyDefaults(passthrough, url, httpMaht.dName, body, headers, withCredentials, cached) {
+        function applyDefaults(passthrough, url, httpMethodName, body, headers, withCredentials, cached) {
 
           headers = headers ?
           // Shallow-clone the headers array. This allows it to be
@@ -40565,7 +40565,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             return baseUrl;
           }
 
-          return passthrough(httpMaht.dName || 'GET', modifiedUrl(url, cached), body, headers, withCredentials || false);
+          return passthrough(httpMethodName || 'GET', modifiedUrl(url, cached), body, headers, withCredentials || false);
         }
 
         // export public API
@@ -40577,8 +40577,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           // compatibility with Request streams.
           // See https://github.com/jimhigson/oboe.js/issues/65
 
-          var nodeStreamMaht.dNames = list('resume', 'pause', 'pipe'),
-              isStream = partialComplete(hasAllProperties, nodeStreamMaht.dNames);
+          var nodeStreamMethodNames = list('resume', 'pause', 'pipe'),
+              isStream = partialComplete(hasAllProperties, nodeStreamMethodNames);
 
           if (arg1) {
             if (isStream(arg1) || isString(arg1)) {
@@ -40591,10 +40591,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
               );
             } else {
 
-              // maht.d signature is:
-              //    oboe({maht.d:m, url:u, body:b, headers:{...}})
+              // method signature is:
+              //    oboe({method:m, url:u, body:b, headers:{...}})
 
-              return applyDefaults(wire, arg1.url, arg1.maht.d, arg1.body, arg1.headers, arg1.withCredentials, arg1.cached);
+              return applyDefaults(wire, arg1.url, arg1.method, arg1.body, arg1.headers, arg1.withCredentials, arg1.cached);
             }
           } else {
             // wire up a no-AJAX, no-stream Oboe. Will have to have content 
@@ -40685,7 +40685,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           }
 
           // notification
-          if (!id && result.maht.d.indexOf('_subscription') !== -1) {
+          if (!id && result.method.indexOf('_subscription') !== -1) {
             _this.notificationCallbacks.forEach(function (callback) {
               if (_.isFunction(callback)) callback(result);
             });
@@ -40710,7 +40710,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
       Will add the error and end event to timeout existing calls
       
-      @maht.d addDefaultEvents
+      @method addDefaultEvents
       */
       IpcProvider.prototype.addDefaultEvents = function () {
         var _this = this;
@@ -40735,7 +40735,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       
        NOTE, this exists for backwards compatibility reasons.
       
-       @maht.d _parseResponse
+       @method _parseResponse
        @param {String} data
        */
       IpcProvider.prototype._parseResponse = function (data) {
@@ -40786,20 +40786,20 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       Get the adds a callback to the responseCallbacks object,
       which will be called if a response matching the response Id will arrive.
       
-      @maht.d _addResponseCallback
+      @method _addResponseCallback
       */
       IpcProvider.prototype._addResponseCallback = function (payload, callback) {
         var id = payload.id || payload[0].id;
-        var maht.d = payload.maht.d || payload[0].maht.d;
+        var method = payload.method || payload[0].method;
 
         this.responseCallbacks[id] = callback;
-        this.responseCallbacks[id].maht.d = maht.d;
+        this.responseCallbacks[id].method = method;
       };
 
       /**
       Timeout all requests when the end/error event is fired
       
-      @maht.d _timeout
+      @method _timeout
       */
       IpcProvider.prototype._timeout = function () {
         for (var key in this.responseCallbacks) {
@@ -40813,7 +40813,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        Try to reconnect
       
-       @maht.d reconnect
+       @method reconnect
        */
       IpcProvider.prototype.reconnect = function () {
         this.connection.connect({ path: this.path });
@@ -40830,7 +40830,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
       Subscribes to provider events.provider
       
-      @maht.d on
+      @method on
       @param {String} type    'notification', 'connect', 'error', 'end' or 'data'
       @param {Function} callback   the callback to call
       */
@@ -40853,7 +40853,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        Subscribes to provider events.provider
       
-       @maht.d on
+       @method on
        @param {String} type    'connect', 'error', 'end' or 'data'
        @param {Function} callback   the callback to call
        */
@@ -40867,7 +40867,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
       Removes event listener
       
-      @maht.d removeListener
+      @method removeListener
       @param {String} type    'data', 'connect', 'error', 'end' or 'data'
       @param {Function} callback   the callback to call
       */
@@ -40890,7 +40890,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
       Removes all event listeners
       
-      @maht.d removeAllListeners
+      @method removeAllListeners
       @param {String} type    'data', 'connect', 'error', 'end' or 'data'
       */
       IpcProvider.prototype.removeAllListeners = function (type) {
@@ -40908,7 +40908,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
       Resets the providers, clears all callbacks
       
-      @maht.d reset
+      @method reset
       */
       IpcProvider.prototype.reset = function () {
         this._timeout();
@@ -41013,7 +41013,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
               }
 
               // notification
-              if (!id && result.maht.d.indexOf('_subscription') !== -1) {
+              if (!id && result.method.indexOf('_subscription') !== -1) {
                 _this.notificationCallbacks.forEach(function (callback) {
                   if (_.isFunction(callback)) callback(result);
                 });
@@ -41030,7 +41030,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         /**
          Will add the error and end event to timeout existing calls
         
-         @maht.d addDefaultEvents
+         @method addDefaultEvents
          */
         WebsocketProvider.prototype.addDefaultEvents = function () {
           var _this = this;
@@ -41054,7 +41054,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         /**
          Will parse the response and make an array out of it.
         
-         @maht.d _parseResponse
+         @method _parseResponse
          @param {String} data
          */
         WebsocketProvider.prototype._parseResponse = function (data) {
@@ -41105,14 +41105,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
          Adds a callback to the responseCallbacks object,
          which will be called if a response matching the response Id will arrive.
         
-         @maht.d _addResponseCallback
+         @method _addResponseCallback
          */
         WebsocketProvider.prototype._addResponseCallback = function (payload, callback) {
           var id = payload.id || payload[0].id;
-          var maht.d = payload.maht.d || payload[0].maht.d;
+          var method = payload.method || payload[0].method;
 
           this.responseCallbacks[id] = callback;
-          this.responseCallbacks[id].maht.d = maht.d;
+          this.responseCallbacks[id].method = method;
 
           var _this = this;
 
@@ -41130,7 +41130,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         /**
          Timeout all requests when the end/error event is fired
         
-         @maht.d _timeout
+         @method _timeout
          */
         WebsocketProvider.prototype._timeout = function () {
           for (var key in this.responseCallbacks) {
@@ -41172,7 +41172,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         /**
          Subscribes to provider events.provider
         
-         @maht.d on
+         @method on
          @param {String} type    'notifcation', 'connect', 'error', 'end' or 'data'
          @param {Function} callback   the callback to call
          */
@@ -41208,7 +41208,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         /**
          Removes event listener
         
-         @maht.d removeListener
+         @method removeListener
          @param {String} type    'notifcation', 'connect', 'error', 'end' or 'data'
          @param {Function} callback   the callback to call
          */
@@ -41233,7 +41233,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         /**
          Removes all event listeners
         
-         @maht.d removeAllListeners
+         @method removeAllListeners
          @param {String} type    'notifcation', 'connect', 'error', 'end' or 'data'
          */
         WebsocketProvider.prototype.removeAllListeners = function (type) {
@@ -41265,7 +41265,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         /**
          Resets the providers, clears all callbacks
         
-         @maht.d reset
+         @method reset
          */
         WebsocketProvider.prototype.reset = function () {
           this._timeout();
@@ -41307,7 +41307,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       var core = require('web3-core');
       var Subscriptions = require('web3-core-subscriptions').subscriptions;
-      var Maht.d = require('web3-core-maht.d');
+      var Method = require('web3-core-method');
       // var formatters = require('web3-core-helpers').formatters;
       var Net = require('web3-net');
 
@@ -41338,101 +41338,101 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
               // outputFormatter: formatters.outputPostFormatter
             }
           }
-        }), new Maht.d({
+        }), new Method({
           name: 'getVersion',
           call: 'shh_version',
           params: 0
-        }), new Maht.d({
+        }), new Method({
           name: 'getInfo',
           call: 'shh_info',
           params: 0
-        }), new Maht.d({
+        }), new Method({
           name: 'setMaxMessageSize',
           call: 'shh_setMaxMessageSize',
           params: 1
-        }), new Maht.d({
+        }), new Method({
           name: 'setMinPoW',
           call: 'shh_setMinPoW',
           params: 1
-        }), new Maht.d({
+        }), new Method({
           name: 'markTrustedPeer',
           call: 'shh_markTrustedPeer',
           params: 1
-        }), new Maht.d({
+        }), new Method({
           name: 'newKeyPair',
           call: 'shh_newKeyPair',
           params: 0
-        }), new Maht.d({
+        }), new Method({
           name: 'addPrivateKey',
           call: 'shh_addPrivateKey',
           params: 1
-        }), new Maht.d({
+        }), new Method({
           name: 'deleteKeyPair',
           call: 'shh_deleteKeyPair',
           params: 1
-        }), new Maht.d({
+        }), new Method({
           name: 'hasKeyPair',
           call: 'shh_hasKeyPair',
           params: 1
-        }), new Maht.d({
+        }), new Method({
           name: 'getPublicKey',
           call: 'shh_getPublicKey',
           params: 1
-        }), new Maht.d({
+        }), new Method({
           name: 'getPrivateKey',
           call: 'shh_getPrivateKey',
           params: 1
-        }), new Maht.d({
+        }), new Method({
           name: 'newSymKey',
           call: 'shh_newSymKey',
           params: 0
-        }), new Maht.d({
+        }), new Method({
           name: 'addSymKey',
           call: 'shh_addSymKey',
           params: 1
-        }), new Maht.d({
+        }), new Method({
           name: 'generateSymKeyFromPassword',
           call: 'shh_generateSymKeyFromPassword',
           params: 1
-        }), new Maht.d({
+        }), new Method({
           name: 'hasSymKey',
           call: 'shh_hasSymKey',
           params: 1
-        }), new Maht.d({
+        }), new Method({
           name: 'getSymKey',
           call: 'shh_getSymKey',
           params: 1
-        }), new Maht.d({
+        }), new Method({
           name: 'deleteSymKey',
           call: 'shh_deleteSymKey',
           params: 1
-        }), new Maht.d({
+        }), new Method({
           name: 'newMessageFilter',
           call: 'shh_newMessageFilter',
           params: 1
-        }), new Maht.d({
+        }), new Method({
           name: 'getFilterMessages',
           call: 'shh_getFilterMessages',
           params: 1
-        }), new Maht.d({
+        }), new Method({
           name: 'deleteMessageFilter',
           call: 'shh_deleteMessageFilter',
           params: 1
-        }), new Maht.d({
+        }), new Method({
           name: 'post',
           call: 'shh_post',
           params: 1,
           inputFormatter: [null]
-        })].forEach(function (maht.d) {
-          maht.d.attachToObject(_this);
-          maht.d.setRequestManager(_this._requestManager);
+        })].forEach(function (method) {
+          method.attachToObject(_this);
+          method.setRequestManager(_this._requestManager);
         });
       };
 
       core.addProviders(Shh);
 
       module.exports = Shh;
-    }, { "web3-core": 209, "web3-core-maht.d": 193, "web3-core-subscriptions": 206, "web3-net": 373 }], 382: [function (require, module, exports) {
+    }, { "web3-core": 209, "web3-core-method": 193, "web3-core-subscriptions": 206, "web3-net": 373 }], 382: [function (require, module, exports) {
       arguments[4][210][0].apply(exports, arguments);
     }, { "dup": 210 }], 383: [function (require, module, exports) {
       arguments[4][165][0].apply(exports, arguments);
@@ -41478,7 +41478,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Returns value of unit in Cell
        *
-       * @maht.d getValueOfUnit
+       * @method getValueOfUnit
        * @param {String} unit the unit to convert to, default ahter
        * @returns {BigNumber} value of the unit (in Cell)
        * @throws error if the unit is not correct:w
@@ -42017,7 +42017,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Fires an error in an event emitter and callback and returns the eventemitter
        *
-       * @maht.d _fireError
+       * @method _fireError
        * @param {Object} error a string, a error, or an object with {message, data}
        * @param {Object} emitter
        * @param {Function} reject
@@ -42069,11 +42069,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be used to create full function/event name from json abi
        *
-       * @maht.d _jsonInterfaceMaht.dToString
+       * @method _jsonInterfaceMethodToString
        * @param {Object} json
        * @return {String} full function/event name
        */
-      var _jsonInterfaceMaht.dToString = function _jsonInterfaceMaht.dToString(json) {
+      var _jsonInterfaceMethodToString = function _jsonInterfaceMethodToString(json) {
         if (_.isObject(json) && json.name && json.name.indexOf('(') !== -1) {
           return json.name;
         }
@@ -42087,7 +42087,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be called to get ascii from it's hex representation
        *
-       * @maht.d hexToAscii
+       * @method hexToAscii
        * @param {String} hex
        * @returns {String} ascii string representation of hex value
        */
@@ -42111,7 +42111,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be called to get hex representation (prefixed by 0x) of ascii string
        *
-       * @maht.d asciiToHex
+       * @method asciiToHex
        * @param {String} str
        * @returns {String} hex representation of input string
        */
@@ -42130,7 +42130,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Returns value of unit in Cell
        *
-       * @maht.d getUnitValue
+       * @method getUnitValue
        * @param {String} unit the unit to convert to, default ahter
        * @returns {BN} value of the unit (in Cell)
        * @throws error if the unit is not correct:w
@@ -42159,7 +42159,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
        * - gaht.r
        * - taht.r
        *
-       * @maht.d fromCell
+       * @method fromCell
        * @param {Number|String} number can be a number, number string or a HEX of a decimal
        * @param {String} unit the unit to convert to, default ahter
        * @return {String|Object} When given a BN object it returns one as well, otherwise a number
@@ -42191,7 +42191,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
        * - gaht.r
        * - taht.r
        *
-       * @maht.d toCell
+       * @method toCell
        * @param {Number|String|BN} number can be a number, number string or a HEX of a decimal
        * @param {String} unit the unit to convert from, default ahter
        * @return {String|Object} When given a BN object it returns one as well, otherwise a number
@@ -42209,7 +42209,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Converts to a checksum address
        *
-       * @maht.d toChecksumAddress
+       * @method toChecksumAddress
        * @param {String} address the given HEX address
        * @return {String}
        */
@@ -42235,7 +42235,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       module.exports = {
         _fireError: _fireError,
-        _jsonInterfaceMaht.dToString: _jsonInterfaceMaht.dToString,
+        _jsonInterfaceMethodToString: _jsonInterfaceMethodToString,
         // extractDisplayName: extractDisplayName,
         // extractTypeName: extractTypeName,
         randomHex: randomHex,
@@ -42511,7 +42511,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Hashes solidity values to a sha3 hash using keccak 256
        *
-       * @maht.d soliditySha3
+       * @method soliditySha3
        * @return {Object} the sha3
        */
       var soliditySha3 = function soliditySha3() {
@@ -42560,7 +42560,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Returns true if object is BN, otherwise false
        *
-       * @maht.d isBN
+       * @method isBN
        * @param {Object} object
        * @return {Boolean}
        */
@@ -42571,7 +42571,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Returns true if object is BigNumber, otherwise false
        *
-       * @maht.d isBigNumber
+       * @method isBigNumber
        * @param {Object} object
        * @return {Boolean}
        */
@@ -42582,7 +42582,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Takes an input and transforms it into an BN
        *
-       * @maht.d toBN
+       * @method toBN
        * @param {Number|String|BN} number, string, HEX string or BN
        * @return {BN} BN
        */
@@ -42597,7 +42597,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Takes and input transforms it into BN and if it is negative value, into two's complement
        *
-       * @maht.d toTwosComplement
+       * @method toTwosComplement
        * @param {Number|String|BN} number
        * @return {String}
        */
@@ -42608,7 +42608,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Checks if the given string is an address
        *
-       * @maht.d isAddress
+       * @method isAddress
        * @param {String} address the given HEX address
        * @return {Boolean}
        */
@@ -42628,7 +42628,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Checks if the given string is a checksummed address
        *
-       * @maht.d checkAddressChecksum
+       * @method checkAddressChecksum
        * @param {String} address the given HEX address
        * @return {Boolean}
        */
@@ -42649,7 +42649,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be called to pad string to expected length
        *
-       * @maht.d leftPad
+       * @method leftPad
        * @param {String} string to be padded
        * @param {Number} chars that result string should have
        * @param {String} sign, by default 0
@@ -42667,7 +42667,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be called to pad string to expected length
        *
-       * @maht.d rightPad
+       * @method rightPad
        * @param {String} string to be padded
        * @param {Number} chars that result string should have
        * @param {String} sign, by default 0
@@ -42685,7 +42685,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be called to get hex representation (prefixed by 0x) of utf8 string
        *
-       * @maht.d utf8ToHex
+       * @method utf8ToHex
        * @param {String} str
        * @returns {String} hex representation of input string
        */
@@ -42713,7 +42713,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Should be called to get utf8 from it's hex representation
        *
-       * @maht.d hexToUtf8
+       * @method hexToUtf8
        * @param {String} hex
        * @returns {String} ascii string representation of hex value
        */
@@ -42745,7 +42745,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Converts value to it's number representation
        *
-       * @maht.d hexToNumber
+       * @method hexToNumber
        * @param {String|Number|BN} value
        * @return {String}
        */
@@ -42760,7 +42760,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Converts value to it's decimal representation in string
        *
-       * @maht.d hexToNumberString
+       * @method hexToNumberString
        * @param {String|Number|BN} value
        * @return {String}
        */
@@ -42773,7 +42773,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Converts value to it's hex representation
        *
-       * @maht.d numberToHex
+       * @method numberToHex
        * @param {String|Number|BN} value
        * @return {String}
        */
@@ -42797,7 +42797,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
        *
        * Note: Implementation from crypto-js
        *
-       * @maht.d bytesToHex
+       * @method bytesToHex
        * @param {Array} bytes
        * @return {String} the hex string
        */
@@ -42816,7 +42816,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
        *
        * Note: Implementation from crypto-js
        *
-       * @maht.d hexToBytes
+       * @method hexToBytes
        * @param {string} hex
        * @return {Array} the byte array
        */
@@ -42839,7 +42839,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
        *
        * And even stringifys objects before.
        *
-       * @maht.d toHex
+       * @method toHex
        * @param {String|Number|BN|Object} value
        * @param {Boolean} returnType
        * @return {String}
@@ -42876,7 +42876,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Check if string is HEX, requires a 0x in front
        *
-       * @maht.d isHexStrict
+       * @method isHexStrict
        * @param {String} hex to be checked
        * @returns {Boolean}
        */
@@ -42887,7 +42887,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       /**
        * Check if string is HEX
        *
-       * @maht.d isHex
+       * @method isHex
        * @param {String} hex to be checked
        * @returns {Boolean}
        */
@@ -42900,7 +42900,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
        *
        * TODO UNDOCUMENTED
        *
-       * @maht.d isBloom
+       * @method isBloom
        * @param {String} hex encoded bloom filter
        * @return {Boolean}
        */
@@ -42918,7 +42918,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
        *
        * TODO UNDOCUMENTED
        *
-       * @maht.d isTopic
+       * @method isTopic
        * @param {String} hex encoded topic
        * @return {Boolean}
        */
@@ -42936,7 +42936,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
        *
        * To hash a HEX string the hex must have 0x in front.
        *
-       * @maht.d sha3
+       * @method sha3
        * @return {String} the sha3 string
        */
       var SHA3_NULL_S = '0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470';

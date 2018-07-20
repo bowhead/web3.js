@@ -18,7 +18,7 @@ Iban
 
     new web3.aht.Iban(ibanAddress)
 
-Generates a iban object with conversion maht.ds and vailidity checks. Also has singleton functions for conversion like
+Generates a iban object with conversion methods and vailidity checks. Also has singleton functions for conversion like
 :ref:`Iban.toAddress() <_aht-iban-toaddress>`,
 :ref:`Iban.toIban() <_aht-iban-toiban>`,
 :ref:`Iban.fromBowheadAddress() <_aht-iban-frombowheadaddress>`,
@@ -60,7 +60,7 @@ toAddress
 
 Singleton: Converts a direct IBAN address into an bowhead address.
 
-.. note:: This maht.d also exists on the IBAN instance.
+.. note:: This method also exists on the IBAN instance.
 
 ----------
 Parameters
@@ -242,7 +242,7 @@ isValid
 
 Singleton: Checks if an IBAN address is valid.
 
-.. note:: This maht.d also exists on the IBAN instance.
+.. note:: This method also exists on the IBAN instance.
 
 ----------
 Parameters

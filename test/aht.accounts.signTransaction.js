@@ -441,7 +441,7 @@ describe("aht., function () {
                     provider.injectResult('0xa');
                     provider.injectValidation(function (payload) {
                         assert.equal(payload.jsonrpc, '2.0');
-                        assert.equal(payload.maht.d, 'aht.getTransactionCount');
+                        assert.equal(payload.method, 'aht.getTransactionCount');
                         assert.deepEqual(payload.params, [test.address, "latest"]);
                     });
 
@@ -468,7 +468,7 @@ describe("aht., function () {
                     provider.injectResult('0x5022');
                     provider.injectValidation(function (payload) {
                         assert.equal(payload.jsonrpc, '2.0');
-                        assert.equal(payload.maht.d, 'aht.gasPrice');
+                        assert.equal(payload.method, 'aht.gasPrice');
                         assert.deepEqual(payload.params, []);
                     });
 
@@ -495,7 +495,7 @@ describe("aht., function () {
                     provider.injectResult(1);
                     provider.injectValidation(function (payload) {
                         assert.equal(payload.jsonrpc, '2.0');
-                        assert.equal(payload.maht.d, 'net_version');
+                        assert.equal(payload.method, 'net_version');
                         assert.deepEqual(payload.params, []);
                     });
 
@@ -522,19 +522,19 @@ describe("aht., function () {
                     provider.injectResult(1);
                     provider.injectValidation(function (payload) {
                         assert.equal(payload.jsonrpc, '2.0');
-                        assert.equal(payload.maht.d, 'net_version');
+                        assert.equal(payload.method, 'net_version');
                         assert.deepEqual(payload.params, []);
                     });
                     provider.injectResult(1);
                     provider.injectValidation(function (payload) {
                         assert.equal(payload.jsonrpc, '2.0');
-                        assert.equal(payload.maht.d, 'aht.gasPrice');
+                        assert.equal(payload.method, 'aht.gasPrice');
                         assert.deepEqual(payload.params, []);
                     });
                     provider.injectResult(1);
                     provider.injectValidation(function (payload) {
                         assert.equal(payload.jsonrpc, '2.0');
-                        assert.equal(payload.maht.d, 'aht.getTransactionCount');
+                        assert.equal(payload.method, 'aht.getTransactionCount');
                         assert.deepEqual(payload.params, [test.address, "latest"]);
                     });
 

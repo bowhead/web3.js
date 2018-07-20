@@ -5,7 +5,7 @@ var web3 = new Web3();
 
 var tests = [{
     params: [{
-        name: 'myMaht.d',
+        name: 'myMethod',
         type: 'function',
         inputs: [{
             type: 'uint256',
@@ -18,7 +18,7 @@ var tests = [{
     result: '0x24ee0097000000000000000000000000000000000000000000000000000000008bd02b7b0000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000748656c6c6f212500000000000000000000000000000000000000000000000000'
 },{
     params: [{
-        name: 'myOtherMaht.d',
+        name: 'myOtherMethod',
         type: 'function',
         inputs: [{
             type: 'uint8',
@@ -31,7 +31,7 @@ var tests = [{
     result: '0x04a2b93600000000000000000000000000000000000000000000000000000000000009132345674321456785432134560000000000000000000000000000000000000000'
 },{
     params: [{
-        name: 'myMaht.d',
+        name: 'myMethod',
         type: 'function',
         inputs: [{
             type: 'uint16',

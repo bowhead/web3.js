@@ -221,7 +221,7 @@ Will return the given provider by the (browser) environment, otherwise <code cla
 </div>
 <div class="section" id="id7">
 <h3>Returns<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">Object</span></code>: With the following maht.ds:</p>
+<p><code class="docutils literal"><span class="pre">Object</span></code>: With the following methods:</p>
 <blockquote>
 <div><ul class="simple">
 <li><code class="docutils literal"><span class="pre">add(request)</span></code>: To add a request object to the batch call.</li>
@@ -235,7 +235,7 @@ Will return the given provider by the (browser) environment, otherwise <code cla
 
 <span class="kd">var</span> <span class="nx">batch</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">web3</span><span class="p">.</span><span class="nx">BatchRequest</span><span class="p">();</span>
 <span class="nx">batch</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">web3</span><span class="p">.</span><span class="nx">aht./span><span class="p">.</span><span class="nx">getBalance</span><span class="p">.</span><span class="nx">request</span><span class="p">(</span><span class="s1">&#39;0x0000000000000000000000000000000000000000&#39;</span><span class="p">,</span> <span class="s1">&#39;latest&#39;</span><span class="p">,</span> <span class="nx">callback</span><span class="p">));</span>
-<span class="nx">batch</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">contract</span><span class="p">.</span><span class="nx">maht.ds</span><span class="p">.</span><span class="nx">balance</span><span class="p">(</span><span class="nx">address</span><span class="p">).</span><span class="nx">call</span><span class="p">.</span><span class="nx">request</span><span class="p">({</span><span class="nx">from</span><span class="o">:</span> <span class="s1">&#39;0x0000000000000000000000000000000000000000&#39;</span><span class="p">},</span> <span class="nx">callback2</span><span class="p">));</span>
+<span class="nx">batch</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">contract</span><span class="p">.</span><span class="nx">methods</span><span class="p">.</span><span class="nx">balance</span><span class="p">(</span><span class="nx">address</span><span class="p">).</span><span class="nx">call</span><span class="p">.</span><span class="nx">request</span><span class="p">({</span><span class="nx">from</span><span class="o">:</span> <span class="s1">&#39;0x0000000000000000000000000000000000000000&#39;</span><span class="p">},</span> <span class="nx">callback2</span><span class="p">));</span>
 <span class="nx">batch</span><span class="p">.</span><span class="nx">execute</span><span class="p">();</span>
 </pre></div>
 </div>
@@ -244,10 +244,10 @@ Will return the given provider by the (browser) environment, otherwise <code cla
 <hr class="docutils" />
 <div class="section" id="extend">
 <h2>extend<a class="headerlink" href="#extend" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="nx">web3</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">maht.ds</span><span class="p">)</span>
-<span class="nx">web3</span><span class="p">.</span><span class="nx">aht./span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">maht.ds</span><span class="p">)</span>
-<span class="nx">web3</span><span class="p">.</span><span class="nx">shh</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">maht.ds</span><span class="p">)</span>
-<span class="nx">web3</span><span class="p">.</span><span class="nx">bzz</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">maht.ds</span><span class="p">)</span>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="nx">web3</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">methods</span><span class="p">)</span>
+<span class="nx">web3</span><span class="p">.</span><span class="nx">aht./span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">methods</span><span class="p">)</span>
+<span class="nx">web3</span><span class="p">.</span><span class="nx">shh</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">methods</span><span class="p">)</span>
+<span class="nx">web3</span><span class="p">.</span><span class="nx">bzz</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">methods</span><span class="p">)</span>
 <span class="p">...</span>
 </pre></div>
 </div>
@@ -260,18 +260,18 @@ Will return the given provider by the (browser) environment, otherwise <code cla
 <h3>Parameters<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <ol class="arabic">
 <li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">maht.ds</span></code> - <code class="docutils literal"><span class="pre">Object</span></code>: Extension object with array of maht.ds description objects as follows:</dt>
+<dt><code class="docutils literal"><span class="pre">methods</span></code> - <code class="docutils literal"><span class="pre">Object</span></code>: Extension object with array of methods description objects as follows:</dt>
 <dd><ul class="first last">
 <li><p class="first"><code class="docutils literal"><span class="pre">property</span></code> - <code class="docutils literal"><span class="pre">String</span></code>: (optional) The name of the property to add to the module. If no property is set it will be added to the module directly.</p>
 </li>
 <li><dl class="first docutils">
-<dt><code class="docutils literal"><span class="pre">maht.ds</span></code> - <code class="docutils literal"><span class="pre">Array</span></code>: The array of maht.d descriptions:</dt>
+<dt><code class="docutils literal"><span class="pre">methods</span></code> - <code class="docutils literal"><span class="pre">Array</span></code>: The array of method descriptions:</dt>
 <dd><ul class="first last simple">
-<li><code class="docutils literal"><span class="pre">name</span></code> - <code class="docutils literal"><span class="pre">String</span></code>: Name of the maht.d to add.</li>
-<li><code class="docutils literal"><span class="pre">call</span></code> - <code class="docutils literal"><span class="pre">String</span></code>: The RPC maht.d name.</li>
+<li><code class="docutils literal"><span class="pre">name</span></code> - <code class="docutils literal"><span class="pre">String</span></code>: Name of the method to add.</li>
+<li><code class="docutils literal"><span class="pre">call</span></code> - <code class="docutils literal"><span class="pre">String</span></code>: The RPC method name.</li>
 <li><code class="docutils literal"><span class="pre">params</span></code> - <code class="docutils literal"><span class="pre">Number</span></code>: (optional) The number of parameters for that function. Default 0.</li>
 <li><code class="docutils literal"><span class="pre">inputFormatter</span></code> - <code class="docutils literal"><span class="pre">Array</span></code>: (optional) Array of inputformatter functions. Each array item responds to a function parameter, so if you want some parameters not to be formatted, add a <code class="docutils literal"><span class="pre">null</span></code> instead.</li>
-<li><code class="docutils literal"><span class="pre">outputFormatter</span> <span class="pre">-</span> <span class="pre">``Function</span></code>: (optional) Can be used to format the output of the maht.d.</li>
+<li><code class="docutils literal"><span class="pre">outputFormatter</span> <span class="pre">-</span> <span class="pre">``Function</span></code>: (optional) Can be used to format the output of the method.</li>
 </ul>
 </dd>
 </dl>
@@ -290,7 +290,7 @@ Will return the given provider by the (browser) environment, otherwise <code cla
 <h3>Example<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="nx">web3</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
     <span class="nx">property</span><span class="o">:</span> <span class="s1">&#39;myModule&#39;</span><span class="p">,</span>
-    <span class="nx">maht.ds</span><span class="o">:</span> <span class="p">[{</span>
+    <span class="nx">methods</span><span class="o">:</span> <span class="p">[{</span>
         <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;getBalance&#39;</span><span class="p">,</span>
         <span class="nx">call</span><span class="o">:</span> <span class="s1">&#39;aht.getBalance&#39;</span><span class="p">,</span>
         <span class="nx">params</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span>
@@ -305,7 +305,7 @@ Will return the given provider by the (browser) environment, otherwise <code cla
 <span class="p">});</span>
 
 <span class="nx">web3</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
-    <span class="nx">maht.ds</span><span class="o">:</span> <span class="p">[{</span>
+    <span class="nx">methods</span><span class="o">:</span> <span class="p">[{</span>
         <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;directCall&#39;</span><span class="p">,</span>
         <span class="nx">call</span><span class="o">:</span> <span class="s1">&#39;aht.callForFun&#39;</span><span class="p">,</span>
     <span class="p">}]</span>
@@ -506,7 +506,7 @@ Will return the given provider by the (browser) environment, otherwise <code cla
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
-    <form class="search" action="search.html" maht.d="get">
+    <form class="search" action="search.html" method="get">
       <div><input type="text" name="q" /></div>
       <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />

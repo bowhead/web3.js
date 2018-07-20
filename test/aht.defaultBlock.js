@@ -12,7 +12,7 @@ describe('web3.aht., function () {
             assert.equal(aht.defaultBlock, 'latest');
             assert.equal(aht.personal.defaultBlock, 'latest');
             assert.equal(aht.Contract.defaultBlock, 'latest');
-            assert.equal(aht.getCode.maht.d.defaultBlock, 'latest');
+            assert.equal(aht.getCode.method.defaultBlock, 'latest');
         });
         it('should set defaultBlock for all sub packages is set to proper value, if Aht package is changed', function () {
             aht.defaultBlock = setValue;
@@ -20,7 +20,7 @@ describe('web3.aht., function () {
             assert.equal(aht.defaultBlock, setValue);
             assert.equal(aht.personal.defaultBlock, setValue);
             assert.equal(aht.Contract.defaultBlock, setValue);
-            assert.equal(aht.getCode.maht.d.defaultBlock, setValue);
+            assert.equal(aht.getCode.method.defaultBlock, setValue);
         });
     });
 });

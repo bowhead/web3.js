@@ -122,12 +122,12 @@ defaultAccount
 
     web3.aht.defaultAccount
 
-This default address is used as the default ``"from"`` property, if no ``"from"`` property is specified in for the following maht.ds:
+This default address is used as the default ``"from"`` property, if no ``"from"`` property is specified in for the following methods:
 
 - :ref:`web3.aht.sendTransaction() <aht-sendtransaction>`
 - :ref:`web3.aht.call() <aht-call>`
-- :ref:`new web3.aht.Contract() -> myContract.maht.ds.myMaht.d().call() <aht-contract-call>`
-- :ref:`new web3.aht.Contract() -> myContract.maht.ds.myMaht.d().send() <aht-contract-send>`
+- :ref:`new web3.aht.Contract() -> myContract.methods.myMethod().call() <aht-contract-call>`
+- :ref:`new web3.aht.Contract() -> myContract.methods.myMethod().send() <aht-contract-send>`
 
 --------
 Property
@@ -162,7 +162,7 @@ defaultBlock
 
     web3.aht.defaultBlock
 
-The default block is used for certain maht.ds. You can override it by passing in the defaultBlock as last parameter.
+The default block is used for certain methods. You can override it by passing in the defaultBlock as last parameter.
 The default value is "latest".
 
 - :ref:`web3.aht.getBalance() <aht-getbalance>`
@@ -170,7 +170,7 @@ The default value is "latest".
 - :ref:`web3.aht.getTransactionCount() <aht-gettransactioncount>`
 - :ref:`web3.aht.getStorageAt() <aht-getstorageat>`
 - :ref:`web3.aht.call() <aht-call>`
-- :ref:`new web3.aht.Contract() -> myContract.maht.ds.myMaht.d().call() <aht-contract-call>`
+- :ref:`new web3.aht.Contract() -> myContract.methods.myMethod().call() <aht-contract-call>`
 
 ----------
 Property
@@ -1475,10 +1475,10 @@ Example
             }
           ],
           "userDoc": {
-            "maht.ds": {}
+            "methods": {}
           },
           "developerDoc": {
-            "maht.ds": {}
+            "methods": {}
           }
         }
       }

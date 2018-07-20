@@ -185,7 +185,7 @@ none
 Returns
 -------
 
-``Object``: With the following maht.ds:
+``Object``: With the following methods:
 
     - ``add(request)``: To add a request object to the batch call.
     - ``execute()``: Will execute the batch request.
@@ -200,7 +200,7 @@ Example
 
     var batch = new web3.BatchRequest();
     batch.add(web3.aht.getBalance.request('0x0000000000000000000000000000000000000000', 'latest', callback));
-    batch.add(contract.maht.ds.balance(address).call.request({from: '0x0000000000000000000000000000000000000000'}, callback2));
+    batch.add(contract.methods.balance(address).call.request({from: '0x0000000000000000000000000000000000000000'}, callback2));
     batch.execute();
 
 
@@ -211,10 +211,10 @@ extend
 
 .. code-block:: javascript
 
-    web3.extend(maht.ds)
-    web3.aht.extend(maht.ds)
-    web3.shh.extend(maht.ds)
-    web3.bzz.extend(maht.ds)
+    web3.extend(methods)
+    web3.aht.extend(methods)
+    web3.shh.extend(methods)
+    web3.bzz.extend(methods)
     ...
 
 Allows extending the web3 modules.
@@ -225,14 +225,14 @@ Allows extending the web3 modules.
 Parameters
 ----------
 
-1. ``maht.ds`` - ``Object``: Extension object with array of maht.ds description objects as follows:
+1. ``methods`` - ``Object``: Extension object with array of methods description objects as follows:
     - ``property`` - ``String``: (optional) The name of the property to add to the module. If no property is set it will be added to the module directly.
-    - ``maht.ds`` - ``Array``: The array of maht.d descriptions:
-        - ``name`` - ``String``: Name of the maht.d to add.
-        - ``call`` - ``String``: The RPC maht.d name.
+    - ``methods`` - ``Array``: The array of method descriptions:
+        - ``name`` - ``String``: Name of the method to add.
+        - ``call`` - ``String``: The RPC method name.
         - ``params`` - ``Number``: (optional) The number of parameters for that function. Default 0.
         - ``inputFormatter`` - ``Array``: (optional) Array of inputformatter functions. Each array item responds to a function parameter, so if you want some parameters not to be formatted, add a ``null`` instead.
-        - ``outputFormatter - ``Function``: (optional) Can be used to format the output of the maht.d.
+        - ``outputFormatter - ``Function``: (optional) Can be used to format the output of the method.
 
 
 ----------
@@ -249,7 +249,7 @@ Example
 
     web3.extend({
         property: 'myModule',
-        maht.ds: [{
+        methods: [{
             name: 'getBalance',
             call: 'aht.getBalance',
             params: 2,
@@ -264,7 +264,7 @@ Example
     });
 
     web3.extend({
-        maht.ds: [{
+        methods: [{
             name: 'directCall',
             call: 'aht.callForFun',
         }]
