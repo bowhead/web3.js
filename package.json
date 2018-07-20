@@ -36,28 +36,9 @@
   "author": "bowhead.org",
   "authors": [
     {
-      "name": "Fabian Vogelsteller",
-      "email": "fabian@bowhead.org",
-      "homepage": "http://frozeman.de"
-    },
-    {
-      "name": "Marek Kotewicz",
-      "email": "marek@parity.io",
-      "url": "https://github.com/debris"
-    },
-    {
-      "name": "Marian Oancea",
-      "url": "https://github.com/cubedro"
-    },
-    {
-      "name": "Gav Wood",
-      "email": "g@parity.io",
-      "homepage": "http://gavwood.com"
-    },
-    {
-      "name": "Jeffery Wilcke",
-      "email": "jeffrey.wilcke@bowhead.org",
-      "url": "https://github.com/obscuren"
+      "name": "Ami Rajpal",
+      "email": "ami@bowheadhealth.com",
+      "homepage": "http://bowheadhealth.com"
     }
   ],
   "devDependencies": {
@@ -74,7 +55,7 @@
     "crypto-js": "^3.1.4",
     "del": ">=2.0.2",
     "bowheadjs-wallet": "^0.6.0",
-    "ethjs-signer": "^0.1.1",
+    "ahtjs-signer": "^0.1.1",
     "exorcist": "^0.4.0",
     "gulp": ">=3.9.0",
     "gulp-babel": "^6.1.2",
