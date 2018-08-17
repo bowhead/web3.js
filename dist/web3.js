@@ -14013,7 +14013,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           cb(err);
         };
 
-        // Manually shove somaht.ng into the read() buffer.
+        // Manually shove something into the read() buffer.
         // This returns true if the highWaterMark has not been hit yet,
         // similar to how Writable.write() returns true if you should
         // write() some more.
@@ -14037,7 +14037,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           return readableAddChunk(this, chunk, encoding, false, skipChunkCheck);
         };
 
-        // Unshift should *always* be somaht.ng directly out of read()
+        // Unshift should *always* be something directly out of read()
         Readable.prototype.unshift = function (chunk) {
           return readableAddChunk(this, chunk, null, true, false);
         };
@@ -14205,7 +14205,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           // that the Readable class should behave improperly, as streams are
           // designed to be sync/async agnostic.
           // Take note if the _read call is sync or async (ie, if the read call
-          // has returned yet), so that we know whaht.r or not it's safe to emit
+          // has returned yet), so that we know whether or not it's safe to emit
           // 'readable' etc.
           //
           // 3. Actually pull the requested chunks out of the buffer and return.
@@ -14251,7 +14251,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
           if (state.length === 0) {
             // If we have nothing in the buffer, then we want to know
-            // as soon as we *do* get somaht.ng into the buffer.
+            // as soon as we *do* get something into the buffer.
             if (!state.ended) state.needReadable = true;
 
             // If we tried to read() past the EOF, then emit end on the next tick.
@@ -14413,7 +14413,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
               // If the user unpiped during `dest.write()`, it is possible
               // to get stuck in a permanently paused state if that write
               // also returned false.
-              // => Check whaht.r `dest` is still a piping destination.
+              // => Check whether `dest` is still a piping destination.
               if ((state.pipesCount === 1 && state.pipes === dest || state.pipesCount > 1 && indexOf(state.pipes, dest) !== -1) && !cleanedUp) {
                 debug('false write response, pause', src._readableState.awaitDrain);
                 src._readableState.awaitDrain++;
@@ -14528,7 +14528,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         };
 
         // set up data events if they are asked for
-        // Ensure readable listeners eventually get somaht.ng
+        // Ensure readable listeners eventually get something
         Readable.prototype.on = function (ev, fn) {
           var res = Stream.prototype.on.call(this, ev, fn);
 
@@ -14829,7 +14829,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
       // a transform stream is a readable/writable stream where you do
-      // somaht.ng with the data.  Sometimes it's called a "filter",
+      // something with the data.  Sometimes it's called a "filter",
       // but that's not a great name for it, since that implies a thing where
       // some bits pass through, and others are simply ignored.  (That would
       // be a valid example of a transform, of course.)
@@ -15134,7 +15134,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           // These options can be provided separately as readableXXX and writableXXX.
           var isDuplex = stream instanceof Duplex;
 
-          // object stream flag to indicate whaht.r or not this stream
+          // object stream flag to indicate whether or not this stream
           // contains buffers or objects.
           this.objectMode = !!options.objectMode;
 
@@ -15393,7 +15393,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           return chunk;
         }
 
-        // if we're already writing somaht.ng, then just put this
+        // if we're already writing something, then just put this
         // in the queue, and wait our turn.  Otherwise, call _write
         // If we return false, then we need a drain event, so set that flag.
         function writeOrBuffer(stream, state, isBuf, chunk, encoding, cb) {
@@ -15517,7 +15517,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           }
         }
 
-        // if there's somaht.ng in the buffer waiting, then process it
+        // if there's something in the buffer waiting, then process it
         function clearBuffer(stream, state) {
           state.bufferProcessing = true;
           var entry = state.bufferedRequest;
@@ -17216,7 +17216,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         this.lastNeed -= buf.length;
       };
 
-      // Checks the type of a UTF-8 byte, whaht.r it's ASCII, a leading byte, or a
+      // Checks the type of a UTF-8 byte, whether it's ASCII, a leading byte, or a
       // continuation byte.
       function utf8CheckByte(byte) {
         if (byte <= 0x7F) return 0;else if (byte >> 5 === 0x06) return 2;else if (byte >> 4 === 0x0E) return 3;else if (byte >> 3 === 0x1E) return 4;
@@ -19862,7 +19862,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
         // String -> String -> Nullable String -> Promise (String | Uint8Array | Map String Uint8Array)
         //   Simplified multi-type download which calls the correct function based on
-        //   the type of the argument given, and on whaht.r the Swwarm address has a
+        //   the type of the argument given, and on whether the Swwarm address has a
         //   directory or a file.
         var _download = function _download(swarmUrl) {
           return function (hash) {
@@ -20279,7 +20279,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           };
         };
 
-        // Helper for collection methods to determine whaht.r a collection
+        // Helper for collection methods to determine whether a collection
         // should be iterated as an array or as an object
         // Related: http://people.mozilla.org/~jorendorff/es6-draft.html#sec-tolength
         // Avoids a very nasty iOS 8 JIT bug on ARM-64. #2094
@@ -20385,7 +20385,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           return _.filter(obj, _.negate(cb(predicate)), context);
         };
 
-        // Determine whaht.r all of the elements match a truth test.
+        // Determine whether all of the elements match a truth test.
         // Aliased as `all`.
         _.every = _.all = function (obj, predicate, context) {
           predicate = cb(predicate, context);
@@ -20735,8 +20735,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           });
         };
 
-        // Zip togaht.r multiple lists into a single array -- elements that share
-        // an index go togaht.r.
+        // Zip together multiple lists into a single array -- elements that share
+        // an index go together.
         _.zip = function () {
           return _.unzip(arguments);
         };
@@ -20855,7 +20855,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         // Function (ahem) Functions
         // ------------------
 
-        // Determines whaht.r to execute a function as a constructor
+        // Determines whether to execute a function as a constructor
         // or a normal function with the provided arguments
         var executeBound = function executeBound(sourceFunc, boundFunc, context, callingContext, args) {
           if (!(callingContext instanceof boundFunc)) return sourceFunc.apply(context, args);
@@ -21250,7 +21250,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           return obj;
         };
 
-        // Returns whaht.r an object has a given set of `key:value` pairs.
+        // Returns whether an object has a given set of `key:value` pairs.
         _.isMatch = function (object, attrs) {
           var keys = _.keys(attrs),
               length = keys.length;
@@ -21473,7 +21473,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           };
         };
 
-        // Returns a predicate for checking whaht.r an object has a given set of
+        // Returns a predicate for checking whether an object has a given set of
         // `key:value` pairs.
         _.matcher = _.matches = function (attrs) {
           attrs = _.extendOwn({}, attrs);
@@ -24052,7 +24052,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
        * @method addSubscription
        * @param {String} id           the subscription id
        * @param {String} name         the subscription name
-       * @param {String} type         the subscription namespace (aht. personal, etc)
+       * @param {String} type         the subscription namespace (aht, personal, etc)
        * @param {Function} callback   the callback to call for incoming notifications
        */
       RequestManager.prototype.addSubscription = function (id, name, type, callback) {
@@ -27501,7 +27501,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         };
 
         //
-        // A reduce context, could be using montgomery or somaht.ng better, depending
+        // A reduce context, could be using montgomery or something better, depending
         // on the `m` itself.
         //
         BN.red = function red(num) {
@@ -28818,7 +28818,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       };
 
       /**
-       * This method should be used to combine solidity params togaht.r
+       * This method should be used to combine solidity params together
        * eg. when appending an array
        *
        * @method combine
@@ -32166,7 +32166,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         };
 
         //
-        // A reduce context, could be using montgomery or somaht.ng better, depending
+        // A reduce context, could be using montgomery or something better, depending
         // on the `m` itself.
         //
         BN.red = function red(num) {
@@ -35961,7 +35961,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           var preamble = "\x19Bowhead Signed Message:\n" + message.length;
           var preambleBuffer = Buffer.from(preamble);
           var ahtMessage = Buffer.concat([preambleBuffer, messageBuffer]);
-          return Hash.keccak256s(aht.essage);
+          return Hash.keccak256s(ahtMessage);
         };
 
         Accounts.prototype.sign = function sign(data, privateKey) {
@@ -36509,7 +36509,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
        * @method _encodeEventABI
        * @param {Object} event
        * @param {Object} options
-       * @return {Object} everything combined togaht.r and encoded
+       * @return {Object} everything combined together and encoded
        */
       Contract.prototype._encodeEventABI = function (event, options) {
         options = options || {};
@@ -41447,48 +41447,37 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       // complete bowhead unit map
       var unitMap = {
-        'noaht.r': '0', // eslint-disable-line
-        'cell': '1', // eslint-disable-line
-        'kcell': '1000', // eslint-disable-line
-        'Kcell': '1000', // eslint-disable-line
-        'babbage': '1000', // eslint-disable-line
-        'femtoaht.r': '1000', // eslint-disable-line
-        'mcell': '1000000', // eslint-disable-line
-        'Mcell': '1000000', // eslint-disable-line
-        'lovelace': '1000000', // eslint-disable-line
-        'picoaht.r': '1000000', // eslint-disable-line
-        'gcell': '1000000000', // eslint-disable-line
-        'Gcell': '1000000000', // eslint-disable-line
-        'shannon': '1000000000', // eslint-disable-line
-        'nanoaht.r': '1000000000', // eslint-disable-line
-        'nano': '1000000000', // eslint-disable-line
-        'szabo': '1000000000000', // eslint-disable-line
-        'microaht.r': '1000000000000', // eslint-disable-line
-        'micro': '1000000000000', // eslint-disable-line
-        'finney': '1000000000000000', // eslint-disable-line
-        'milliaht.r': '1000000000000000', // eslint-disable-line
-        'milli': '1000000000000000', // eslint-disable-line
-        'aht.r': '1000000000000000000', // eslint-disable-line
-        'kaht.r': '1000000000000000000000', // eslint-disable-line
-        'grand': '1000000000000000000000', // eslint-disable-line
-        'maht.r': '1000000000000000000000000', // eslint-disable-line
-        'gaht.r': '1000000000000000000000000000', // eslint-disable-line
-        'taht.r': '1000000000000000000000000000000' };
+        'noaht':         '0',
+        'cell':          '1',
+        'kcell':         '1000',
+        'Kcell':         '1000',
+        'mcell':         '1000000',
+        'Mcell':         '1000000',
+        'gcell':         '1000000000',
+        'Gcell':         '1000000000',
+        'organ':         '1000000000',
+        'korgan':        '1000000000000',
+        'Korgan':        '1000000000000',
+        'morgan':        '1000000000000000',
+        'Morgan':        '1000000000000000',
+        'gorgan':        '1000000000000000000',
+        'Gorgan':        '1000000000000000000',
+        'aht':           '1000000000000000000' };
 
       /**
        * Returns value of unit in Cell
        *
        * @method getValueOfUnit
-       * @param {String} unit the unit to convert to, default ahter
+       * @param {String} unit the unit to convert to, default aht
        * @returns {BigNumber} value of the unit (in Cell)
        * @throws error if the unit is not correct:w
        */
       function getValueOfUnit(unitInput) {
-        var unit = unitInput ? unitInput.toLowerCase() : 'aht.r';
+        var unit = unitInput ? unitInput.toLowerCase() : 'aht';
         var unitValue = unitMap[unit]; // eslint-disable-line
 
         if (typeof unitValue !== 'string') {
-          throw new Error('[aht.s-unit] the unit provided ' + unitInput + ' doesn\'t exists, please use the one of the following units ' + JSON.stringify(unitMap, null, 2));
+          throw new Error('[ahtjs-unit] the unit provided ' + unitInput + ' doesn\'t exists, please use the one of the following units ' + JSON.stringify(unitMap, null, 2));
         }
 
         return new BN(unitValue, 10);
@@ -41555,19 +41544,19 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         var baseLength = unitMap[unit].length - 1 || 1;
 
         // Is it negative?
-        var negative = ahter.substring(0, 1) === '-'; // eslint-disable-line
+        var negative = aht.substring(0, 1) === '-'; // eslint-disable-line
         if (negative) {
           cell = cell.substring(1);
         }
 
         if (cell === '.') {
-          throw new Error('[aht.s-unit] while converting number ' + cellInput + ' to cell, invalid value');
+          throw new Error('[ahtjs-unit] while converting number ' + cellInput + ' to cell, invalid value');
         }
 
         // Split it into a whole and fractional part
         var comps = cell.split('.'); // eslint-disable-line
         if (comps.length > 2) {
-          throw new Error('[aht.s-unit] while converting number ' + cellInput + ' to cell,  too many decimal points');
+          throw new Error('[ahtjs-unit] while converting number ' + cellInput + ' to cell,  too many decimal points');
         }
 
         var whole = comps[0],
@@ -41580,7 +41569,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           fraction = '0';
         }
         if (fraction.length > baseLength) {
-          throw new Error('[aht.s-unit] while converting number ' + cellInput + ' to cell, too many decimal places');
+          throw new Error('[ahtjs-unit] while converting number ' + cellInput + ' to cell, too many decimal places');
         }
 
         while (fraction.length < baseLength) {
@@ -41607,7 +41596,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       };
     }, { "bn.js": 382, "number-to-bn": 386 }], 385: [function (require, module, exports) {
       /**
-       * Returns a `Boolean` on whaht.r or not the a `String` starts with '0x'
+       * Returns a `Boolean` on whether or not the a `String` starts with '0x'
        * @param {String} str the string input value
        * @return {Boolean} a boolean if it is or is not hex prefixed
        * @throws if the str input is not a string
@@ -42009,7 +41998,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
        */
 
       var _ = require('underscore');
-      var ahtjsUnit = require('aht.s-unit');
+      var ahtjsUnit = require('ahtjs-unit');
       var utils = require('./utils.js');
       var soliditySha3 = require('./soliditySha3.js');
       var randomHex = require('randomhex');
@@ -42131,37 +42120,37 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
        * Returns value of unit in Cell
        *
        * @method getUnitValue
-       * @param {String} unit the unit to convert to, default ahter
+       * @param {String} unit the unit to convert to, default aht
        * @returns {BN} value of the unit (in Cell)
        * @throws error if the unit is not correct:w
        */
       var getUnitValue = function getUnitValue(unit) {
-        unit = unit ? unit.toLowerCase() : 'aht.r';
-        if (!aht.sUnit.unitMap[unit]) {
-          throw new Error('This unit "' + unit + '" doesn\'t exist, please use the one of the following units' + JSON.stringify(aht.sUnit.unitMap, null, 2));
+        unit = unit ? unit.toLowerCase() : 'aht';
+        if (!ahtjsUnit.unitMap[unit]) {
+          throw new Error('This unit "' + unit + '" doesn\'t exist, please use the one of the following units' + JSON.stringify(ahtjsUnit.unitMap, null, 2));
         }
         return unit;
       };
 
       /**
-       * Takes a number of cell and converts it to any other ahter unit.
+       * Takes a number of cell and converts it to any other aht unit.
        *
        * Possible units are:
        *   SI Short   SI Full        Effigy       Other
-       * - kcell       femtoaht.r     babbage
-       * - mcell       picoaht.r      lovelace
-       * - gcell       nanoaht.r      shannon      nano
-       * - --         microaht.r     szabo        micro
-       * - --         milliaht.r     finney       milli
-       * - ahter      --             --
-       * - kaht.r                    --           grand
-       * - maht.r
-       * - gaht.r
-       * - taht.r
+       * - kcell       femtoaht     babbage
+       * - mcell       picoaht      lovelace
+       * - gcell       nanoaht      shannon      nano
+       * - --         microaht     szabo        micro
+       * - --         milliaht     finney       milli
+       * - aht      --             --
+       * - kaht                    --           grand
+       * - maht
+       * - gaht
+       * - taht
        *
        * @method fromCell
        * @param {Number|String} number can be a number, number string or a HEX of a decimal
-       * @param {String} unit the unit to convert to, default ahter
+       * @param {String} unit the unit to convert to, default aht
        * @return {String|Object} When given a BN object it returns one as well, otherwise a number
        */
       var fromCell = function fromCell(number, unit) {
@@ -42179,21 +42168,21 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
        *
        * Possible units are:
        *   SI Short   SI Full        Effigy       Other
-       * - kcell       femtoaht.r     babbage
-       * - mcell       picoaht.r      lovelace
-       * - gcell       nanoaht.r      shannon      nano
-       * - --         microaht.r     szabo        micro
-       * - --         microaht.r     szabo        micro
-       * - --         milliaht.r     finney       milli
-       * - ahter      --             --
-       * - kaht.r                    --           grand
-       * - maht.r
-       * - gaht.r
-       * - taht.r
+       * - kcell       femtoaht     babbage
+       * - mcell       picoaht      lovelace
+       * - gcell       nanoaht      shannon      nano
+       * - --         microaht     szabo        micro
+       * - --         microaht     szabo        micro
+       * - --         milliaht     finney       milli
+       * - aht      --             --
+       * - kaht                    --           grand
+       * - maht
+       * - gaht
+       * - taht
        *
        * @method toCell
        * @param {Number|String|BN} number can be a number, number string or a HEX of a decimal
-       * @param {String} unit the unit to convert from, default ahter
+       * @param {String} unit the unit to convert from, default aht
        * @return {String|Object} When given a BN object it returns one as well, otherwise a number
        */
       var toCell = function toCell(number, unit) {
@@ -42288,7 +42277,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         rightPad: utils.rightPad,
         toTwosComplement: utils.toTwosComplement
       };
-    }, { "./soliditySha3.js": 394, "./utils.js": 395, "aht.s-unit": 384, "randomhex": 389, "underscore": 391 }], 394: [function (require, module, exports) {
+    }, { "./soliditySha3.js": 394, "./utils.js": 395, "ahtjs-unit": 384, "randomhex": 389, "underscore": 391 }], 394: [function (require, module, exports) {
       /*
        This file is part of web3.js.
       
