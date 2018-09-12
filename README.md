@@ -62,11 +62,6 @@ web3.aht.getAccounts()
 .then(console.log);
 ```
 
-## Documentation
-
-Documentation can be found at [read the docs][docs]
-
-
 ## Building
 
 ### Requirements
