@@ -27,7 +27,7 @@ const Web3 = require('web3')
 Then you can use it like this:
 
 ```js
-console.log(Web3); // {eth: .., shh: ...} // it's here!
+console.log(Web3); // {aht: .., shh: ...} // it's here!
 ```
 
 Set a provider (HttpProvider)
